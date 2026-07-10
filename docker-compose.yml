@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  # The local iii.dev message engine
+  iii-engine:
+    image: Rust-based-iii-engine-image-placeholder
+    container_name: peoplesync-iii-engine
+    ports:
+      - "49134:49134"
+    volumes:
+      - ./config.yaml:/etc/iii/config.yaml
+    command: iii --config /etc/iii/config.yaml
+    restart: always
+
+  # The TypeScript MCP Server exposing Workday, Greenhouse & Rippling tools
+  mcp-server:
+    build:
+      context: ./mcp-server
+      dockerfile: Dockerfile
+    container_name: peoplesync-mcp-server
+    ports:
+      - "3001:3001" # Exposed when running in SSE (Server-Sent Events) HTTP mode
+    volumes:
+      - ./mcp-server/src/db.json:/usr/src/app/build/db.json
+    restart: always
+
+  # The ZeroClaw agent runtime
+  zeroclaw-agent:
+    image: zeroclaw-labs/zeroclaw:latest
+    container_name: peoplesync-zeroclaw-agent
+    volumes:
+      - ./agents:/etc/zeroclaw/agents
+      - ./agents/configs/production.toml:/root/.zeroclaw/config.toml
+    environment:
+      - ZEROCLAW_providers__models__claude__base_url=http://host.docker.internal:8000/v1
+      - ZEROCLAW_providers__models__claude__api_key=local-mock-key
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - mcp-server
+    restart: always
+
+  # The Vite React Frontend Portal
+  web-app:
+    build:
+      context: ./web-app
+      dockerfile: Dockerfile
+    container_name: peoplesync-web-portal
+    ports:
+      - "80:80"
+    depends_on:
+      - iii-engine
+    restart: always

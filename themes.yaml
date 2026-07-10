@@ -1,0 +1,45 @@
+# PeopleSync Color Schemes / Design Token Themes
+# This file tracks design token mappings compiled into CSS variables
+
+themes:
+  default:
+    name: "Anthropic Purple"
+    primary: "#8A2BE2"
+    accent: "#00C2FF"
+    glow: "rgba(138, 43, 226, 0.15)"
+    glow_secondary: "rgba(0, 194, 255, 0.1)"
+    bg_gradient_start: "#0B0F19"
+    description: "Original purple-blue default styling."
+
+  greenhouse:
+    name: "Greenhouse Emerald"
+    primary: "#10B981"
+    accent: "#00F0FF"
+    glow: "rgba(16, 185, 129, 0.15)"
+    glow_secondary: "rgba(0, 240, 255, 0.1)"
+    description: "Emerald greens mimicking the Greenhouse candidate tracking dashboard."
+
+  rippling:
+    name: "Rippling Electric Blue"
+    primary: "#2563EB"
+    accent: "#38BDF8"
+    glow: "rgba(37, 99, 235, 0.15)"
+    glow_secondary: "rgba(56, 189, 248, 0.1)"
+    description: "Deep royal blue and sky highlights representing Rippling accounts dashboard."
+
+  sunset:
+    name: "Sunset Gold"
+    primary: "#F97316"
+    accent: "#FBBF24"
+    glow: "rgba(249, 115, 22, 0.15)"
+    glow_secondary: "rgba(251, 191, 36, 0.1)"
+    description: "Amber-orange sunset gradient theme."
+
+  frontier:
+    name: "Frontier (Claude Platform)"
+    primary: "#CC5A49" # Claude Coral Accent
+    accent: "#E28A3B"  # Claude Warm Amber Accent
+    glow: "rgba(204, 90, 73, 0.15)"
+    glow_secondary: "rgba(226, 138, 59, 0.1)"
+    bg_gradient_start: "#1B1917" # Deep Warm Charcoal Background
+    description: "Styled to match the warm charcoal, coral, and amber branding of the official claude.com platform pages."

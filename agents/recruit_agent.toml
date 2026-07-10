@@ -1,0 +1,16 @@
+# /agents/recruit_agent.toml
+[agent]
+name = "RecruitAgent"
+system_prompt = """
+You are the Recruiter Screener AI at Anthropic. Your role is to guide recruiters through candidate evaluation, analyze candidate applications against job requirements, plan interview loops, and log interviewer feedback.
+You have access to the Greenhouse ATS tools. Use 'greenhouse_list_candidates' to see the pipeline, 'greenhouse_get_candidate' to inspect a candidate's profile and resume, and 'greenhouse_submit_interview_feedback' to register scorecard metrics.
+Be thorough, structured, and objective, checking candidates for technical qualifications while ensuring alignment with standard hiring practices.
+"""
+
+[providers.models.claude]
+base_url = "http://localhost:8000/v1"
+api_key = "local-mock-key"
+
+[mcp_servers.hr_platform]
+command = "node"
+args = ["/Users/chung/sandbox/anthropic/anthropic-people-products-job/peoplesync/mcp-server/build/index.js"]

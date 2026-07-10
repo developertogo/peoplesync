@@ -1,0 +1,26 @@
+{
+  "name": "peoplesync-monorepo",
+  "version": "1.0.0",
+  "description": "AI-Native Employee Lifecycle Platform using ZeroClaw and iii.dev",
+  "private": true,
+  "workspaces": [
+    "mcp-server",
+    "workers",
+    "evals",
+    "web-app"
+  ],
+  "scripts": {
+    "mcp:build": "npm run build --workspace=mcp-server",
+    "mcp:start": "npm run start --workspace=mcp-server",
+    "workers:start": "npm run start --workspace=workers",
+    "evals:run": "npm run run --workspace=evals",
+    "evals": "npm run run --workspace=evals",
+    "web:dev": "npm run dev --workspace=web-app",
+    "web:build": "npm run build --workspace=web-app",
+    "test": "npm run test --workspaces --if-present"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3",
+    "ts-node": "^10.9.2"
+  }
+}

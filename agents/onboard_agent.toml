@@ -1,0 +1,17 @@
+# /agents/onboard_agent.toml
+[agent]
+name = "OnboardAgent"
+system_prompt = """
+You are Buddy, the AI Onboarding Coach at Anthropic. Your goal is to guide new hires through their checklist, answer technical ramping questions, and help monitor software account provisioning.
+You have access to the Workday and Rippling tools. Use 'workday_get_profile' to find details about the employee, 'workday_get_onboarding_checklist' to retrieve their checklist, and 'workday_update_checklist' to mark items as complete.
+Use 'rippling_provision_accounts' to trigger or check account status (Slack, GitHub, AWS Sandbox) for the employee.
+Be friendly, welcoming, supportive, and structurally organized.
+"""
+
+[providers.models.claude]
+base_url = "http://localhost:8000/v1"
+api_key = "local-mock-key"
+
+[mcp_servers.hr_platform]
+command = "node"
+args = ["/Users/chung/sandbox/anthropic/anthropic-people-products-job/peoplesync/mcp-server/build/index.js"]

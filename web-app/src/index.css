@@ -1,0 +1,110 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Inter', sans-serif;
+  --font-display: 'Outfit', sans-serif;
+
+  --color-primary: #8A2BE2; /* Anthropic/Purple defaults */
+  --color-accent: #00C2FF; /* Neon Blue */
+  --color-glow: rgba(138, 43, 226, 0.15);
+  --color-glow-secondary: rgba(0, 194, 255, 0.1);
+}
+
+:root {
+  --bg-gradient-start: #0B0F19;
+}
+
+/* Greenhouse Theme - Emerald Focus */
+.theme-greenhouse {
+  --color-primary: #10B981; /* Emerald */
+  --color-accent: #00F0FF; /* Electric Cyan */
+  --color-glow: rgba(16, 185, 129, 0.15);
+  --color-glow-secondary: rgba(0, 240, 255, 0.1);
+}
+
+/* Rippling Theme - Electric Blue Focus */
+.theme-rippling {
+  --color-primary: #2563EB; /* Royal Blue */
+  --color-accent: #38BDF8; /* Sky Blue */
+  --color-glow: rgba(37, 99, 235, 0.15);
+  --color-glow-secondary: rgba(56, 189, 248, 0.1);
+}
+
+/* Sunset Theme - Amber & Coral Focus */
+.theme-sunset {
+  --color-primary: #F97316; /* Orange */
+  --color-accent: #FBBF24; /* Yellow */
+  --color-glow: rgba(249, 115, 22, 0.15);
+  --color-glow-secondary: rgba(251, 191, 36, 0.1);
+}
+
+/* Frontier Theme - Claude.com Platform API style */
+.theme-frontier {
+  --color-primary: #CC5A49; /* Claude Coral Accent */
+  --color-accent: #E28A3B;  /* Claude Warm Amber Accent */
+  --color-glow: rgba(204, 90, 73, 0.15);
+  --color-glow-secondary: rgba(226, 138, 59, 0.1);
+  --bg-gradient-start: #1B1917; /* Deep Warm Charcoal Background */
+}
+
+/* Custom Scrollbar Utility */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.3);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.2);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.4);
+}
+
+/* Glow animations and glassmorphism helpers */
+.glow-blur {
+  filter: blur(140px);
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 8s infinite ease-in-out;
+}
+
+/* Light mode specific primary/accent overrides for accessibility contrast */
+.mode-light {
+  --color-primary: #7C3AED; /* Slate-friendly violet */
+  --color-accent: #0284C7; /* Slate-friendly blue */
+  --color-glow: rgba(124, 58, 237, 0.05);
+  --color-glow-secondary: rgba(2, 132, 199, 0.03);
+}
+
+.mode-light.theme-greenhouse {
+  --color-primary: #059669; /* Emerald */
+  --color-accent: #0891B2;
+}
+
+.mode-light.theme-rippling {
+  --color-primary: #1D4ED8; /* Royal Blue */
+  --color-accent: #0284C7;
+}
+
+.mode-light.theme-sunset {
+  --color-primary: #EA580C; /* Sunset Orange */
+  --color-accent: #D97706;
+}
+
+.mode-light.theme-frontier {
+  --color-primary: #B84A39; /* Claude Coral */
+  --color-accent: #C2702E;
+}

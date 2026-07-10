@@ -1,0 +1,46 @@
+The fastest, smallest AI assistant.
+
+Usage: zeroclaw [OPTIONS] <COMMAND>
+
+Commands:
+  quickstart    Create your first agent end-to-end
+  onboard       Deprecated. Use `zeroclaw quickstart`. Any flags error
+  agent         Start the AI agent loop
+  gateway       Manage the gateway server (webhooks, websockets)
+  acp           Start the ACP server (JSON-RPC 2.0 over stdio)
+  daemon        Start the long-running autonomous daemon
+  service       Manage OS service lifecycle (launchd/systemd user service)
+  doctor        Run diagnostics for daemon/scheduler/channel freshness
+  status        Show system status (full details)
+  security      Inspect the active security posture derived from local config and host detection
+  estop         Engage, inspect, and resume emergency-stop states
+  cron          Configure and manage scheduled tasks
+  models        Manage provider model catalogs
+  providers     List supported AI providers
+  channel       Manage communication channels
+  agents        Manage agent aliases (create/list/rename/delete). Distinct from `agent`, which runs an agent
+  channels      Manage channel aliases (create/list/rename/delete)
+  integrations  Browse 50+ integrations
+  skills        Manage skills (user-defined capabilities)
+  browse        Browse the shared workspace one directory at a time
+  sop           Manage standard operating procedures (SOPs)
+  migrate       Migrate data from other agent runtimes
+  auth          Manage provider subscription authentication profiles
+  hardware      Discover and introspect USB hardware
+  peripheral    Manage hardware peripherals
+  memory        Manage agent memory entries
+  config        Manage ZeroClaw configuration
+  update        Check for and apply ZeroClaw updates
+  self-test     Run diagnostic self-tests
+  eval          Run the agent evaluation harness
+  completions   Generate shell completion scripts
+  desktop       Launch the ZeroClaw companion desktop app
+  locales       Fetch translated locale files (FTL) from upstream
+  help          Print this message or the help of the given subcommand(s)
+
+Options:
+      --config-dir <CONFIG_DIR>  
+      --log-level <LOG_LEVEL>    Lowest severity recorded to the runtime trace (and capture layer). Immutable for the process. Precedence: this flag > RUST_LOG env > per-command default [possible values: error, warn, info, debug, trace]
+  -v, --verbose                  Surface recorded logs on the terminal. Off by default: logs go to the trace file only and the terminal shows just command output. When on, the terminal shows events down to the recorded floor. Immutable for the process
+  -h, --help                     Print help
+  -V, --version                  Print version

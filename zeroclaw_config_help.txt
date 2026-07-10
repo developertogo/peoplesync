@@ -1,0 +1,50 @@
+Manage ZeroClaw configuration.
+
+View, set, or initialize config properties by dotted path. Use 'schema' to dump the full JSON Schema for the config file.
+
+Properties are addressed by dotted path (e.g. channels.matrix.mention-only).
+Secret fields (API keys, tokens) automatically use masked input.
+Enum fields offer interactive selection when value is omitted.
+
+Examples:
+  zeroclaw config list                                  # list all properties
+  zeroclaw config list --secrets                        # list only secrets
+  zeroclaw config list --filter channels.matrix         # filter by prefix
+  zeroclaw config get channels.matrix.mention-only      # get a value
+  zeroclaw config set channels.matrix.mention-only true # set a value
+  zeroclaw config set channels.matrix.access-token      # secret: masked input
+  zeroclaw config set channels.matrix.stream-mode       # enum: interactive select
+  zeroclaw config init channels.matrix                  # init section with defaults
+  zeroclaw config schema                                # print JSON Schema to stdout
+  zeroclaw config schema > schema.json
+
+Property path tab completion is included automatically in `zeroclaw completions <shell>`.
+
+Usage: zeroclaw config [OPTIONS] <COMMAND>
+
+Commands:
+  schema    Dump the full configuration JSON Schema to stdout
+  list      List all config properties with current values
+  get       Get a config property value
+  set       Set a config property (secret fields auto-prompt for masked input)
+  init      Initialize unconfigured sections with defaults (enabled=false)
+  migrate   Migrate config.toml to the current schema version on disk (preserves comments)
+  patch     Apply a JSON Patch (RFC 6902) document atomically. Mirrors `PATCH /api/config`
+  docs      Print the API explorer URL (plus a hint if the daemon isn't running)
+  generate  Generate a canonical config at any supported schema version to stdout
+  help      Print this message or the help of the given subcommand(s)
+
+Options:
+      --config-dir <CONFIG_DIR>
+          
+
+      --log-level <LOG_LEVEL>
+          Lowest severity recorded to the runtime trace (and capture layer). Immutable for the process. Precedence: this flag > RUST_LOG env > per-command default
+          
+          [possible values: error, warn, info, debug, trace]
+
+  -v, --verbose
+          Surface recorded logs on the terminal. Off by default: logs go to the trace file only and the terminal shows just command output. When on, the terminal shows events down to the recorded floor. Immutable for the process
+
+  -h, --help
+          Print help (see a summary with '-h')

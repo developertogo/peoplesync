@@ -1,0 +1,20 @@
+{
+  "name": "workers",
+  "version": "1.0.0",
+  "description": "TypeScript workers for the PeopleSync event bus",
+  "main": "build/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node build/index.js",
+    "test": "NODE_ENV=test vitest run"
+  },
+  "dependencies": {
+    "iii-sdk": "^0.21.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.24",
+    "typescript": "^5.3.3",
+    "vitest": "^4.1.10"
+  }
+}
