@@ -2280,95 +2280,85 @@ const [selectedCandidate, setSelectedCandidate] = useState(INITIAL_CANDIDATES[0]
                 <span className={`text-sm ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>Loading calibration data…</span>
               </div>
             ) : (
-            <div className={`flex-1 flex min-h-0 relative ${isResponsiveMode ? 'flex-col space-y-6' : 'flex-row space-x-2'}`}>
+            <div className={`flex-1 flex min-h-0 relative ${isResponsiveMode ? 'flex-col space-y-4' : 'flex-row space-x-2'}`}>
 
-              {/* Feedback Editor Card */}
+              {/* ── LEFT COLUMN: Calibration Candidate selector + Peer Feedback Auditor ── */}
               <div
                 style={isResponsiveMode ? {} : { width: `${calibrateLeftWidth}px` }}
-                className={`shrink-0 space-y-6 ${cardClass} ${isResponsiveMode ? 'w-full h-auto overflow-visible' : 'overflow-y-auto h-full pr-3'}`}
+                className={`shrink-0 flex flex-col ${isResponsiveMode ? 'w-full' : 'h-full'} gap-3`}
               >
-                <div className="flex flex-col space-y-4">
+
+                {/* Calibration Candidate Selector Card */}
+                <div className={`relative calibrate-dropdown-container shrink-0 ${cardClass} flex flex-col justify-center py-3 px-4`}>
+                  <label className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">Calibration Candidate</label>
+                  <button
+                    onClick={() => {
+                      setIsCalibrateCandDropdownOpen(!isCalibrateCandDropdownOpen);
+                      setCalibrateSearchText('');
+                    }}
+                    className={`w-full flex items-center justify-between border text-xs font-semibold rounded-lg px-2.5 py-2 focus:outline-none focus:border-primary transition-colors cursor-pointer ${isDarkMode ? 'bg-slate-900 border-slate-700 text-white hover:bg-slate-800/50' : 'bg-white border-slate-200 text-slate-800 hover:bg-slate-55 shadow-sm'}`}
+                  >
+                    <span className="flex items-center space-x-2 truncate">
+                      <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse shrink-0"></span>
+                      <span className="font-semibold text-xs truncate">{selectedCalibrateCandObj.name}</span>
+                      <span className="text-[10px] px-1.5 py-0.5 rounded border ml-1 shrink-0 bg-amber-500/10 text-amber-400 border-amber-500/20">
+                        {selectedCalibrateCandObj.target_job}
+                      </span>
+                    </span>
+                    <ChevronDown className="w-3.5 h-3.5 opacity-60 shrink-0 ml-2" />
+                  </button>
+
+                  {isCalibrateCandDropdownOpen && (
+                    <>
+                      <div className={`absolute top-full left-0 right-0 mt-1 z-50 border rounded-lg shadow-xl overflow-hidden ${isDarkMode ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-800'}`}>
+                        <div className="p-2 border-b border-slate-700/50 relative">
+                          <input
+                            ref={calibrateCandSearchInputRef}
+                            type="text"
+                            placeholder="Type candidate name..."
+                            value={calibrateSearchText}
+                            onChange={(e) => setCalibrateSearchText(e.target.value)}
+                            onClick={(e) => e.stopPropagation()}
+                            className={`w-full text-xs border rounded-lg pl-2.5 pr-7 py-1.5 focus:outline-none focus:border-primary ${isDarkMode ? 'bg-slate-950 border-slate-800 text-white' : 'bg-slate-50 border-slate-200 text-slate-800'}`}
+                          />
+                          {calibrateSearchText && (
+                            <button
+                              type="button"
+                              onClick={(e) => { e.stopPropagation(); setCalibrateSearchText(''); }}
+                              className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200 transition-colors p-0.5 cursor-pointer"
+                            >
+                              <X className="w-3 h-3" />
+                            </button>
+                          )}
+                        </div>
+                        <div className="max-h-48 overflow-y-auto">
+                          {calibrationStageCandidates.length === 0 ? (
+                            <div className="p-3 text-xs text-slate-500 text-center">No candidates found</div>
+                          ) : (
+                            calibrationStageCandidates.map(c => (
+                              <button
+                                key={c.id}
+                                onClick={() => { setSelectedCalibrateCandidateId(c.id); setIsCalibrateCandDropdownOpen(false); }}
+                                className={`w-full flex flex-col items-start px-3 py-2 text-left hover:bg-primary/10 transition-colors ${selectedCalibrateCandidateId === c.id ? 'bg-primary/5' : ''}`}
+                              >
+                                <span className={`text-xs font-semibold ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>{c.name}</span>
+                                <span className="text-[10px] text-slate-500 truncate w-full">{c.target_job} • {c.department}</span>
+                              </button>
+                            ))
+                          )}
+                        </div>
+                      </div>
+                      <div className="fixed inset-0 z-40 cursor-default" onClick={() => setIsCalibrateCandDropdownOpen(false)}></div>
+                    </>
+                  )}
+                </div>
+
+                {/* Peer Feedback Auditor Card */}
+                <div className={`flex-1 space-y-6 ${cardClass} ${isResponsiveMode ? 'w-full h-auto overflow-visible' : 'overflow-y-auto min-h-0 pr-3'}`}>
+                <div className="flex flex-col space-y-2">
                   <div>
                     <h3 className={`font-display font-semibold text-lg ${isDarkMode ? 'text-white' : 'text-slate-905'}`}>Peer Feedback Auditor</h3>
-                    <span className={`text-xs ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>Calibration analysis for employee: <strong>{selectedCalibrateCandObj.name}</strong></span>
-                  </div>
-
-                  {/* Calibration Candidate Search Selector */}
-                  <div className="relative shrink-0 calibrate-dropdown-container">
-                    <label className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">Select Calibration Candidate</label>
-                    <button
-                      onClick={() => {
-                        setIsCalibrateCandDropdownOpen(!isCalibrateCandDropdownOpen);
-                        setCalibrateSearchText('');
-                      }}
-                      className={`w-full flex items-center justify-between border text-xs font-semibold rounded-lg px-2.5 py-2.5 focus:outline-none focus:border-primary transition-colors cursor-pointer ${isDarkMode ? 'bg-slate-900 border-slate-700 text-white hover:bg-slate-800/50' : 'bg-white border-slate-200 text-slate-800 hover:bg-slate-55 shadow-sm'}`}
-                    >
-                      <span className="flex items-center space-x-2 truncate">
-                        <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
-                        <span className="font-semibold text-xs">{selectedCalibrateCandObj.name}</span>
-                        <span className="text-[10px] px-1.5 py-0.5 rounded border ml-2 bg-amber-500/10 text-amber-400 border-amber-500/20">
-                          {selectedCalibrateCandObj.target_job}
-                        </span>
-                      </span>
-                      <ChevronDown className="w-3.5 h-3.5 opacity-60" />
-                    </button>
-
-                    {isCalibrateCandDropdownOpen && (
-                      <>
-                        <div className={`absolute top-full left-0 right-0 mt-1 z-50 border rounded-lg shadow-xl overflow-hidden transition-all duration-300 ${isDarkMode ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-800'}`}>
-                          {/* Search input inside dropdown */}
-                          <div className="p-2 border-b border-slate-700/50 relative">
-                            <input
-                              ref={calibrateCandSearchInputRef}
-                              type="text"
-                              placeholder="Type candidate name..."
-                              value={calibrateSearchText}
-                              onChange={(e) => setCalibrateSearchText(e.target.value)}
-                              onClick={(e) => e.stopPropagation()} // Prevent closing dropdown on click
-                              className={`w-full text-xs border rounded-lg pl-2.5 pr-7 py-1.5 focus:outline-none focus:border-primary ${isDarkMode ? 'bg-slate-950 border-slate-800 text-white' : 'bg-slate-50 border-slate-200 text-slate-800'}`}
-                            />
-                            {calibrateSearchText && (
-                              <button
-                                type="button"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  setCalibrateSearchText('');
-                                }}
-                                className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200 transition-colors p-0.5 cursor-pointer"
-                              >
-                                <X className="w-3 h-3" />
-                              </button>
-                            )}
-                          </div>
-
-                          {/* Candidate List */}
-                          <div className="max-h-48 overflow-y-auto">
-                            {calibrationStageCandidates.length === 0 ? (
-                              <div className="p-3 text-xs text-slate-500 text-center">No candidates found</div>
-                            ) : (
-                              calibrationStageCandidates.map(c => (
-                                <button
-                                  key={c.id}
-                                  onClick={() => {
-                                    setSelectedCalibrateCandidateId(c.id);
-                                    setIsCalibrateCandDropdownOpen(false);
-                                  }}
-                                  className={`w-full flex flex-col items-start px-3 py-2 text-left hover:bg-primary/10 transition-colors ${selectedCalibrateCandidateId === c.id ? 'bg-primary/5' : ''}`}
-                                >
-                                  <span className={`text-xs font-semibold ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>{c.name}</span>
-                                  <span className="text-[10px] text-slate-500 truncate w-full">{c.target_job} • {c.department}</span>
-                                </button>
-                              ))
-                            )}
-                          </div>
-                        </div>
-                        {/* Transparent overlay to close dropdown when clicking outside */}
-                        <div
-                          className="fixed inset-0 z-40 cursor-default"
-                          onClick={() => setIsCalibrateCandDropdownOpen(false)}
-                        ></div>
-                      </>
-                    )}
+                    <span className={`text-xs ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>{selectedCalibrateCandObj.department} · {selectedCalibrateCandObj.target_job}</span>
                   </div>
                 </div>
 
@@ -2443,8 +2433,10 @@ const [selectedCandidate, setSelectedCandidate] = useState(INITIAL_CANDIDATES[0]
                   )}
                 </div>
               </div>
+              </div>{/* end left column wrapper */}
 
-              {/* Drag Handle */}
+
+              {/* ── Drag Handle (resizes both columns simultaneously) ── */}
               <div
                 onMouseDown={startResizingCalibrate}
                 className={`cursor-col-resize self-stretch flex items-center justify-center group relative z-30 transition-all duration-150 select-none ${isResponsiveMode ? 'hidden' : 'w-2.5 hover:w-3.5'}`}
@@ -2452,74 +2444,109 @@ const [selectedCandidate, setSelectedCandidate] = useState(INITIAL_CANDIDATES[0]
                 <div className={`w-1 group-hover:w-1.5 h-20 rounded bg-slate-550/20 group-hover:bg-primary transition-all ${isResizingCalibrate ? 'bg-primary w-1.5' : ''}`}></div>
               </div>
 
-              {/* Level Alignment matrix card */}
-              <div className={`flex-1 space-y-6 ${cardClass} ${isResponsiveMode ? 'w-full h-auto overflow-visible' : 'overflow-y-auto h-full pr-3'}`}>
-                <div>
-                  <h3 className={`font-display font-semibold text-lg ${isDarkMode ? 'text-white' : 'text-slate-905'}`}>Level Alignment Matrix</h3>
-                  <span className={`text-xs ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>{selectedCalibrateCandObj.name} vs <strong>{selectedCalibrateCandObj.target_job.split(',')[0]}</strong> expectations</span>
-                </div>
+              {/* ── RIGHT COLUMN: Calibration Signal + Level Alignment Matrix ── */}
+              <div className={`flex-1 flex flex-col ${isResponsiveMode ? 'w-full' : 'h-full'} gap-3 min-w-0`}>
 
-                <div className="space-y-4">
-
-                  {/* Metric 1 */}
-                  <div className="space-y-1.5">
-                    <div className="flex justify-between text-xs font-medium">
-                      <span className={isDarkMode ? 'text-slate-300' : 'text-slate-700'}>Technical Impact</span>
-                      <span className="text-primary font-semibold">85% / 90%</span>
-                    </div>
-                    <div className={`w-full h-2.5 rounded-full overflow-hidden border ${isDarkMode ? 'bg-slate-900 border-slate-700/50' : 'bg-slate-150 border-slate-250'}`}>
-                      <div className="bg-gradient-to-r from-primary to-accent h-full w-[85%] rounded-full"></div>
-                    </div>
+                {/* Calibration Signal Card */}
+                <div className={`shrink-0 ${cardClass} flex flex-col justify-center py-3 px-4`}>
+                  <div className="flex items-center justify-between mb-2">
+                    <label className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Calibration Signal</label>
+                    <span className="flex items-center space-x-1 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
+                      <TrendingUp className="w-3 h-3" />
+                      <span>Promotion Ready</span>
+                    </span>
                   </div>
-
-                  {/* Metric 2 */}
-                  <div className="space-y-1.5">
-                    <div className="flex justify-between text-xs font-medium">
-                      <span className={isDarkMode ? 'text-slate-300' : 'text-slate-700'}>Leadership</span>
-                      <span className="text-primary font-semibold">70% / 80%</span>
+                  <div className="flex items-center gap-4 flex-wrap">
+                    <div className="flex flex-col">
+                      <span className={`text-lg font-display font-bold leading-none ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>82%</span>
+                      <span className="text-[10px] text-slate-500 mt-0.5">Overall score</span>
                     </div>
-                    <div className={`w-full h-2.5 rounded-full overflow-hidden border ${isDarkMode ? 'bg-slate-900 border-slate-700/50' : 'bg-slate-150 border-slate-250'}`}>
-                      <div className="bg-gradient-to-r from-primary to-accent h-full w-[70%] rounded-full"></div>
+                    <div className={`w-px self-stretch ${isDarkMode ? 'bg-slate-700' : 'bg-slate-200'}`} />
+                    <div className="flex flex-col">
+                      <span className={`text-lg font-display font-bold leading-none ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>4</span>
+                      <span className="text-[10px] text-slate-500 mt-0.5">Peers reviewed</span>
                     </div>
-                  </div>
-
-                  {/* Metric 3 */}
-                  <div className="space-y-1.5">
-                    <div className="flex justify-between text-xs font-medium">
-                      <span className={isDarkMode ? 'text-slate-300' : 'text-slate-700'}>Strategy</span>
-                      <span className="text-primary font-semibold">80% / 80%</span>
+                    <div className={`w-px self-stretch ${isDarkMode ? 'bg-slate-700' : 'bg-slate-200'}`} />
+                    <div className="flex flex-col">
+                      <span className="text-lg font-display font-bold leading-none text-amber-400">1</span>
+                      <span className="text-[10px] text-slate-500 mt-0.5">Bias flags</span>
                     </div>
-                    <div className={`w-full h-2.5 rounded-full overflow-hidden border ${isDarkMode ? 'bg-slate-900 border-slate-700/50' : 'bg-slate-150 border-slate-250'}`}>
-                      <div className="bg-gradient-to-r from-primary to-accent h-full w-[80%] rounded-full"></div>
-                    </div>
-                  </div>
-
-                  {/* Metric 4 */}
-                  <div className="space-y-1.5">
-                    <div className="flex justify-between text-xs font-medium">
-                      <span className={isDarkMode ? 'text-slate-300' : 'text-slate-700'}>Execution</span>
-                      <span className="text-primary font-semibold">95% / 85%</span>
-                    </div>
-                    <div className={`w-full h-2.5 rounded-full overflow-hidden border ${isDarkMode ? 'bg-slate-900 border-slate-700/50' : 'bg-slate-150 border-slate-250'}`}>
-                      <div className="bg-gradient-to-r from-primary to-accent h-full w-[95%] rounded-full"></div>
+                    <div className={`w-px self-stretch ${isDarkMode ? 'bg-slate-700' : 'bg-slate-200'}`} />
+                    <div className="flex flex-col">
+                      <span className="text-[10px] font-semibold text-slate-500">Cycle</span>
+                      <span className={`text-xs font-semibold mt-0.5 ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>H2 2025</span>
                     </div>
                   </div>
                 </div>
 
-                <div className={`rounded-xl p-4 border text-xs leading-relaxed space-y-2 transition-colors duration-500 ${isDarkMode ? 'bg-slate-900/60 border-slate-700/50' : 'bg-slate-50 border-slate-200 text-slate-606'}`}>
-                  <div className={`font-semibold flex items-center space-x-1.5 ${isDarkMode ? 'text-white' : 'text-slate-905'}`}>
-                    <TrendingUp className="w-4 h-4 text-accent" />
-                    <span>Promotion Recommendation</span>
+                {/* Level Alignment Matrix Card */}
+                <div className={`flex-1 space-y-6 ${cardClass} ${isResponsiveMode ? 'w-full h-auto overflow-visible' : 'overflow-y-auto min-h-0 pr-3'}`}>
+                  <div>
+                    <h3 className={`font-display font-semibold text-lg ${isDarkMode ? 'text-white' : 'text-slate-905'}`}>Level Alignment Matrix</h3>
+                    <span className={`text-xs ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>{selectedCalibrateCandObj.name} vs <strong>{selectedCalibrateCandObj.target_job.split(',')[0]}</strong> expectations</span>
                   </div>
-                  <p>
-                    Strong alignment across Strategy and Execution, meeting the baseline for Staff Engineer II. Recommended for promotion path with development support for Leadership behaviors.
-                  </p>
+
+                  <div className="space-y-4">
+                    {/* Metric 1 */}
+                    <div className="space-y-1.5">
+                      <div className="flex justify-between text-xs font-medium">
+                        <span className={isDarkMode ? 'text-slate-300' : 'text-slate-700'}>Technical Impact</span>
+                        <span className="text-primary font-semibold">85% / 90%</span>
+                      </div>
+                      <div className={`w-full h-2.5 rounded-full overflow-hidden border ${isDarkMode ? 'bg-slate-900 border-slate-700/50' : 'bg-slate-150 border-slate-250'}`}>
+                        <div className="bg-gradient-to-r from-primary to-accent h-full w-[85%] rounded-full"></div>
+                      </div>
+                    </div>
+                    {/* Metric 2 */}
+                    <div className="space-y-1.5">
+                      <div className="flex justify-between text-xs font-medium">
+                        <span className={isDarkMode ? 'text-slate-300' : 'text-slate-700'}>Leadership</span>
+                        <span className="text-primary font-semibold">70% / 80%</span>
+                      </div>
+                      <div className={`w-full h-2.5 rounded-full overflow-hidden border ${isDarkMode ? 'bg-slate-900 border-slate-700/50' : 'bg-slate-150 border-slate-250'}`}>
+                        <div className="bg-gradient-to-r from-primary to-accent h-full w-[70%] rounded-full"></div>
+                      </div>
+                    </div>
+                    {/* Metric 3 */}
+                    <div className="space-y-1.5">
+                      <div className="flex justify-between text-xs font-medium">
+                        <span className={isDarkMode ? 'text-slate-300' : 'text-slate-700'}>Strategy</span>
+                        <span className="text-primary font-semibold">80% / 80%</span>
+                      </div>
+                      <div className={`w-full h-2.5 rounded-full overflow-hidden border ${isDarkMode ? 'bg-slate-900 border-slate-700/50' : 'bg-slate-150 border-slate-250'}`}>
+                        <div className="bg-gradient-to-r from-primary to-accent h-full w-[80%] rounded-full"></div>
+                      </div>
+                    </div>
+                    {/* Metric 4 */}
+                    <div className="space-y-1.5">
+                      <div className="flex justify-between text-xs font-medium">
+                        <span className={isDarkMode ? 'text-slate-300' : 'text-slate-700'}>Execution</span>
+                        <span className="text-primary font-semibold">95% / 85%</span>
+                      </div>
+                      <div className={`w-full h-2.5 rounded-full overflow-hidden border ${isDarkMode ? 'bg-slate-900 border-slate-700/50' : 'bg-slate-150 border-slate-250'}`}>
+                        <div className="bg-gradient-to-r from-primary to-accent h-full w-[95%] rounded-full"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className={`rounded-xl p-4 border text-xs leading-relaxed space-y-2 transition-colors duration-500 ${isDarkMode ? 'bg-slate-900/60 border-slate-700/50' : 'bg-slate-50 border-slate-200 text-slate-606'}`}>
+                    <div className={`font-semibold flex items-center space-x-1.5 ${isDarkMode ? 'text-white' : 'text-slate-905'}`}>
+                      <TrendingUp className="w-4 h-4 text-accent" />
+                      <span>Promotion Recommendation</span>
+                    </div>
+                    <p>
+                      Strong alignment across Strategy and Execution, meeting the baseline for Staff Engineer II. Recommended for promotion path with development support for Leadership behaviors.
+                    </p>
+                  </div>
                 </div>
-              </div>
+
+              </div>{/* end right column */}
 
             </div>
             )
           )}
+
+
 
 
         </div>
