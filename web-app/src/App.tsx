@@ -2383,29 +2383,30 @@ const [selectedCandidate, setSelectedCandidate] = useState(INITIAL_CANDIDATES[0]
 
                   {/* Suggestion Card */}
                   {!biasAccepted && !biasDismissed && (
-                    <div className={`border rounded-xl p-5 flex items-start space-x-4 shadow-lg transition-all duration-500 ${isDarkMode ? 'bg-slate-900 border-amber-500/20 shadow-amber-500/5' : 'bg-amber-500/5 border border-amber-500/20 shadow-amber-500/2'}`}>
+                    <div className={`border rounded-xl p-5 flex items-start space-x-4 shadow-lg transition-all duration-500 min-w-0 ${isDarkMode ? 'bg-slate-900 border-amber-500/20 shadow-amber-500/5' : 'bg-amber-500/5 border border-amber-500/20 shadow-amber-500/2'}`}>
                       <div className="w-8 h-8 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-400 shrink-0">
                         <Sparkles className="w-4 h-4" />
                       </div>
-                      <div className="flex-1 space-y-3">
-                        <div className={`text-xs font-bold ${isDarkMode ? 'text-amber-300' : 'text-amber-600'}`}>Unconscious Bias Flagged (Gender Coded Phrasing)</div>
+                      <div className="flex-1 space-y-3 min-w-0">
+                        <div className={`text-xs font-bold truncate ${isDarkMode ? 'text-amber-300' : 'text-amber-600'}`}>Unconscious Bias Flagged (Gender Coded Phrasing)</div>
                         <p className={`text-xs leading-relaxed ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
                           The term **"bossy"** is commonly identified as a gender-coded critique that reduces objective performance description. Propose rewriting for constructive calibrating.
                         </p>
-                        <div className={`rounded-lg p-3 text-xs border transition-all duration-500 ${isDarkMode ? 'bg-slate-950/60 border-slate-700/50 text-slate-300' : 'bg-white border-slate-200 text-slate-707'}`}>
+                        <div className={`rounded-lg p-3 text-xs border transition-all duration-500 break-words ${isDarkMode ? 'bg-slate-950/60 border-slate-700/50 text-slate-300' : 'bg-white border-slate-200 text-slate-707'}`}>
                           <span className={`font-semibold block mb-1 ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>AI Recommendation:</span>
                           "{selectedCalibrateCandObj.name} is direct and successfully drives decisions, ensuring clarity in meetings, though {calPronouns.subj} could enhance this by proactively seeking diverse input."
                         </div>
-                        <div className="flex space-x-3">
+
+                        <div className="flex flex-wrap gap-2">
                           <button
                             onClick={() => setBiasAccepted(true)}
-                            className="bg-amber-500 hover:bg-amber-600 text-slate-900 font-semibold text-xs px-4 py-2 rounded-lg transition-colors cursor-pointer"
+                            className="bg-amber-500 hover:bg-amber-600 text-slate-900 font-semibold text-xs px-4 py-2 rounded-lg transition-colors cursor-pointer whitespace-nowrap shrink-0"
                           >
                             Accept Rewrite
                           </button>
                           <button
                             onClick={() => setBiasDismissed(true)}
-                            className={`border font-semibold text-xs px-4 py-2 rounded-lg transition-colors cursor-pointer ${isDarkMode ? 'bg-slate-800 hover:bg-slate-750 text-slate-300 border-slate-700' : 'bg-white hover:bg-slate-100 text-slate-600'}`}
+                            className={`border font-semibold text-xs px-4 py-2 rounded-lg transition-colors cursor-pointer whitespace-nowrap shrink-0 ${isDarkMode ? 'bg-slate-800 hover:bg-slate-750 text-slate-300 border-slate-700' : 'bg-white hover:bg-slate-100 text-slate-600'}`}
                           >
                             Dismiss
                           </button>
