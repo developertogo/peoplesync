@@ -28,6 +28,7 @@ Thumbs.db
 
 # Agent state/runtime logs and sessions
 agents/data/
+.agents
 
 # Python cache & virtualenvs
 __pycache__/
@@ -37,3 +38,8 @@ __pycache__/
 venv/
 ENV/
 env/
+# CocoIndex Code (ccc)
+/.cocoindex_code/
+
+# Front End cache
+.vite

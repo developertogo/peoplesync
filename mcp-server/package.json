@@ -6,7 +6,7 @@
   "main": "build/index.js",
   "scripts": {
     "build": "tsc",
-    "start": "ts-node src/index.ts",
+    "start": "tsc && node build/index.js",
     "test": "NODE_ENV=test vitest run"
   },
   "dependencies": {

@@ -10,7 +10,7 @@
     "forceConsistentCasingInFileNames": true,
     "outDir": "./build",
     "rootDir": "./src",
-    "types": ["vitest/globals"]
+    "types": ["vitest/globals", "node"]
   },
   "include": ["src/**/*"]
 }

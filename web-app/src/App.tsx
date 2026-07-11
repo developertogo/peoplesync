@@ -32,47 +32,160 @@ type Theme = 'default' | 'greenhouse' | 'rippling' | 'sunset' | 'frontier';
 const INITIAL_CANDIDATES = [
   {
     id: "cnd_001",
-    name: "Jordan Miller",
-    email: "jordan.miller@example.com",
+    name: "John Miller",
+    email: "john.miller@gmail.com",
+    phone: "+1-808-555-0199",
     stage: "recruiter_screen",
     target_job: "Staff Software Engineer, People Products",
     department: "Applied AI / People Products",
-    resume: "JORDAN MILLER\nEmail: jordan.miller@example.com | San Francisco, CA\n\nEXPERIENCE\nLead Fullstack Engineer at HRflow AI (2022 - Present)\n- Built dynamic workflows integrating Greenhouse and Workday APIs for resume screening.\n- Led team of 4 engineers to design 0->1 products powered by LLMs, reducing screening latency by 40%.\n- Designed a custom internal tool protocol similar to Model Context Protocol (MCP) to load database tools into agent pipelines.\n- Proficient in TypeScript, React, Node.js, and Python.\n\nEDUCATION\nB.S. in Computer Science - Stanford University"
+    pronouns: "he/his",
+    resume: "JOHN MILLER\nEmail: john.miller@gmail.com | Phone: +1-808-555-0199 | San Francisco, CA\n\nEXPERIENCE\nLead Fullstack Engineer at HRflow AI (2022 - Present)\n- Built dynamic workflows integrating Greenhouse and Workday APIs for resume screening.\n- Led team of 4 engineers to design 0->1 products powered by LLMs, reducing screening latency by 40%.\n- Designed a custom internal tool protocol similar to Model Context Protocol (MCP) to load database tools into agent pipelines.\n- Proficient in TypeScript, React, Node.js, and Python.\n\nEDUCATION\nB.S. in Computer Science - Stanford University"
   },
   {
     id: "cnd_002",
     name: "Taylor Chen",
-    email: "taylor.chen@example.com",
+    email: "taylor.chen@gmail.com",
+    phone: "+1-808-555-0122",
     stage: "hired",
     target_job: "AI Product Engineer",
     department: "Applied AI",
-    resume: "TAYLOR CHEN\nEmail: taylor.chen@example.com | New York, NY\n\nEXPERIENCE\nLead AI Product Engineer at TechGenius (2021 - Present)\n- Built production-grade LLM integrations utilizing LangChain and LlamaIndex for enterprise search platforms.\n- Optimized token throughput and context window management, reducing API costs by 35%.\n- Designed responsive agent interfaces using React, TypeScript, TailwindCSS, and Next.js.\n- Engineered real-time WebSocket messaging systems to support interactive AI companion bots.\n\nEDUCATION\nM.S. in Software Engineering - MIT"
+    pronouns: "she/her",
+    resume: "TAYLOR CHEN\nEmail: taylor.chen@gmail.com | Phone: +1-808-555-0122 | New York, NY\n\nEXPERIENCE\nLead AI Product Engineer at TechGenius (2021 - Present)\n- Built production-grade LLM integrations utilizing LangChain and LlamaIndex for enterprise search platforms.\n- Optimized token throughput and context window management, reducing API costs by 35%.\n- Designed responsive agent interfaces using React, TypeScript, TailwindCSS, and Next.js.\n- Engineered real-time WebSocket messaging systems to support interactive AI companion bots.\n\nEDUCATION\nM.S. in Software Engineering - MIT"
   },
   {
     id: "cnd_003",
     name: "Morgan Vance",
-    email: "morgan.vance@example.com",
-    stage: "hired",
+    email: "morgan.vance@gmail.com",
+    phone: "+1-808-555-0133",
+    stage: "panel_interview",
     target_job: "Senior Product Designer",
     department: "Product Design",
-    resume: "MORGAN VANCE\nEmail: morgan.vance@example.com | Seattle, WA\n\nEXPERIENCE\nSenior Product Designer at DesignStudio (2020 - Present)\n- Led UX redesign of flagship enterprise platform, increasing user activation by 25%.\n- Designed complex workflow visualization systems and interactive components.\n- Expert in Figma, React prototyping, and responsive design frameworks.\n\nEDUCATION\nB.F.A. in Interaction Design - Carnegie Mellon University"
+    pronouns: "she/her",
+    resume: "MORGAN VANCE\nEmail: morgan.vance@gmail.com | Phone: +1-808-555-0133 | Seattle, WA\n\nEXPERIENCE\nSenior Product Designer at DesignStudio (2020 - Present)\n- Led UX redesign of flagship enterprise platform, increasing user activation by 25%.\n- Designed complex workflow visualization systems and interactive components.\n- Expert in Figma, React prototyping, and responsive design frameworks.\n\nEDUCATION\nB.F.A. in Interaction Design - Carnegie Mellon University"
+  },
+  {
+    id: "cnd_004",
+    name: "Mary Smith",
+    email: "mary.smith@gmail.com",
+    phone: "+1-808-555-0155",
+    stage: "hired",
+    target_job: "Frontend Engineer, Design Systems",
+    department: "Product Design",
+    pronouns: "she/her",
+    resume: "MARY SMITH\nEmail: mary.smith@gmail.com | Phone: +1-808-555-0155 | Austin, TX\n\nEXPERIENCE\nFrontend Engineer at Design Systems Corp (2023 - Present)\n- Developed reusable component library using React, TypeScript, and TailwindCSS.\n- Syncing UI tokens and design variables between Figma and React codebases.\n\nEDUCATION\nB.S. in Computer Science - University of Texas at Austin"
   }
 ];
 
 const INITIAL_ONBOARDING_ITEMS = [
-  { id: "task_01", name: "Review Codebase Setup", status: "completed" },
-  { id: "task_02", name: "Read Security Guidelines", status: "completed" },
-  { id: "task_03", name: "Set up Local Dev Environment", status: "completed" },
-  { id: "task_04", name: "Submit Onboarding Feedback", status: "pending" },
-  { id: "task_05", name: "First 1:1 with Sarah", status: "pending" }
+  { id: "task_01", name: "Accepted Offer", status: "completed" as const },
+  { id: "task_02", name: "Request Computer and Other Equipment", status: "completed" as const },
+  { id: "task_03", name: "Review Codebase Setup", status: "completed" as const },
+  { id: "task_04", name: "Read Security Guidelines", status: "completed" as const },
+  { id: "task_05", name: "Set up Local Dev Environment", status: "completed" as const },
+  { id: "task_06", name: "Health Benefits Enrollment", status: "pending" as const },
+  { id: "task_07", name: "Submit Onboarding Feedback", status: "pending" as const },
+  { id: "task_08", name: "First 1:1 with Sarah", status: "pending" as const }
 ];
 
 const INITIAL_PROVISIONED_ACCOUNTS = [
-  { app_name: "Slack", account_email: "alex.rivera@anthropic-mock.com", status: "active" as const },
-  { app_name: "GitHub", account_email: "alex.rivera@anthropic-mock.com", status: "pending" as const },
-  { app_name: "Google Workspace", account_email: "alex.rivera@anthropic-mock.com", status: "active" as const },
-  { app_name: "Jira", account_email: "alex.rivera@anthropic-mock.com", status: "pending" as const }
+  { app_name: "Slack", account_email: "alex.rivera@example.com", status: "active" as const },
+  { app_name: "GitHub", account_email: "alex.rivera@example.com", status: "pending" as const },
+  { app_name: "Google Workspace", account_email: "alex.rivera@example.com", status: "active" as const },
+  { app_name: "Jira", account_email: "alex.rivera@example.com", status: "pending" as const }
 ];
+
+interface Employee {
+  id: string;
+  name: string;
+  personal_email: string;
+  work_email: string;
+  title: string;
+  target_job: string;
+  department: string;
+  pronouns: string;
+  onboarding: {
+    items: Array<{ id: string; name: string; status: 'completed' | 'pending'; note?: string }>;
+  };
+}
+
+const INITIAL_EMPLOYEES: Employee[] = [
+  {
+    id: "emp_002",
+    name: "Taylor Chen",
+    personal_email: "taylor.chen@gmail.com",
+    work_email: "taylor.chen@example.com",
+    title: "AI Product Engineer",
+    target_job: "AI Product Engineer",
+    department: "Applied AI",
+    pronouns: "she/her",
+    onboarding: {
+      items: INITIAL_ONBOARDING_ITEMS.map(item => ({ ...item, status: 'pending' as const }))
+    }
+  },
+  {
+    id: "emp_003",
+    name: "Mary Smith",
+    personal_email: "mary.smith@gmail.com",
+    work_email: "mary.smith@example.com",
+    title: "Frontend Engineer, Design Systems",
+    target_job: "Frontend Engineer, Design Systems",
+    department: "Product Design",
+    pronouns: "she/her",
+    onboarding: {
+      items: INITIAL_ONBOARDING_ITEMS.map(item => ({ ...item, status: 'pending' as const }))
+    }
+  },
+  {
+    id: "sarah_smith",
+    name: "Sarah Smith",
+    personal_email: "sarah.smith@gmail.com",
+    work_email: "sarah.smith@example.com",
+    title: "Staff Software Engineer, People Products",
+    target_job: "Staff Software Engineer, People Products",
+    department: "Applied AI / People Products",
+    pronouns: "she/her",
+    onboarding: {
+      items: INITIAL_ONBOARDING_ITEMS.map(item => ({ ...item, status: 'completed' as const }))
+    }
+  }
+];
+
+
+const renderAppIcon = (appName: string, isDarkMode: boolean) => {
+  const name = appName.toLowerCase();
+  if (name.includes('slack')) {
+    return (
+      <svg viewBox="0 0 16 16" fill="currentColor" className={`w-4 h-4 ${isDarkMode ? 'text-[#36C5F0]' : 'text-[#4A154B]'}`}>
+        <path d="M3.362 10.11c0 .926-.756 1.681-1.681 1.681S0 11.036 0 10.111.756 8.43 1.68 8.43h1.682zm.846 0c0-.924.756-1.68 1.681-1.68s1.681.756 1.681 1.68v4.21c0 .924-.756 1.68-1.68 1.68a1.685 1.685 0 0 1-1.682-1.68zM5.89 3.362c-.926 0-1.682-.756-1.682-1.681S4.964 0 5.89 0s1.68.756 1.68 1.68v1.682zm0 .846c.924 0 1.68.756 1.68 1.681S6.814 7.57 5.89 7.57H1.68C.757 7.57 0 6.814 0 5.89c0-.926.756-1.682 1.68-1.682zm6.749 1.682c0-.926.755-1.682 1.68-1.682S16 4.964 16 5.889s-.756 1.681-1.68 1.681h-1.681zm-.848 0c0 .924-.755 1.68-1.68 1.68A1.685 1.685 0 0 1 8.43 5.89V1.68C8.43.757 9.186 0 10.11 0c.926 0 1.681.756 1.681 1.68zm-1.681 6.748c.926 0 1.682.756 1.682 1.681S11.036 16 10.11 16s-1.681-.756-1.681-1.68v-1.682h1.68zm0-.847c-.924 0-1.68-.755-1.68-1.68s.756-1.681 1.68-1.681h4.21c.924 0 1.68.756 1.68 1.68 0 .926-.756 1.681-1.68 1.681z"/>
+      </svg>
+    );
+  }
+  if (name.includes('github')) {
+    return (
+      <svg viewBox="0 0 24 24" fill="currentColor" className={`w-4.5 h-4.5 ${isDarkMode ? 'text-white' : 'text-[#181717]'}`}>
+        <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.577.688.479C19.138 20.162 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
+      </svg>
+    );
+  }
+  if (name.includes('google')) {
+    return (
+      <svg viewBox="0 0 24 24" className="w-4.5 h-4.5">
+        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" />
+        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" />
+      </svg>
+    );
+  }
+  if (name.includes('jira')) {
+    return (
+      <svg viewBox="0 0 24 24" fill="currentColor" className="w-4.5 h-4.5 text-[#0052CC] dark:text-[#2684FF]">
+        <path d="M11.571 11.513H0a5.218 5.218 0 0 0 5.232 5.215h2.13v2.057A5.215 5.215 0 0 0 12.575 24V12.518a1.005 1.005 0 0 0-1.005-1.005zm5.723-5.756H5.736a5.215 5.215 0 0 0 5.215 5.214h2.129v2.058a5.218 5.218 0 0 0 5.215 5.214V6.758a1.001 1.001 0 0 0-1.001-1.001zM23.013 0H11.455a5.215 5.215 0 0 0 5.215 5.214h2.13v2.058a5.218 5.218 0 0 0 5.215 5.214V1.001A1.001 1.001 0 0 0 23.013 0z" />
+      </svg>
+    );
+  }
+  return <span className="text-primary font-bold text-xs">{appName[0]}</span>;
+};
 
 export default function App() {
   // Theme State
@@ -264,15 +377,44 @@ export default function App() {
     localStorage.setItem('peoplesync_active_tab', activeTab);
   }, [activeTab]);
 
-  // Candidate Data State
-  const [candidates, setCandidates] = useState(INITIAL_CANDIDATES);
-  const [draggedCandidateIndex, setDraggedCandidateIndex] = useState<number | null>(null);
-  const [selectedCandidate, setSelectedCandidate] = useState(INITIAL_CANDIDATES[0]);
+// Candidate Data State
+const [candidates, setCandidates] = useState(INITIAL_CANDIDATES);
+const [draggedCandidateIndex, setDraggedCandidateIndex] = useState<number | null>(null);
+const [selectedCandidate, setSelectedCandidate] = useState(INITIAL_CANDIDATES[0]);
+
+  // Onboarding candidate selection — must be declared before the useEffect below that calls setSelectedOnboardCandidateId
+  const [selectedOnboardCandidateId, setSelectedOnboardCandidateId] = useState<string>('');
+
+  React.useEffect(() => {
+    if (selectedCandidate && selectedCandidate.stage === 'hired') {
+      setSelectedOnboardCandidateId(selectedCandidate.id);
+    }
+  }, [selectedCandidate]);
   const [candidateSearchQuery, setCandidateSearchQuery] = useState('');
-  const [candidateFilterStage, setCandidateFilterStage] = useState<'all' | 'application' | 'recruiter_screen' | 'technical_interview' | 'onsite_interview' | 'offer' | 'hired'>('all');
+  const [candidateFilterStage, setCandidateFilterStage] = useState<'all' | 'application' | 'recruiter_screen' | 'manager_screen' | 'panel_interview' | 'final_interview' | 'offer' | 'archived' | 'hired'>('all');
   const [isCandidateSearchOpen, setIsCandidateSearchOpen] = useState(false);
   const [isStageMenuOpen, setIsStageMenuOpen] = useState(false);
   const [isResumeExpanded, setIsResumeExpanded] = useState(false);
+  const [isScorecardExpanded, setIsScorecardExpanded] = useState(false);
+
+  const isScorecardEnabled = ['recruiter_screen', 'manager_screen', 'panel_interview', 'final_interview'].includes(selectedCandidate?.stage || '');
+
+  React.useEffect(() => {
+    if (!isScorecardEnabled) {
+      setIsScorecardExpanded(false);
+    }
+  }, [selectedCandidate, isScorecardEnabled]);
+
+  const [evaluationNotes, setEvaluationNotes] = useState('');
+  const [isEvalNotesExpanded, setIsEvalNotesExpanded] = useState(false);
+  const [evalNotesLogged, setEvalNotesLogged] = useState(false);
+  const [evalError, setEvalError] = useState('');
+
+  React.useEffect(() => {
+    setEvaluationNotes('');
+    setEvalNotesLogged(false);
+    setEvalError('');
+  }, [selectedCandidate]);
 
   const filteredCandidates = React.useMemo(() => {
     let result = [...candidates];
@@ -295,38 +437,81 @@ export default function App() {
   const [interviewLogged, setInterviewLogged] = useState<boolean>(false);
 
   // Onboarding Data State
-  const [selectedOnboardCandidateId, setSelectedOnboardCandidateId] = useState<string>("cnd_002");
+  const [employees, setEmployees] = useState<Employee[]>([]);
   const [isOnboardCandDropdownOpen, setIsOnboardCandDropdownOpen] = useState(false);
-  const [candidateOnboardChecklists, setCandidateOnboardChecklists] = useState<{ [candId: string]: typeof INITIAL_ONBOARDING_ITEMS }>({
-    "cnd_001": [
-      { id: "task_01", name: "Schedule System Design Panel", status: "completed" },
-      { id: "task_02", name: "Submit Technical Assessment Rubric", status: "completed" },
-      { id: "task_03", name: "Review Culture Fit Feedback", status: "pending" }
-    ],
-    "cnd_002": INITIAL_ONBOARDING_ITEMS, // Taylor Chen (Hired)
-    "cnd_003": [
-      { id: "task_01", name: "Sign Employment Agreement", status: "completed" },
-      { id: "task_02", name: "Upload Background Check Consent", status: "completed" },
-      { id: "task_03", name: "Complete Direct Deposit Form", status: "pending" },
-      { id: "task_04", name: "Hardware Order: MacBook Pro M3", status: "pending" }
-    ]
-  });
-  const onboardingItems = candidateOnboardChecklists[selectedOnboardCandidateId] || [];
+
+  // Fetch employee records — replace with real API calls when endpoints are available
+  const fetchEmployees = async () => {
+    try {
+      // TODO: replace with real endpoints, e.g.:
+      // const workdayResp = await fetch('https://api.workday.com/v1/employees', { headers: { Authorization: `Bearer ${token}` } });
+      // const ripplingResp = await fetch('https://api.rippling.com/v1/employees', { headers: { Authorization: `Bearer ${token}` } });
+      const unique: Employee[] = INITIAL_EMPLOYEES;
+      setEmployees(unique);
+      if (unique.length > 0) {
+        setSelectedOnboardCandidateId(unique[0].id);
+      }
+    } catch (e) {
+      console.error('Failed to fetch employees:', e);
+    }
+  };
+
+  // Fetch candidate records — replace with real Greenhouse API call when available
+  const fetchCandidates = async () => {
+    try {
+      // TODO: replace with real endpoint, e.g.:
+      // const resp = await fetch('https://api.greenhouse.io/v1/candidates', { headers: { Authorization: `Basic ${btoa(apiKey + ':')}` } });
+      const data = INITIAL_CANDIDATES;
+      setCandidates(data);
+      if (data.length > 0) {
+        setSelectedCandidate(data[0]);
+      }
+    } catch (e) {
+      console.error('Failed to fetch candidates:', e);
+    }
+  };
+
+  // Load data on component mount
+  React.useEffect(() => {
+    fetchEmployees();
+    fetchCandidates();
+  }, []);
+
+  const rawOnboardingItems = (employees.find(e => e.id === selectedOnboardCandidateId)?.onboarding.items) || [];
   const [newOnboardingItemName, setNewOnboardingItemName] = useState('');
   const [isEditingChecklist, setIsEditingChecklist] = useState(false);
   const [onboardSearchText, setOnboardSearchText] = useState('');
+  const [hideCompletedTasks, setHideCompletedTasks] = useState(false);
 
-  const selectedOnboardCandObj = candidates.find(c => c.id === selectedOnboardCandidateId);
+  const onboardingItems = React.useMemo(() => {
+    if (hideCompletedTasks) {
+      return rawOnboardingItems.filter(item => item.status !== 'completed');
+    }
+    return rawOnboardingItems;
+  }, [rawOnboardingItems, hideCompletedTasks]);
+
+  const [expandedTaskNoteId, setExpandedTaskNoteId] = useState<string | null>(null);
+  const [editingNotes, setEditingNotes] = useState<{ [taskId: string]: string }>({});
+
+  const selectedOnboardCandObj = employees.find(e => e.id === selectedOnboardCandidateId);
+
+  React.useEffect(() => {
+    const hasPending = employees.some(e => e.id === selectedOnboardCandidateId && e.onboarding.items.some(item => item.status === 'pending'));
+    if (!hasPending) {
+      const firstPending = employees.find(e => e.onboarding.items.some(item => item.status === 'pending'));
+      setSelectedOnboardCandidateId(firstPending ? firstPending.id : '');
+    }
+  }, [employees, selectedOnboardCandidateId]);
 
   const onboardingStageCandidates = React.useMemo(() => {
-    let list = candidates.filter(c => c.stage === 'hired');
+    let list = employees.filter(emp => emp.onboarding.items.some(item => item.status === 'pending'));
     if (onboardSearchText.trim() !== '') {
       const q = onboardSearchText.toLowerCase();
-      list = list.filter(c => c.name.toLowerCase().includes(q));
+      list = list.filter(emp => emp.name.toLowerCase().includes(q));
     }
     return list;
-  }, [candidates, onboardSearchText]);
-  const [provisionedAccounts, setProvisionedAccounts] = useState(INITIAL_PROVISIONED_ACCOUNTS);
+  }, [employees, onboardSearchText]);
+  const [provisionedAccounts, setProvisionedAccounts] = useState<Array<{ app_name: string; account_email: string; status: 'active' | 'pending' | 'inactive' }>>(INITIAL_PROVISIONED_ACCOUNTS);
   const [draggedAccountIndex, setDraggedAccountIndex] = useState<number | null>(null);
 
   // Rippling Search, Filter, Sort States
@@ -335,19 +520,79 @@ export default function App() {
   const [isFilterDropdownOpen, setIsFilterDropdownOpen] = useState(false);
   const [isSortDropdownOpen, setIsSortDropdownOpen] = useState(false);
   const [ripplingSearchQuery, setRipplingSearchQuery] = useState('');
-  const [ripplingFilterStatus, setRipplingFilterStatus] = useState<'all' | 'active' | 'pending'>('all');
-  const [ripplingSortOrder, setRipplingSortOrder] = useState<'default' | 'active-first' | 'pending-first'>('default');
+  const [ripplingFilterStatus, setRipplingFilterStatus] = useState<'all' | 'active' | 'pending' | 'inactive'>('all');
+  const [ripplingSortOrder, setRipplingSortOrder] = useState<'default' | 'active-first' | 'pending-first' | 'inactive-first'>('default');
+
+  const ripplingSearchInputRef = React.useRef<HTMLInputElement>(null);
+  React.useEffect(() => {
+    if (isRipplingSearchOpen) {
+      setTimeout(() => {
+        ripplingSearchInputRef.current?.focus();
+      }, 50);
+    }
+  }, [isRipplingSearchOpen]);
+
+  const onboardCandSearchInputRef = React.useRef<HTMLInputElement>(null);
+  React.useEffect(() => {
+    if (isOnboardCandDropdownOpen) {
+      setTimeout(() => {
+        onboardCandSearchInputRef.current?.focus();
+      }, 50);
+    }
+  }, [isOnboardCandDropdownOpen]);
+
+  const [selectedCalibrateCandidateId, setSelectedCalibrateCandidateId] = useState<string>("sarah_smith");
+  const [isCalibrateCandDropdownOpen, setIsCalibrateCandDropdownOpen] = useState(false);
+  const [calibrateSearchText, setCalibrateSearchText] = useState('');
+  const calibrateCandSearchInputRef = React.useRef<HTMLInputElement>(null);
+
+  React.useEffect(() => {
+    if (isCalibrateCandDropdownOpen) {
+      setTimeout(() => {
+        calibrateCandSearchInputRef.current?.focus();
+      }, 50);
+    }
+  }, [isCalibrateCandDropdownOpen]);
+
+  const calibrationStageCandidates = React.useMemo(() => {
+    let list = employees;
+    if (calibrateSearchText.trim() !== '') {
+      const q = calibrateSearchText.toLowerCase();
+      list = list.filter(e => e.name.toLowerCase().includes(q));
+    }
+    return list;
+  }, [employees, calibrateSearchText]);
+
+  const selectedCalibrateCandObj = React.useMemo(() => {
+    return employees.find(e => e.id === selectedCalibrateCandidateId) || employees[0];
+  }, [employees, selectedCalibrateCandidateId]);
+
+  const calPronouns = React.useMemo(() => {
+    const isHe = selectedCalibrateCandObj?.pronouns === "he/his";
+    return {
+      subj: isHe ? "he" : "she",
+      subjCap: isHe ? "He" : "She",
+      poss: isHe ? "his" : "her",
+      obj: isHe ? "him" : "her"
+    };
+  }, [selectedCalibrateCandObj]);
 
   const processedAccounts = React.useMemo(() => {
-    let result = [...provisionedAccounts];
+    let result = provisionedAccounts.map(acc => ({
+      ...acc,
+      account_email: selectedOnboardCandObj ? (selectedOnboardCandObj.work_email ?? selectedOnboardCandObj.personal_email ?? acc.account_email).replace(/@[^@]+$/, '@example.com') : acc.account_email
+    }));
 
     // 1. Filter by Search Query
     if (ripplingSearchQuery.trim() !== '') {
       const q = ripplingSearchQuery.toLowerCase();
-      result = result.filter(acc =>
-        acc.app_name.toLowerCase().includes(q) ||
-        acc.account_email.toLowerCase().includes(q)
-      );
+      result = result.filter(acc => {
+        const isSlack = acc.app_name.toLowerCase() === 'slack';
+        const displayValue = isSlack ? '@' + acc.account_email.split('@')[0] : acc.account_email;
+        return acc.app_name.toLowerCase().includes(q) ||
+               acc.account_email.toLowerCase().includes(q) ||
+               displayValue.toLowerCase().includes(q);
+      });
     }
 
     // 2. Filter by Status
@@ -355,8 +600,10 @@ export default function App() {
       result = result.filter(acc => acc.status === ripplingFilterStatus);
     }
 
-    // 3. Sort by Status
-    if (ripplingSortOrder === 'active-first') {
+    // 3. Sort
+    if (ripplingSortOrder === 'default') {
+      result.sort((a, b) => a.app_name.localeCompare(b.app_name));
+    } else if (ripplingSortOrder === 'active-first') {
       result.sort((a, b) => {
         if (a.status === 'active' && b.status !== 'active') return -1;
         if (a.status !== 'active' && b.status === 'active') return 1;
@@ -368,10 +615,16 @@ export default function App() {
         if (a.status !== 'pending' && b.status === 'pending') return 1;
         return 0;
       });
+    } else if (ripplingSortOrder === 'inactive-first') {
+      result.sort((a, b) => {
+        if (a.status === 'inactive' && b.status !== 'inactive') return -1;
+        if (a.status !== 'inactive' && b.status === 'inactive') return 1;
+        return 0;
+      });
     }
 
     return result;
-  }, [provisionedAccounts, ripplingSearchQuery, ripplingFilterStatus, ripplingSortOrder]);
+  }, [provisionedAccounts, ripplingSearchQuery, ripplingFilterStatus, ripplingSortOrder, selectedOnboardCandObj]);
 
   const isDragEnabled = ripplingSearchQuery === '' && ripplingFilterStatus === 'all' && ripplingSortOrder === 'default';
 
@@ -381,9 +634,15 @@ export default function App() {
 
   // Onboarding Chat State
   const [chatMessages, setChatMessages] = useState([
-    { sender: 'coach', text: 'Welcome! I am Buddy, your AI Coach and site-wide assistant for the PeopleSync portal. I can help you search/filter candidates in the Recruiter Hub, check onboarding tasks, manage IT accounts, or navigate the calibration system. Try asking me "go to calibration" or "filter Jordan"!' }
+    { sender: 'coach', text: 'Welcome! I am your AI Assistant for the PeopleSync portal. I can help you search/filter candidates in the Recruiter Hub, check onboarding tasks, manage IT accounts, or navigate the calibration system. Try asking me "go to calibration" or "filter John"!' }
   ]);
   const [inputMessage, setInputMessage] = useState('');
+
+  const chatEndRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [chatMessages]);
 
   // Onboarding Chat History States
   const [promptHistory, setPromptHistory] = useState<string[]>([]);
@@ -442,6 +701,47 @@ export default function App() {
       setChatPosition(prev => prev ? { ...prev, x: leftLimit } : null);
     }
   }, [isSidebarCollapsed, chatPosition]);
+
+  // Click outside listener for all dropdowns/popovers
+  React.useEffect(() => {
+    const handleOutsideClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (!target || typeof target.closest !== 'function') return;
+
+      if (isThemeMenuOpen && !target.closest('.theme-dropdown-container')) {
+        setIsThemeMenuOpen(false);
+      }
+      if (isStageMenuOpen && !target.closest('.stage-dropdown-container')) {
+        setIsStageMenuOpen(false);
+      }
+      if (isOnboardCandDropdownOpen && !target.closest('.onboard-dropdown-container')) {
+        setIsOnboardCandDropdownOpen(false);
+      }
+      if (isFilterDropdownOpen && !target.closest('.rippling-filter-status-container')) {
+        setIsFilterDropdownOpen(false);
+      }
+      if (isSortDropdownOpen && !target.closest('.rippling-sort-container')) {
+        setIsSortDropdownOpen(false);
+      }
+      if (isRipplingFilterOpen && !target.closest('.rippling-filter-popover-container')) {
+        setIsRipplingFilterOpen(false);
+        setIsFilterDropdownOpen(false);
+        setIsSortDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('click', handleOutsideClick, true);
+    return () => {
+      document.removeEventListener('click', handleOutsideClick, true);
+    };
+  }, [
+    isThemeMenuOpen,
+    isStageMenuOpen,
+    isOnboardCandDropdownOpen,
+    isFilterDropdownOpen,
+    isSortDropdownOpen,
+    isRipplingFilterOpen
+  ]);
 
   const startResizingChat = (e: React.MouseEvent, direction: string) => {
     e.preventDefault();
@@ -563,8 +863,8 @@ export default function App() {
   };
 
   // Calculations
-  const completedCount = onboardingItems.filter(item => item.status === 'completed').length;
-  const completionPercentage = Math.round((completedCount / onboardingItems.length) * 100);
+  const completedCount = rawOnboardingItems.filter(item => item.status === 'completed').length;
+  const completionPercentage = rawOnboardingItems.length ? Math.round((completedCount / rawOnboardingItems.length) * 100) : 0;
 
   // Theme Config Class Map
   const themeClassMap = {
@@ -581,6 +881,11 @@ export default function App() {
     if (!inputMessage.trim()) return;
 
     const userText = inputMessage.trim();
+    if (userText.toLowerCase() === 'clear') {
+      setChatMessages([]);
+      setInputMessage('');
+      return;
+    }
     const newMessages = [...chatMessages, { sender: 'user', text: userText }];
     setChatMessages(newMessages);
 
@@ -596,10 +901,10 @@ export default function App() {
     setTimeout(() => {
       const lowerText = userText.toLowerCase();
       let responseText = "";
-      let agentPrefix = "[Buddy]";
+      let agentPrefix = "[AI Assistant]";
 
       // 1. Determine Agent Sub-Identity (Multi-Agent Assistant)
-      const isRecruitingQuery = lowerText.includes('recruit') || lowerText.includes('candidate') || lowerText.includes('greenhouse') || lowerText.includes('jordan') || lowerText.includes('taylor') || lowerText.includes('stage') || lowerText.includes('pipeline') || lowerText.includes('applied') || lowerText.includes('job');
+      const isRecruitingQuery = lowerText.includes('recruit') || lowerText.includes('candidate') || lowerText.includes('greenhouse') || lowerText.includes('john') || lowerText.includes('taylor') || lowerText.includes('stage') || lowerText.includes('pipeline') || lowerText.includes('applied') || lowerText.includes('job');
       const isCalibrationQuery = lowerText.includes('calibrate') || lowerText.includes('calibration') || lowerText.includes('coach') || lowerText.includes('sarah') || lowerText.includes('matrix') || lowerText.includes('performance') || lowerText.includes('bias') || lowerText.includes('rewriting');
       const isOnboardingQuery = lowerText.includes('onboard') || lowerText.includes('checklist') || lowerText.includes('task') || lowerText.includes('slack') || lowerText.includes('github') || lowerText.includes('workspace') || lowerText.includes('jira') || lowerText.includes('rippling') || lowerText.includes('provision');
 
@@ -610,7 +915,7 @@ export default function App() {
       } else if (isOnboardingQuery) {
         agentPrefix = "[IT Provisioning Buddy]";
       } else {
-        agentPrefix = "[Buddy (AI Coach)]";
+        agentPrefix = "[AI Assistant]";
       }
 
       // 2. Process Interactive Navigation & UI Updates
@@ -630,8 +935,8 @@ export default function App() {
 
       // Candidate Selection
       let selectedCand = null;
-      if (lowerText.includes('jordan') || lowerText.includes('jordan miller')) {
-        selectedCand = candidates.find(c => c.name.toLowerCase().includes('jordan'));
+      if (lowerText.includes('john') || lowerText.includes('john miller')) {
+        selectedCand = candidates.find(c => c.name.toLowerCase().includes('john'));
       } else if (lowerText.includes('taylor') || lowerText.includes('taylor chen')) {
         selectedCand = candidates.find(c => c.name.toLowerCase().includes('taylor'));
       }
@@ -645,8 +950,14 @@ export default function App() {
 
       // Candidate Searching & Filtering
       let searchMatched = false;
-      if (lowerText.includes('filter ') || lowerText.includes('search ')) {
-        const filterKeyword = lowerText.replace('filter ', '').replace('search ', '').trim();
+      if (lowerText.includes('filter ') || lowerText.includes('search ') || lowerText.includes('find ') || lowerText.includes('select ') || lowerText.includes('locate ')) {
+        const filterKeyword = lowerText
+          .replace('filter ', '')
+          .replace('search ', '')
+          .replace('find ', '')
+          .replace('select ', '')
+          .replace('locate ', '')
+          .trim();
         if (filterKeyword === 'all' || filterKeyword === 'clear' || filterKeyword === 'reset') {
           setCandidateSearchQuery('');
           setCandidateFilterStage('all');
@@ -665,23 +976,35 @@ export default function App() {
           setActiveTab('recruit');
           uiUpdatedMsg = " *(Filtered candidate list to 'Recruiter Screen' stage)*";
           searchMatched = true;
-        } else if (filterKeyword.includes('technical') || filterKeyword.includes('tech')) {
-          setCandidateFilterStage('technical_interview');
+        } else if (filterKeyword.includes('manager')) {
+          setCandidateFilterStage('manager_screen');
           setCandidateSearchQuery('');
           setActiveTab('recruit');
-          uiUpdatedMsg = " *(Filtered candidate list to 'Technical Screen' stage)*";
+          uiUpdatedMsg = " *(Filtered candidate list to 'Manager Screen' stage)*";
           searchMatched = true;
-        } else if (filterKeyword.includes('onsite')) {
-          setCandidateFilterStage('onsite_interview');
+        } else if (filterKeyword.includes('technical') || filterKeyword.includes('tech') || filterKeyword.includes('panel')) {
+          setCandidateFilterStage('panel_interview');
           setCandidateSearchQuery('');
           setActiveTab('recruit');
-          uiUpdatedMsg = " *(Filtered candidate list to 'Onsite Interview' stage)*";
+          uiUpdatedMsg = " *(Filtered candidate list to 'Panel Interview' stage)*";
+          searchMatched = true;
+        } else if (filterKeyword.includes('onsite') || filterKeyword.includes('final')) {
+          setCandidateFilterStage('final_interview');
+          setCandidateSearchQuery('');
+          setActiveTab('recruit');
+          uiUpdatedMsg = " *(Filtered candidate list to 'Final Interview' stage)*";
           searchMatched = true;
         } else if (filterKeyword.includes('offer')) {
           setCandidateFilterStage('offer');
           setCandidateSearchQuery('');
           setActiveTab('recruit');
           uiUpdatedMsg = " *(Filtered candidate list to 'Offer Stage')*";
+          searchMatched = true;
+        } else if (filterKeyword.includes('archive')) {
+          setCandidateFilterStage('archived');
+          setCandidateSearchQuery('');
+          setActiveTab('recruit');
+          uiUpdatedMsg = " *(Filtered candidate list to 'Archived' stage)*";
           searchMatched = true;
         } else if (filterKeyword.includes('hired')) {
           setCandidateFilterStage('hired');
@@ -717,22 +1040,22 @@ export default function App() {
             responseText = `I have updated the sidebar filter. Here are the candidates matching your query:\n\n` +
               matches.map(c => `• **${c.name}** (${c.target_job}) — Stage: *${c.stage.replace('_', ' ')}*`).join('\n');
           } else {
-            responseText = `I have updated the search filter, but no candidates matched your query. Try searching for "Jordan" or "Taylor".`;
+            responseText = `I have updated the search filter, but no candidates matched your query. Try searching for "John" or "Taylor".`;
           }
         } else {
           responseText = `Here are the candidates currently in your Greenhouse pipeline:\n\n` +
             candidates.map(c => `• **${c.name}** (${c.target_job}) — Stage: *${c.stage.replace('_', ' ')}*`).join('\n') +
-            `\n\nYou can ask me to "filter hired", "search Staff", or "select Jordan Miller" to update the dashboard.`;
+            `\n\nYou can ask me to "filter hired", "search Staff", or "select John Miller" to update the dashboard.`;
         }
       } else if (isCalibrationQuery) {
-        if (lowerText.includes('sarah') || lowerText.includes('chen')) {
-          responseText = `Sarah Chen's promotion case is open for Staff Software Engineer. The Peer Feedback Auditor has highlighted a gender-coded term ("bossy"). I recommend accepting the AI rewrite to keep the review objective.`;
+        if (lowerText.includes('sarah') || lowerText.includes('smith')) {
+          responseText = `Sarah Smith's promotion case is open for Staff Software Engineer. The Peer Feedback Auditor has highlighted a gender-coded term ("bossy"). I recommend accepting the AI rewrite to keep the review objective.`;
         } else if (lowerText.includes('bias') || lowerText.includes('rewrite') || lowerText.includes('accept')) {
           setBiasAccepted(true);
-          responseText = `I have updated Sarah Chen's calibration record to accept the objective rewrite. The bias alert is now resolved.`;
-          uiUpdatedMsg = " *(Accepted bias rewrite for Sarah Chen)*";
+          responseText = `I have updated Sarah Smith's calibration record to accept the objective rewrite. The bias alert is now resolved.`;
+          uiUpdatedMsg = " *(Accepted bias rewrite for Sarah Smith)*";
         } else {
-          responseText = `You are currently viewing Sarah Chen's Level Alignment Matrix. Her metrics show strong Technical Impact (85%) and Execution (95%), but she needs development support for Leadership (70%).`;
+          responseText = `You are currently viewing Sarah Smith's Level Alignment Matrix. Her metrics show strong Technical Impact (85%) and Execution (95%), but she needs development support for Leadership (70%).`;
         }
       } else if (isOnboardingQuery) {
         if (lowerText.includes('checklist') || lowerText.includes('task')) {
@@ -745,7 +1068,7 @@ export default function App() {
         }
       } else {
         responseText = `I'm your site-wide buddy. I can:\n` +
-          `1. **Search and select candidates** (e.g. "select Jordan Miller", "filter hired")\n` +
+          `1. **Search and select candidates** (e.g. "select John Miller", "filter hired")\n` +
           `2. **Check onboarding progress** (e.g. "show tasks", "slack access")\n` +
           `3. **Open team calibration** (e.g. "go to calibration", "bias rewrite")\n` +
           `4. **Navigate** (e.g. "go to onboarding")`;
@@ -757,38 +1080,66 @@ export default function App() {
 
   // Toggle Onboarding Items
   const toggleOnboardingItem = (id: string) => {
-    setCandidateOnboardChecklists(prev => {
-      const currentList = prev[selectedOnboardCandidateId] || [];
-      return {
-        ...prev,
-        [selectedOnboardCandidateId]: currentList.map(item => {
-          if (item.id === id) {
-            const nextStatus = item.status === 'completed' ? 'pending' : 'completed';
-            return { ...item, status: nextStatus as 'completed' | 'pending' };
+    setEmployees(prev => prev.map(emp => {
+      if (emp.id === selectedOnboardCandidateId) {
+        return {
+          ...emp,
+          onboarding: {
+            ...emp.onboarding,
+            items: emp.onboarding.items.map(item => {
+              if (item.id === id) {
+                const nextStatus = item.status === 'completed' ? 'pending' : 'completed';
+                return { ...item, status: nextStatus as 'completed' | 'pending' };
+              }
+              return item;
+            })
           }
-          return item;
-        })
-      };
-    });
+        };
+      }
+      return emp;
+    }));
   };
 
   // Delete Onboarding Item
   const deleteOnboardingItem = (id: string) => {
-    setCandidateOnboardChecklists(prev => {
-      const currentList = prev[selectedOnboardCandidateId] || [];
-      return {
-        ...prev,
-        [selectedOnboardCandidateId]: currentList.filter(item => item.id !== id)
-      };
-    });
+    setEmployees(prev => prev.map(emp => {
+      if (emp.id === selectedOnboardCandidateId) {
+        return {
+          ...emp,
+          onboarding: {
+            ...emp.onboarding,
+            items: emp.onboarding.items.filter(item => item.id !== id)
+          }
+        };
+      }
+      return emp;
+    }));
+  };
+
+  // Save Task Note
+  const saveTaskNote = (taskId: string, noteValue: string) => {
+    setEmployees(prev => prev.map(emp => {
+      if (emp.id === selectedOnboardCandidateId) {
+        return {
+          ...emp,
+          onboarding: {
+            ...emp.onboarding,
+            items: emp.onboarding.items.map(item =>
+              item.id === taskId ? { ...item, note: noteValue } : item
+            )
+          }
+        };
+      }
+      return emp;
+    }));
   };
 
   // Toggle Rippling Accounts
   const toggleAccountStatus = (appName: string) => {
     setProvisionedAccounts(prev => prev.map(acc => {
       if (acc.app_name === appName) {
-        const nextStatus = acc.status === 'active' ? 'pending' : 'active';
-        return { ...acc, status: nextStatus };
+        const nextStatus = acc.status === 'active' ? 'pending' : (acc.status === 'pending' ? 'inactive' : 'active');
+        return { ...acc, status: nextStatus as 'active' | 'pending' | 'inactive' };
       }
       return acc;
     }));
@@ -1010,7 +1361,7 @@ export default function App() {
                     <Sliders className="w-3 h-3" />
                     <span>Active Theme Schema</span>
                   </label>
-                  <div className="relative">
+                  <div className="relative theme-dropdown-container">
                     <button
                       onClick={() => setIsThemeMenuOpen(!isThemeMenuOpen)}
                       className={`w-full flex items-center justify-between border text-xs font-semibold rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-primary transition-colors cursor-pointer ${isDarkMode ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-800'}`}
@@ -1027,7 +1378,6 @@ export default function App() {
 
                     {isThemeMenuOpen && (
                       <>
-                        <div className="fixed inset-0 z-40" onClick={() => setIsThemeMenuOpen(false)} />
                         <div className={`absolute bottom-full left-0 right-0 mb-1 z-50 border rounded-lg shadow-xl overflow-hidden transition-all duration-300 ${isDarkMode ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-800'}`}>
                           {[
                             { id: 'default', name: 'Anthropic Purple', color: 'bg-[#8A2BE2]' },
@@ -1132,7 +1482,7 @@ export default function App() {
                     </div>
                   </div>
 
-                  <div className="relative">
+                  <div className="relative stage-dropdown-container">
                     <button
                       onClick={() => setIsStageMenuOpen(!isStageMenuOpen)}
                       className={`flex items-center justify-between border text-xs font-semibold rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-primary transition-colors cursor-pointer space-x-1 ${isDarkMode ? 'bg-slate-900 border-slate-700 text-white hover:bg-slate-800/50' : 'bg-white border-slate-200 text-slate-800 hover:bg-slate-50'}`}
@@ -1141,9 +1491,11 @@ export default function App() {
                         {candidateFilterStage === 'all' && 'All Stages'}
                         {candidateFilterStage === 'application' && 'Application Review'}
                         {candidateFilterStage === 'recruiter_screen' && 'Recruiter Screen'}
-                        {candidateFilterStage === 'technical_interview' && 'Technical Screen'}
-                        {candidateFilterStage === 'onsite_interview' && 'Onsite Interview'}
+                        {candidateFilterStage === 'manager_screen' && 'Manager Screen'}
+                        {candidateFilterStage === 'panel_interview' && 'Panel Interview'}
+                        {candidateFilterStage === 'final_interview' && 'Final Interview'}
                         {candidateFilterStage === 'offer' && 'Offer Stage'}
+                        {candidateFilterStage === 'archived' && 'Archived'}
                         {candidateFilterStage === 'hired' && 'Hired'}
                       </span>
                       <ChevronDown className="w-3.5 h-3.5 opacity-60" />
@@ -1151,17 +1503,16 @@ export default function App() {
 
                     {isStageMenuOpen && (
                       <>
-                        {/* Backdrop to close stage selection */}
-                        <div className="fixed inset-0 z-40" onClick={() => setIsStageMenuOpen(false)} />
-                        
-                        <div className={`absolute right-0 top-full mt-1 w-44 z-50 border rounded-lg shadow-xl overflow-hidden transition-all duration-300 ${isDarkMode ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-800'}`}>
+                        <div className={`absolute ${recruitLeftWidth > 290 ? 'right-0' : 'left-0'} top-full mt-1 w-36 z-[60] border rounded-lg shadow-xl overflow-hidden transition-all duration-300 ${isDarkMode ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-800'}`}>
                           {[
                             { id: 'all', name: 'All Stages' },
                             { id: 'application', name: 'Application Review' },
                             { id: 'recruiter_screen', name: 'Recruiter Screen' },
-                            { id: 'technical_interview', name: 'Technical Screen' },
-                            { id: 'onsite_interview', name: 'Onsite Interview' },
+                            { id: 'manager_screen', name: 'Manager Screen' },
+                            { id: 'panel_interview', name: 'Panel Interview' },
+                            { id: 'final_interview', name: 'Final Interview' },
                             { id: 'offer', name: 'Offer Stage' },
+                            { id: 'archived', name: 'Archived' },
                             { id: 'hired', name: 'Hired' }
                           ].map(opt => (
                             <button
@@ -1244,6 +1595,9 @@ export default function App() {
                     <div className="min-w-0 flex-1">
                       <h3 className={`font-display font-semibold text-lg ${isDarkMode ? 'text-white' : 'text-slate-905'}`}>{selectedCandidate.name}</h3>
                       <span className={`text-xs block truncate ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>{selectedCandidate.email}</span>
+                      {selectedCandidate.phone && (
+                        <span className={`text-xs block mt-0.5 truncate ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>{selectedCandidate.phone}</span>
+                      )}
                     </div>
                     <span className="text-[11px] uppercase font-semibold text-accent tracking-wider bg-accent/10 border border-accent/20 px-2.5 py-1 rounded text-center whitespace-normal break-words w-fit max-w-[130px] shrink-0">
                       Resume Parser (Active)
@@ -1274,47 +1628,128 @@ export default function App() {
                     </div>
                   </div>
 
-                  {/* Interview feedback submission */}
-                  <div className={`border-t pt-6 transition-colors duration-500 ${isDarkMode ? 'border-slate-700/50' : 'border-slate-205'}`}>
-                    <h4 className={`font-display font-medium mb-4 ${isDarkMode ? 'text-white' : 'text-slate-905'}`}>Submit Interview Scorecard</h4>
+                  {/* Interview feedback submission (Collapsible Accordion) */}
+                  <div className={`border rounded-xl mt-6 overflow-hidden transition-all duration-500 ${isDarkMode ? 'border-slate-700/50' : 'border-slate-205 shadow-sm'} ${!isScorecardEnabled ? 'opacity-40 bg-slate-100/5 dark:bg-slate-900/5' : ''}`}>
+                    <button
+                      disabled={!isScorecardEnabled}
+                      onClick={() => setIsScorecardExpanded(!isScorecardExpanded)}
+                      className={`w-full flex items-center justify-between p-4 text-left transition-colors ${!isScorecardEnabled ? 'cursor-not-allowed text-slate-400 dark:text-slate-500' : 'cursor-pointer'} ${isDarkMode ? 'bg-slate-900/40 hover:bg-slate-900/60' : 'bg-slate-50 hover:bg-slate-100/70'}`}
+                    >
+                      <span className={`text-sm font-semibold flex items-center space-x-2 ${!isScorecardEnabled ? 'text-slate-400 dark:text-slate-500' : (isDarkMode ? 'text-slate-200' : 'text-slate-750')}`}>
+                        <span>Submit Interview Scorecard</span>
+                        {interviewLogged && (
+                          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                            Logged
+                          </span>
+                        )}
+                      </span>
+                      <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isScorecardExpanded ? 'rotate-180 text-primary' : 'text-slate-400'}`} />
+                    </button>
 
-                    {interviewLogged ? (
-                      <div className="bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded-xl p-4 text-sm flex items-center space-x-2">
-                        <Check className="w-5 h-5" />
-                        <span>Scorecard successfully logged to Greenhouse pipeline! Stage updated.</span>
-                      </div>
-                    ) : (
-                      <div className="space-y-4">
-                        <div className={`flex ${isMobileView ? 'flex-col space-y-4 space-x-0' : 'items-start space-x-6'}`}>
-                          <div>
-                            <label className={`text-xs font-medium block mb-1.5 ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>Rating (1 to 5)</label>
-                            <input
-                              type="number"
-                              min="1"
-                              max="5"
-                              value={interviewScore}
-                              onChange={(e) => setInterviewScore(Number(e.target.value))}
-                              className={`border text-sm font-semibold rounded-lg p-2 w-20 focus:outline-none focus:border-primary ${isDarkMode ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-slate-205 text-slate-805'}`}
-                            />
+                    <div className={`transition-all duration-300 ease-in-out overflow-hidden ${isScorecardExpanded ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0 pointer-events-none'}`}>
+                      <div className={`p-4 border-t ${isDarkMode ? 'border-slate-800 bg-slate-950/20' : 'border-slate-200 bg-white'}`}>
+                        {interviewLogged ? (
+                          <div className="bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded-xl p-4 text-sm flex items-center space-x-2">
+                            <Check className="w-5 h-5 shrink-0" />
+                            <span>Scorecard successfully logged to Greenhouse pipeline! Stage updated.</span>
                           </div>
-                          <div className="flex-1">
-                            <label className={`text-xs font-medium block mb-1.5 ${isDarkMode ? 'text-slate-400' : 'text-slate-505'}`}>Interview Notes</label>
-                            <textarea
-                              rows={3}
-                              value={interviewNotes}
-                              onChange={(e) => setInterviewNotes(e.target.value)}
-                              className={`w-full border text-sm rounded-lg p-2 focus:outline-none focus:border-primary resize-y min-h-[38px] ${isDarkMode ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-800'}`}
-                            />
+                        ) : (
+                          <div className="space-y-4">
+                            <div className={`flex ${isMobileView ? 'flex-col space-y-4 space-x-0' : 'items-start space-x-6'}`}>
+                              <div>
+                                <label className={`text-xs font-medium block mb-1.5 ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>Rating (1 to 5)</label>
+                                <input
+                                  type="number"
+                                  min="1"
+                                  max="5"
+                                  value={interviewScore}
+                                  onChange={(e) => setInterviewScore(Number(e.target.value))}
+                                  className={`border text-sm font-semibold rounded-lg p-2 w-20 focus:outline-none focus:border-primary ${isDarkMode ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-slate-205 text-slate-805'}`}
+                                />
+                              </div>
+                              <div className="flex-1">
+                                <label className={`text-xs font-medium block mb-1.5 ${isDarkMode ? 'text-slate-400' : 'text-slate-505'}`}>Interview Notes</label>
+                                <textarea
+                                  rows={3}
+                                  value={interviewNotes}
+                                  onChange={(e) => setInterviewNotes(e.target.value)}
+                                  className={`w-full border text-sm rounded-lg p-2 focus:outline-none focus:border-primary resize-y min-h-[38px] ${isDarkMode ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-800'}`}
+                                />
+                              </div>
+                            </div>
+                            <button
+                              onClick={() => setInterviewLogged(true)}
+                              className="bg-primary hover:bg-opacity-90 text-white font-medium text-sm rounded-xl px-5 py-2.5 transition-all shadow-md shadow-primary/20 cursor-pointer"
+                            >
+                              Submit to Greenhouse
+                            </button>
                           </div>
-                        </div>
-                        <button
-                          onClick={() => setInterviewLogged(true)}
-                          className="bg-primary hover:bg-opacity-90 text-white font-medium text-sm rounded-xl px-5 py-2.5 transition-all shadow-md shadow-primary/20 cursor-pointer"
-                        >
-                          Submit to Greenhouse
-                        </button>
+                        )}
                       </div>
-                    )}
+                    </div>
+                  </div>
+
+                  {/* Evaluation Notes (Collapsible Accordion) */}
+                  <div className={`border rounded-xl mt-6 overflow-hidden transition-all duration-500 ${isDarkMode ? 'border-slate-700/50' : 'border-slate-205 shadow-sm'}`}>
+                    <button
+                      onClick={() => setIsEvalNotesExpanded(!isEvalNotesExpanded)}
+                      className={`w-full flex items-center justify-between p-4 text-left transition-colors cursor-pointer ${isDarkMode ? 'bg-slate-900/40 hover:bg-slate-900/60' : 'bg-slate-50 hover:bg-slate-100/70'}`}
+                    >
+                      <span className={`text-sm font-semibold flex items-center space-x-2 ${isDarkMode ? 'text-slate-200' : 'text-slate-750'}`}>
+                        <span>Evaluation Notes</span>
+                        {evalNotesLogged && (
+                          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                            Logged
+                          </span>
+                        )}
+                      </span>
+                      <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isEvalNotesExpanded ? 'rotate-180 text-primary' : 'text-slate-400'}`} />
+                    </button>
+
+                    <div className={`transition-all duration-300 ease-in-out overflow-hidden ${isEvalNotesExpanded ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0 pointer-events-none'}`}>
+                      <div className={`p-4 border-t ${isDarkMode ? 'border-slate-800 bg-slate-950/20' : 'border-slate-200 bg-white'}`}>
+                        {evalNotesLogged ? (
+                          <div className="bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded-xl p-4 text-sm flex items-center space-x-2">
+                            <Check className="w-5 h-5 shrink-0" />
+                            <span>Evaluation notes successfully logged to Greenhouse!</span>
+                          </div>
+                        ) : (
+                          <div className="space-y-4">
+                            <div>
+                              <label className={`text-xs font-medium block mb-1.5 ${isDarkMode ? 'text-slate-400' : 'text-slate-505'}`}>
+                                Notes {selectedCandidate?.stage === 'archived' && <span className="text-rose-505 font-bold">* (Required for Archived)</span>}
+                              </label>
+                              <textarea
+                                rows={3}
+                                value={evaluationNotes}
+                                onChange={(e) => {
+                                  setEvaluationNotes(e.target.value);
+                                  if (e.target.value.trim() !== '') setEvalError('');
+                                }}
+                                placeholder="Enter evaluation details..."
+                                className={`w-full border text-sm rounded-lg p-2 focus:outline-none focus:border-primary resize-y min-h-[38px] ${isDarkMode ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-800'}`}
+                              />
+                              {evalError && (
+                                <p className="text-xs text-rose-500 mt-1">{evalError}</p>
+                              )}
+                            </div>
+                            <button
+                              onClick={() => {
+                                if (selectedCandidate?.stage === 'archived' && evaluationNotes.trim() === '') {
+                                  setEvalError('Evaluation notes cannot be empty for archived candidates.');
+                                } else {
+                                  setEvalError('');
+                                  setEvalNotesLogged(true);
+                                }
+                              }}
+                              className="bg-primary hover:bg-opacity-90 text-white font-medium text-sm rounded-xl px-5 py-2.5 transition-all shadow-md shadow-primary/20 cursor-pointer"
+                            >
+                              Submit to Greenhouse
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1330,40 +1765,51 @@ export default function App() {
                 style={isResponsiveMode ? {} : { width: `${onboardLeftWidth}px` }}
                 className={`shrink-0 flex flex-col ${isResponsiveMode ? 'w-full h-auto max-h-[350px]' : 'overflow-y-auto h-full pr-3'} ${cardClass}`}
               >
-                <div className="flex justify-between items-center mb-6">
-                  <div>
+                <div className="flex flex-wrap justify-between items-start mb-6 gap-4">
+                  <div className="min-w-0 mr-3">
                     {selectedOnboardCandObj ? (
                       <>
-                        <h3 className={`font-display font-bold text-lg leading-tight ${isDarkMode ? 'text-white' : 'text-slate-905'}`}>
+                        <h3 className={`font-display font-bold text-lg leading-tight truncate ${isDarkMode ? 'text-white' : 'text-slate-905'}`}>
                           {selectedOnboardCandObj.name}
                         </h3>
-                        <span className={`text-xs font-semibold text-primary/95`}>
-                          Onboarding Checklist
+                        <span className={`text-xs block mt-0.5 truncate ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+                          {(selectedOnboardCandObj.work_email ?? selectedOnboardCandObj.personal_email ?? '').replace(/@[^@]+$/, '@example.com')}
                         </span>
                       </>
                     ) : (
                       <>
-                        <h3 className={`font-display font-semibold text-lg ${isDarkMode ? 'text-white' : 'text-slate-905'}`}>
+                        <h3 className={`font-display font-semibold text-lg truncate ${isDarkMode ? 'text-white' : 'text-slate-905'}`}>
                           Your Onboarding Checklist
                         </h3>
-                        <span className={`text-xs ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>Track and check off Day 1 tasks</span>
+                        <span className={`text-xs block truncate ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>Track and check off Day 1 tasks</span>
                       </>
                     )}
                   </div>
-                  <div className="flex items-center space-x-2.5">
+                  <div className="flex flex-col items-end space-y-1.5 shrink-0 whitespace-nowrap">
+                    <span className={`text-xs font-semibold whitespace-nowrap ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>{completionPercentage}% Complete</span>
                     <button
                       onClick={() => setIsEditingChecklist(!isEditingChecklist)}
-                      className={`px-2.5 py-1.5 rounded-lg border text-xs font-semibold transition-all cursor-pointer ${isEditingChecklist ? 'bg-primary/15 border-primary/45 text-primary font-bold shadow-sm' : (isDarkMode ? 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white' : 'bg-white border-slate-200 text-slate-655 hover:bg-slate-50 shadow-sm')}`}
+                      className={`px-2.5 py-1.5 rounded-lg border text-xs font-semibold transition-all cursor-pointer whitespace-nowrap ${isEditingChecklist ? 'bg-primary/15 border-primary/45 text-primary font-bold shadow-sm' : (isDarkMode ? 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white' : 'bg-white border-slate-200 text-slate-655 hover:bg-slate-50 shadow-sm')}`}
                     >
                       {isEditingChecklist ? 'Done' : 'Edit'}
                     </button>
-                    <span className={`text-xs font-semibold ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>{completionPercentage}% Complete</span>
                   </div>
                 </div>
 
                 {/* Onboarding Candidate Search Selector */}
-                <div className="mb-5 relative shrink-0">
-                  <label className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">Select Onboarding Candidate</label>
+                <div className="mb-5 relative shrink-0 onboard-dropdown-container">
+                  <div className="flex justify-between items-center mb-1.5">
+                    <label className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider block">Select Onboarding Candidate</label>
+                    <label className="flex items-center space-x-1.5 text-[10px] font-semibold text-slate-500 uppercase tracking-wider cursor-pointer hover:text-primary transition-colors select-none">
+                      <input
+                        type="checkbox"
+                        checked={hideCompletedTasks}
+                        onChange={(e) => setHideCompletedTasks(e.target.checked)}
+                        className="rounded border-slate-300 text-primary focus:ring-primary w-3 h-3 cursor-pointer"
+                      />
+                      <span>Hide Completed</span>
+                    </label>
+                  </div>
                   <button
                     onClick={() => {
                       setIsOnboardCandDropdownOpen(!isOnboardCandDropdownOpen);
@@ -1383,13 +1829,11 @@ export default function App() {
 
                   {isOnboardCandDropdownOpen && (
                     <>
-                      {/* Dropdown backdrop to close menu */}
-                      <div className="fixed inset-0 z-40" onClick={() => setIsOnboardCandDropdownOpen(false)} />
-                      
                       <div className={`absolute top-full left-0 right-0 mt-1 z-50 border rounded-lg shadow-xl overflow-hidden transition-all duration-300 ${isDarkMode ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-800'}`}>
                         {/* Search input inside dropdown */}
                         <div className="p-2 border-b border-slate-700/50 relative">
                           <input
+                            ref={onboardCandSearchInputRef}
                             type="text"
                             placeholder="Type candidate name..."
                             value={onboardSearchText}
@@ -1492,34 +1936,85 @@ export default function App() {
 
                 {/* List */}
                 <div className="space-y-2 flex-1 overflow-y-auto pr-1">
-                  {onboardingItems.map((item) => (
-                    <div
-                      key={item.id}
-                      onClick={() => toggleOnboardingItem(item.id)}
-                      className={`flex items-center justify-between space-x-3 p-3.5 rounded-xl border transition-all cursor-pointer select-none ${isDarkMode ? 'bg-slate-900/35 border-slate-700/40 hover:bg-slate-900/60' : 'bg-white border-slate-205 shadow-sm hover:bg-slate-55'}`}
-                    >
-                      <div className="flex items-center space-x-3.5 flex-1 min-w-0">
-                        <div className={`w-5 h-5 rounded flex items-center justify-center transition-all shrink-0 ${item.status === 'completed' ? 'bg-primary text-white' : `border ${isDarkMode ? 'border-slate-700' : 'border-slate-300'}`}`}>
-                          {item.status === 'completed' && <Check className="w-3.5 h-3.5" />}
-                        </div>
-                        <span className={`text-sm truncate ${item.status === 'completed' ? 'line-through text-slate-505' : (isDarkMode ? 'text-slate-200' : 'text-slate-805')}`}>
-                          {item.name}
-                        </span>
-                      </div>
-                      {isEditingChecklist && item.status === 'pending' && (
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            deleteOnboardingItem(item.id);
-                          }}
-                          className={`p-1.5 rounded-lg border transition-all cursor-pointer flex items-center justify-center shrink-0 ${isDarkMode ? 'bg-slate-900 border-slate-800 text-slate-400 hover:text-red-400 hover:border-red-500/30' : 'bg-white border-slate-200 text-slate-500 hover:text-red-550 hover:border-red-550/30 shadow-sm'}`}
-                          title="Delete Task"
+                  {onboardingItems.map((item) => {
+                    const isExpanded = expandedTaskNoteId === item.id;
+                    return (
+                      <div
+                        key={item.id}
+                        className={`flex flex-col rounded-xl border transition-all duration-300 ${isDarkMode ? 'bg-slate-900/35 border-slate-700/40' : 'bg-white border-slate-205 shadow-sm'} ${isExpanded ? 'ring-1 ring-primary/30' : ''}`}
+                      >
+                        <div
+                          onClick={() => toggleOnboardingItem(item.id)}
+                          className="flex items-center justify-between space-x-3 p-3.5 cursor-pointer select-none"
                         >
-                          <Trash2 className="w-3.5 h-3.5" />
-                        </button>
-                      )}
-                    </div>
-                  ))}
+                          <div className="flex items-center space-x-3.5 flex-1 min-w-0">
+                            <div className={`w-5 h-5 rounded flex items-center justify-center transition-all shrink-0 ${item.status === 'completed' ? 'bg-primary text-white' : `border ${isDarkMode ? 'border-slate-700' : 'border-slate-300'}`}`}>
+                              {item.status === 'completed' && <Check className="w-3.5 h-3.5" />}
+                            </div>
+                            <span className={`text-sm truncate ${item.status === 'completed' ? 'line-through text-slate-505' : (isDarkMode ? 'text-slate-200' : 'text-slate-805')}`}>
+                              {item.name}
+                            </span>
+                          </div>
+
+                          <div className="flex items-center space-x-2 shrink-0">
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                if (isExpanded) {
+                                  saveTaskNote(item.id, editingNotes[item.id] || '');
+                                  setExpandedTaskNoteId(null);
+                                } else {
+                                  setEditingNotes(prev => ({ ...prev, [item.id]: item.note || '' }));
+                                  setExpandedTaskNoteId(item.id);
+                                }
+                              }}
+                              className={`p-1.5 rounded-lg border transition-all cursor-pointer flex items-center justify-center ${isDarkMode ? 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white' : 'bg-white border-slate-200 text-slate-500 hover:text-slate-700 shadow-sm'}`}
+                              title="Toggle Task Notes"
+                            >
+                              <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${isExpanded ? 'rotate-180 text-primary' : ''}`} />
+                            </button>
+
+                            {isEditingChecklist && item.status === 'pending' && (
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  deleteOnboardingItem(item.id);
+                                }}
+                                className={`p-1.5 rounded-lg border transition-all cursor-pointer flex items-center justify-center shrink-0 ${isDarkMode ? 'bg-slate-900 border-slate-800 text-slate-400 hover:text-red-400 hover:border-red-500/30' : 'bg-white border-slate-200 text-slate-500 hover:text-red-550 hover:border-red-550/30 shadow-sm'}`}
+                                title="Delete Task"
+                              >
+                                <Trash2 className="w-3.5 h-3.5" />
+                              </button>
+                            )}
+                          </div>
+                        </div>
+
+                        {isExpanded && (
+                          <div className={`p-3 border-t ${isDarkMode ? 'border-slate-800 bg-slate-950/20' : 'border-slate-200 bg-slate-50/50'}`}>
+                            <textarea
+                              rows={2}
+                              value={editingNotes[item.id] !== undefined ? editingNotes[item.id] : (item.note || '')}
+                              onChange={(e) => {
+                                const val = e.target.value;
+                                setEditingNotes(prev => ({ ...prev, [item.id]: val }));
+                              }}
+                              onBlur={() => {
+                                saveTaskNote(item.id, editingNotes[item.id] || '');
+                              }}
+                              placeholder="Write a task note (auto-saves)..."
+                              className={`w-full text-xs border rounded-lg p-2 focus:outline-none focus:border-primary resize-y min-h-[38px] ${isDarkMode ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-800'}`}
+                            />
+                            {item.note && (
+                              <div className="text-[10px] text-emerald-400 mt-1 flex items-center space-x-1">
+                                <Check className="w-3 h-3" />
+                                <span>Saved</span>
+                              </div>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
 
@@ -1561,6 +2056,7 @@ export default function App() {
                     {/* Collapsible Search Input */}
                     <div className={`overflow-hidden transition-all duration-300 flex-1 relative ${isRipplingSearchOpen ? 'max-w-md opacity-100' : 'max-w-0 opacity-0 pointer-events-none'}`}>
                       <input
+                        ref={ripplingSearchInputRef}
                         type="text"
                         placeholder="Search apps..."
                         value={ripplingSearchQuery}
@@ -1581,7 +2077,7 @@ export default function App() {
                   </div>
 
                   {/* Collapsible Filter/Sort Popover */}
-                  <div className="relative">
+                  <div className="relative rippling-filter-popover-container">
                     <button
                       onClick={() => {
                         setIsRipplingFilterOpen(!isRipplingFilterOpen);
@@ -1596,18 +2092,11 @@ export default function App() {
 
                     {isRipplingFilterOpen && (
                       <>
-                        {/* Backdrop to close menu */}
-                        <div className="fixed inset-0 z-40" onClick={() => {
-                          setIsRipplingFilterOpen(false);
-                          setIsFilterDropdownOpen(false);
-                          setIsSortDropdownOpen(false);
-                        }} />
-
                         {/* Popover Card */}
                         <div className={`absolute right-0 top-full mt-2 w-56 p-4 rounded-xl border shadow-xl z-50 transition-colors duration-500 ${isDarkMode ? 'bg-slate-955 border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-800'}`}>
                           <div className="space-y-4">
                             {/* Filter Option */}
-                            <div className="relative">
+                            <div className="relative rippling-filter-status-container">
                               <label className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">Filter by Status</label>
                               <button
                                 onClick={() => {
@@ -1620,18 +2109,19 @@ export default function App() {
                                   {ripplingFilterStatus === 'all' && 'Filter: All'}
                                   {ripplingFilterStatus === 'active' && 'Active Only'}
                                   {ripplingFilterStatus === 'pending' && 'Pending Only'}
+                                  {ripplingFilterStatus === 'inactive' && 'Inactive Only'}
                                 </span>
                                 <ChevronDown className="w-3.5 h-3.5 opacity-60" />
                               </button>
 
                               {isFilterDropdownOpen && (
                                 <>
-                                  <div className="fixed inset-0 z-45" onClick={() => setIsFilterDropdownOpen(false)} />
                                   <div className={`absolute top-full left-0 right-0 mt-1 z-50 border rounded-lg shadow-xl overflow-hidden transition-all duration-300 ${isDarkMode ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-800'}`}>
                                     {[
                                       { id: 'all', name: 'Filter: All' },
                                       { id: 'active', name: 'Active Only' },
-                                      { id: 'pending', name: 'Pending Only' }
+                                      { id: 'pending', name: 'Pending Only' },
+                                      { id: 'inactive', name: 'Inactive Only' }
                                     ].map(opt => (
                                       <button
                                         key={opt.id}
@@ -1650,7 +2140,7 @@ export default function App() {
                             </div>
 
                             {/* Sort Option */}
-                            <div className="relative">
+                            <div className="relative rippling-sort-container">
                               <label className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">Sort Order</label>
                               <button
                                 onClick={() => {
@@ -1663,18 +2153,19 @@ export default function App() {
                                   {ripplingSortOrder === 'default' && 'Sort: Default'}
                                   {ripplingSortOrder === 'active-first' && 'Active First'}
                                   {ripplingSortOrder === 'pending-first' && 'Pending First'}
+                                  {ripplingSortOrder === 'inactive-first' && 'Inactive First'}
                                 </span>
                                 <ChevronDown className="w-3.5 h-3.5 opacity-60" />
                               </button>
 
                               {isSortDropdownOpen && (
                                 <>
-                                  <div className="fixed inset-0 z-45" onClick={() => setIsSortDropdownOpen(false)} />
                                   <div className={`absolute top-full left-0 right-0 mt-1 z-50 border rounded-lg shadow-xl overflow-hidden transition-all duration-300 ${isDarkMode ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-800'}`}>
                                     {[
                                       { id: 'default', name: 'Sort: Default' },
                                       { id: 'active-first', name: 'Active First' },
-                                      { id: 'pending-first', name: 'Pending First' }
+                                      { id: 'pending-first', name: 'Pending First' },
+                                      { id: 'inactive-first', name: 'Inactive First' }
                                     ].map(opt => (
                                       <button
                                         key={opt.id}
@@ -1730,20 +2221,38 @@ export default function App() {
 
                       {/* Column 1: App Info */}
                       <div className="flex items-center space-x-3 min-w-0">
-                        <div className={`w-8 h-8 rounded-lg border flex items-center justify-center font-bold text-xs text-primary shrink-0 transition-colors duration-500 ${isDarkMode ? 'bg-slate-900 border-slate-700/50' : 'bg-slate-100 border-slate-200'}`}>
-                          {acc.app_name[0]}
+                        <div className={`w-8 h-8 rounded-lg border flex items-center justify-center shrink-0 transition-colors duration-500 ${isDarkMode ? 'bg-slate-900 border-slate-700/50' : 'bg-slate-100 border-slate-200'}`}>
+                          {renderAppIcon(acc.app_name, isDarkMode)}
                         </div>
                         <div className="min-w-0">
                           <div className={`text-sm font-medium truncate ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{acc.app_name}</div>
-                          <div className={`text-xs truncate ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>{acc.account_email}</div>
+                          <div className={`text-xs truncate ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>
+                            {acc.app_name.toLowerCase() === 'slack' ? `@${acc.account_email.split('@')[0]}` : acc.account_email}
+                          </div>
                         </div>
                       </div>
 
                       {/* Column 2: Status Badge */}
                       <div className="flex justify-start">
-                        <span className={`text-xs px-2.5 py-1 rounded-full font-medium flex items-center space-x-1.5 ${acc.status === 'active' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'}`}>
-                          <span className={`w-1.5 h-1.5 rounded-full ${acc.status === 'active' ? 'bg-emerald-400 animate-pulse' : 'bg-amber-400'}`}></span>
-                          <span>{acc.status === 'active' ? 'Active' : 'Pending'}</span>
+                        <span className={`text-xs px-2.5 py-1 rounded-full font-medium flex items-center space-x-1.5 ${
+                          acc.status === 'active' 
+                            ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' 
+                            : acc.status === 'pending'
+                              ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
+                              : 'bg-slate-500/10 text-slate-400 border border-slate-500/20'
+                        }`}>
+                          <span className={`w-1.5 h-1.5 rounded-full ${
+                            acc.status === 'active' 
+                              ? 'bg-emerald-400 animate-pulse' 
+                              : acc.status === 'pending'
+                                ? 'bg-amber-400'
+                                : 'bg-slate-400'
+                          }`}></span>
+                          <span>
+                            {acc.status === 'active' && 'Active'}
+                            {acc.status === 'pending' && 'Pending'}
+                            {acc.status === 'inactive' && 'Inactive'}
+                          </span>
                         </span>
                       </div>
 
@@ -1766,6 +2275,11 @@ export default function App() {
 
           {/* TAB 3: CALIBRATION COACH */}
           {activeTab === 'calibrate' && (
+            !selectedCalibrateCandObj ? (
+              <div className="flex-1 flex items-center justify-center">
+                <span className={`text-sm ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>Loading calibration data…</span>
+              </div>
+            ) : (
             <div className={`flex-1 flex min-h-0 relative ${isResponsiveMode ? 'flex-col space-y-6' : 'flex-row space-x-2'}`}>
 
               {/* Feedback Editor Card */}
@@ -1773,9 +2287,89 @@ export default function App() {
                 style={isResponsiveMode ? {} : { width: `${calibrateLeftWidth}px` }}
                 className={`shrink-0 space-y-6 ${cardClass} ${isResponsiveMode ? 'w-full h-auto overflow-visible' : 'overflow-y-auto h-full pr-3'}`}
               >
-                <div>
-                  <h3 className={`font-display font-semibold text-lg ${isDarkMode ? 'text-white' : 'text-slate-905'}`}>Peer Feedback Auditor</h3>
-                  <span className={`text-xs ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>Calibration analysis for employee: **Sarah Chen**</span>
+                <div className="flex flex-col space-y-4">
+                  <div>
+                    <h3 className={`font-display font-semibold text-lg ${isDarkMode ? 'text-white' : 'text-slate-905'}`}>Peer Feedback Auditor</h3>
+                    <span className={`text-xs ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>Calibration analysis for employee: <strong>{selectedCalibrateCandObj.name}</strong></span>
+                  </div>
+
+                  {/* Calibration Candidate Search Selector */}
+                  <div className="relative shrink-0 calibrate-dropdown-container">
+                    <label className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">Select Calibration Candidate</label>
+                    <button
+                      onClick={() => {
+                        setIsCalibrateCandDropdownOpen(!isCalibrateCandDropdownOpen);
+                        setCalibrateSearchText('');
+                      }}
+                      className={`w-full flex items-center justify-between border text-xs font-semibold rounded-lg px-2.5 py-2.5 focus:outline-none focus:border-primary transition-colors cursor-pointer ${isDarkMode ? 'bg-slate-900 border-slate-700 text-white hover:bg-slate-800/50' : 'bg-white border-slate-200 text-slate-800 hover:bg-slate-55 shadow-sm'}`}
+                    >
+                      <span className="flex items-center space-x-2 truncate">
+                        <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
+                        <span className="font-semibold text-xs">{selectedCalibrateCandObj.name}</span>
+                        <span className="text-[10px] px-1.5 py-0.5 rounded border ml-2 bg-amber-500/10 text-amber-400 border-amber-500/20">
+                          {selectedCalibrateCandObj.target_job}
+                        </span>
+                      </span>
+                      <ChevronDown className="w-3.5 h-3.5 opacity-60" />
+                    </button>
+
+                    {isCalibrateCandDropdownOpen && (
+                      <>
+                        <div className={`absolute top-full left-0 right-0 mt-1 z-50 border rounded-lg shadow-xl overflow-hidden transition-all duration-300 ${isDarkMode ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-800'}`}>
+                          {/* Search input inside dropdown */}
+                          <div className="p-2 border-b border-slate-700/50 relative">
+                            <input
+                              ref={calibrateCandSearchInputRef}
+                              type="text"
+                              placeholder="Type candidate name..."
+                              value={calibrateSearchText}
+                              onChange={(e) => setCalibrateSearchText(e.target.value)}
+                              onClick={(e) => e.stopPropagation()} // Prevent closing dropdown on click
+                              className={`w-full text-xs border rounded-lg pl-2.5 pr-7 py-1.5 focus:outline-none focus:border-primary ${isDarkMode ? 'bg-slate-950 border-slate-800 text-white' : 'bg-slate-50 border-slate-200 text-slate-800'}`}
+                            />
+                            {calibrateSearchText && (
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setCalibrateSearchText('');
+                                }}
+                                className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200 transition-colors p-0.5 cursor-pointer"
+                              >
+                                <X className="w-3 h-3" />
+                              </button>
+                            )}
+                          </div>
+
+                          {/* Candidate List */}
+                          <div className="max-h-48 overflow-y-auto">
+                            {calibrationStageCandidates.length === 0 ? (
+                              <div className="p-3 text-xs text-slate-500 text-center">No candidates found</div>
+                            ) : (
+                              calibrationStageCandidates.map(c => (
+                                <button
+                                  key={c.id}
+                                  onClick={() => {
+                                    setSelectedCalibrateCandidateId(c.id);
+                                    setIsCalibrateCandDropdownOpen(false);
+                                  }}
+                                  className={`w-full flex flex-col items-start px-3 py-2 text-left hover:bg-primary/10 transition-colors ${selectedCalibrateCandidateId === c.id ? 'bg-primary/5' : ''}`}
+                                >
+                                  <span className={`text-xs font-semibold ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>{c.name}</span>
+                                  <span className="text-[10px] text-slate-500 truncate w-full">{c.target_job} • {c.department}</span>
+                                </button>
+                              ))
+                            )}
+                          </div>
+                        </div>
+                        {/* Transparent overlay to close dropdown when clicking outside */}
+                        <div
+                          className="fixed inset-0 z-40 cursor-default"
+                          onClick={() => setIsCalibrateCandDropdownOpen(false)}
+                        ></div>
+                      </>
+                    )}
+                  </div>
                 </div>
 
                 <div className="space-y-4">
@@ -1785,13 +2379,13 @@ export default function App() {
                   <div className={`relative border rounded-xl p-5 font-sans leading-relaxed text-sm transition-all duration-500 ${isDarkMode ? 'bg-slate-900/50 border-slate-700/50 text-slate-350' : 'bg-slate-50 border-slate-200 text-slate-707'}`}>
                     {biasAccepted ? (
                       <p>
-                        Sarah's leadership is assertive, though some colleagues feel she could collaborate more effectively. A specific concern was noted: <span className="bg-emerald-500/10 text-emerald-600 px-1 border border-emerald-500/20 rounded font-medium">Sarah is direct and successfully drives decisions, ensuring clarity in meetings, though she could enhance this by proactively seeking diverse input.</span>
+                        {selectedCalibrateCandObj.name}'s leadership is assertive, though some colleagues feel {calPronouns.subj} could collaborate more effectively. A specific concern was noted: <span className="bg-emerald-500/10 text-emerald-600 px-1 border border-emerald-500/20 rounded font-medium">{selectedCalibrateCandObj.name} is direct and successfully drives decisions, ensuring clarity in meetings, though {calPronouns.subj} could enhance this by proactively seeking diverse input.</span>
                       </p>
                     ) : (
                       <p>
-                        Sarah's leadership is assertive, though some colleagues feel she could collaborate more effectively. A specific concern was noted: <span className="bg-amber-500/15 text-amber-500 border border-amber-500/30 px-1.5 py-0.5 rounded font-medium inline-flex items-center space-x-1">
+                        {selectedCalibrateCandObj.name}'s leadership is assertive, though some colleagues feel {calPronouns.subj} could collaborate more effectively. A specific concern was noted: <span className="bg-amber-500/15 text-amber-500 border border-amber-500/30 px-1.5 py-0.5 rounded font-medium inline-flex items-center space-x-1">
                           <AlertTriangle className="w-3.5 h-3.5 text-amber-500 inline" />
-                          <span>'She is too bossy during team meetings.'</span>
+                          <span>'{calPronouns.subjCap} is too bossy during team meetings.'</span>
                         </span>
                       </p>
                     )}
@@ -1810,7 +2404,7 @@ export default function App() {
                         </p>
                         <div className={`rounded-lg p-3 text-xs border transition-all duration-500 ${isDarkMode ? 'bg-slate-950/60 border-slate-700/50 text-slate-300' : 'bg-white border-slate-200 text-slate-707'}`}>
                           <span className={`font-semibold block mb-1 ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>AI Recommendation:</span>
-                          "Sarah is direct and successfully drives decisions, ensuring clarity in meetings, though she could enhance this by proactively seeking diverse input."
+                          "{selectedCalibrateCandObj.name} is direct and successfully drives decisions, ensuring clarity in meetings, though {calPronouns.subj} could enhance this by proactively seeking diverse input."
                         </div>
                         <div className="flex space-x-3">
                           <button
@@ -1862,7 +2456,7 @@ export default function App() {
               <div className={`flex-1 space-y-6 ${cardClass} ${isResponsiveMode ? 'w-full h-auto overflow-visible' : 'overflow-y-auto h-full pr-3'}`}>
                 <div>
                   <h3 className={`font-display font-semibold text-lg ${isDarkMode ? 'text-white' : 'text-slate-905'}`}>Level Alignment Matrix</h3>
-                  <span className={`text-xs ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>Sarah Chen vs **Staff Engineer** expectations</span>
+                  <span className={`text-xs ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>{selectedCalibrateCandObj.name} vs <strong>{selectedCalibrateCandObj.target_job.split(',')[0]}</strong> expectations</span>
                 </div>
 
                 <div className="space-y-4">
@@ -1924,7 +2518,9 @@ export default function App() {
               </div>
 
             </div>
+            )
           )}
+
 
         </div>
       </main>
@@ -1933,7 +2529,7 @@ export default function App() {
       {isMinimized ? (
         <button
           onClick={() => setIsMinimized(false)}
-          title="Open AI Onboarding Coach"
+          title="Open AI Assistant"
           className="fixed bottom-6 right-6 z-40 w-14 h-14 rounded-full bg-gradient-to-tr from-primary to-accent flex items-center justify-center text-white shadow-xl shadow-primary/20 hover:scale-105 transition-all cursor-pointer border border-white/10"
         >
           <Compass className="w-6 h-6 animate-spin-slow" />
@@ -2009,10 +2605,10 @@ export default function App() {
             className={`p-4 border-b flex items-center justify-between transition-colors duration-500 ${isMobileView ? '' : 'cursor-grab active:cursor-grabbing'} ${isDarkMode ? 'border-slate-800/60 bg-slate-900/20' : 'border-slate-200 bg-slate-50/50'}`}>
             <div className="flex items-center space-x-2.5">
               <div className="w-8 h-8 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center font-display font-bold text-primary">
-                B
+                A
               </div>
               <div>
-                <div className={`text-xs font-semibold leading-none ${isDarkMode ? 'text-white' : 'text-slate-905'}`}>Buddy (AI Coach)</div>
+                <div className={`text-xs font-semibold leading-none ${isDarkMode ? 'text-white' : 'text-slate-905'}`}>AI Assistant</div>
                 <div className="text-[10px] text-emerald-400 mt-1 flex items-center space-x-1">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-405 animate-pulse"></span>
                   <span>Online</span>
@@ -2039,13 +2635,14 @@ export default function App() {
                 </div>
               </div>
             ))}
+            <div ref={chatEndRef} />
           </div>
 
           {/* Input box */}
           <form onSubmit={handleSendMessage} className={`p-4 border-t flex items-center space-x-2 transition-colors duration-500 ${isDarkMode ? 'border-slate-800/40' : 'border-slate-205'}`}>
             <input
               type="text"
-              placeholder="Ask Buddy a question..."
+              placeholder="Ask AI Assistant a question..."
               value={inputMessage}
               onChange={(e) => setInputMessage(e.target.value)}
               onKeyDown={handleInputKeyDown}

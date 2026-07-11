@@ -21,7 +21,7 @@ interface Candidate {
   last_name: string;
   email: string;
   phone: string;
-  status: string;
+  status: 'active' | 'inactive';
   stage: string;
   applied_at: string;
   target_job: {
@@ -47,7 +47,8 @@ interface Employee {
   id: string;
   first_name: string;
   last_name: string;
-  email: string;
+  personal_email: string;
+  work_email: string;
   title: string;
   hire_date: string;
   supervisory_organization: string;
@@ -271,7 +272,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         }
 
         candidate.interview_feedback.push({ interviewer, score, notes });
-        
+
         // If score is high (e.g., >= 4) and we have feedback, mock transition stage
         if (score >= 4 && candidate.stage === "recruiter_screen") {
           candidate.stage = "technical_interview";
@@ -290,14 +291,18 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
           throw new McpError(ErrorCode.InvalidParams, `Employee ${employeeId} not found`);
         }
         return {
-          content: [{ type: "text", text: JSON.stringify({
-            id: employee.id,
-            name: `${employee.first_name} ${employee.last_name}`,
-            title: employee.title,
-            email: employee.email,
-            hire_date: employee.hire_date,
-            supervisory_organization: employee.supervisory_organization
-          }, null, 2) }]
+          content: [{
+            type: "text", text: JSON.stringify({
+              id: employee.id,
+              name: `${employee.first_name} ${employee.last_name}`,
+              title: employee.title,
+              personal_email: employee.personal_email,
+              work_email: employee.work_email,
+              email: employee.work_email,
+              hire_date: employee.hire_date,
+              supervisory_organization: employee.supervisory_organization
+            }, null, 2)
+          }]
         };
       }
 
@@ -351,7 +356,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         }
 
         task.status = status;
-        
+
         // Recalculate percentage completed
         const completed = employee.onboarding.items.filter(item => item.status === 'completed').length;
         employee.onboarding.checklist_completed_percentage = Math.round(
@@ -383,7 +388,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
           const employee = db.employees.find(e => e.id === employeeId);
           db.provisioned_accounts[employeeId].push({
             app_name: appName,
-            account_email: employee ? employee.email : `${employeeId}@mock-provision.com`,
+            account_email: employee ? employee.work_email : `${employeeId}@mock-provision.com`,
             status
           });
         }

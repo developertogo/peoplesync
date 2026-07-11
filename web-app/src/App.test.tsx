@@ -18,7 +18,7 @@ describe('PeopleSync Portal App', () => {
   it('renders floating chatbot icon by default', () => {
     render(<App />);
     // Since isMinimized defaults to true, the floating action button should exist
-    const chatbotBtn = screen.getByTitle('Open AI Onboarding Coach');
+    const chatbotBtn = screen.getByTitle('Open AI Assistant');
     expect(chatbotBtn).toBeInTheDocument();
   });
 });

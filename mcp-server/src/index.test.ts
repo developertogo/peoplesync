@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { readDb } from "./index";
+import { readDb } from "./index.js";
 
 describe("MCP Server Database", () => {
   it("reads seed data from db.json correctly", () => {

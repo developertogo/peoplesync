@@ -2,10 +2,10 @@
   "candidates": [
     {
       "id": "cnd_001",
-      "first_name": "Jordan",
+      "first_name": "John",
       "last_name": "Miller",
-      "email": "jordan.miller@example.com",
-      "phone": "+1-555-0199",
+      "email": "john.miller@gmail.com",
+      "phone": "+1-808-555-0199",
       "status": "active",
       "stage": "recruiter_screen",
       "applied_at": "2026-07-01T10:00:00Z",
@@ -14,16 +14,16 @@
         "title": "Staff Software Engineer, People Products",
         "department": "Applied AI / People Products"
       },
-      "resume": "JORDAN MILLER\nEmail: jordan.miller@example.com | San Francisco, CA\n\nEXPERIENCE\nLead Fullstack Engineer at HRflow AI (2022 - Present)\n- Built dynamic workflows integrating Greenhouse and Workday APIs for resume screening.\n- Led team of 4 engineers to design 0->1 products powered by LLMs, reducing screening latency by 40%.\n- Designed a custom internal tool protocol similar to Model Context Protocol (MCP) to load database tools into agent pipelines.\n- Proficient in TypeScript, React, Node.js, and Python.\n\nEDUCATION\nB.S. in Computer Science - Stanford University",
+      "resume": "JOHN MILLER\nEmail: john.miller@gmail.com | San Francisco, CA\n\nEXPERIENCE\nLead Fullstack Engineer at HRflow AI (2022 - Present)\n- Built dynamic workflows integrating Greenhouse and Workday APIs for resume screening.\n- Led team of 4 engineers to design 0->1 products powered by LLMs, reducing screening latency by 40%.\n- Designed a custom internal tool protocol similar to Model Context Protocol (MCP) to load database tools into agent pipelines.\n- Proficient in TypeScript, React, Node.js, and Python.\n\nEDUCATION\nB.S. in Computer Science - Stanford University",
       "interview_feedback": []
     },
     {
       "id": "cnd_002",
       "first_name": "Taylor",
       "last_name": "Chen",
-      "email": "taylor.chen@example.com",
-      "phone": "+1-555-0122",
-      "status": "hired",
+      "email": "taylor.chen@gmail.com",
+      "phone": "+1-808-555-0122",
+      "status": "active",
       "stage": "hired",
       "applied_at": "2026-06-15T09:00:00Z",
       "target_job": {
@@ -31,7 +31,7 @@
         "title": "AI Product Engineer",
         "department": "Applied AI"
       },
-      "resume": "TAYLOR CHEN\nEmail: taylor.chen@example.com | New York, NY\n\nEXPERIENCE\nLead AI Product Engineer at TechGenius (2021 - Present)\n- Built production-grade LLM integrations utilizing LangChain and LlamaIndex for enterprise search platforms.\n- Optimized token throughput and context window management, reducing API costs by 35%.\n- Designed responsive agent interfaces using React, TypeScript, TailwindCSS, and Next.js.\n- Engineered real-time WebSocket messaging systems to support interactive AI companion bots.\n\nEDUCATION\nM.S. in Software Engineering - MIT",
+      "resume": "TAYLOR CHEN\nEmail: taylor.chen@gmail.com | New York, NY\n\nEXPERIENCE\nLead AI Product Engineer at TechGenius (2021 - Present)\n- Built production-grade LLM integrations utilizing LangChain and LlamaIndex for enterprise search platforms.\n- Optimized token throughput and context window management, reducing API costs by 35%.\n- Designed responsive agent interfaces using React, TypeScript, TailwindCSS, and Next.js.\n- Engineered real-time WebSocket messaging systems to support interactive AI companion bots.\n\nEDUCATION\nM.S. in Software Engineering - MIT",
       "interview_feedback": [
         {
           "interviewer": "Sarah Jenkins",
@@ -39,6 +39,23 @@
           "notes": "Excellent systems thinking, designed a robust local-first caching layer for agent runs."
         }
       ]
+    },
+    {
+      "id": "cnd_004",
+      "first_name": "Mary",
+      "last_name": "Smith",
+      "email": "mary.smith@gmail.com",
+      "phone": "+1-808-555-0155",
+      "status": "active",
+      "stage": "hired",
+      "applied_at": "2026-07-05T11:00:00Z",
+      "target_job": {
+        "id": "job_103",
+        "title": "Frontend Engineer, Design Systems",
+        "department": "Product Design"
+      },
+      "resume": "MARY SMITH\nEmail: mary.smith@gmail.com | Austin, TX\n\nEXPERIENCE\nFrontend Engineer at Design Systems Corp (2023 - Present)\n- Developed reusable component library using React, TypeScript, and TailwindCSS.\n- Syncing UI tokens and design variables between Figma and React codebases.\n\nEDUCATION\nB.S. in Computer Science - University of Texas at Austin",
+      "interview_feedback": []
     }
   ],
   "employees": [
@@ -46,12 +63,16 @@
       "id": "emp_001",
       "first_name": "Sarah",
       "last_name": "Jenkins",
-      "email": "sarah.jenkins@anthropic-mock.com",
+      "personal_email": "sarah.jenkins@gmail.com",
+      "work_email": "sarah.jenkins@example.com",
       "title": "Director of Engineering, People Products",
       "hire_date": "2023-01-15",
       "supervisory_organization": "People Products Engineering Org",
       "manager_id": null,
-      "direct_reports": ["emp_002", "emp_003"],
+      "direct_reports": [
+        "emp_002",
+        "emp_003"
+      ],
       "peers": [],
       "onboarding": {
         "checklist_completed_percentage": 100,
@@ -62,21 +83,44 @@
       "id": "emp_002",
       "first_name": "Alex",
       "last_name": "Rivera",
-      "email": "alex.rivera@anthropic-mock.com",
+      "personal_email": "alex.rivera@gmail.com",
+      "work_email": "alex.rivera@example.com",
       "title": "Software Engineer, Onboarding Experience",
       "hire_date": "2026-06-20",
       "supervisory_organization": "People Products Engineering Org",
       "manager_id": "emp_001",
       "direct_reports": [],
-      "peers": ["emp_003"],
+      "peers": [
+        "emp_003"
+      ],
       "onboarding": {
-        "checklist_completed_percentage": 60,
+        "checklist_completed_percentage": 0,
         "items": [
-          { "id": "task_01", "name": "Review Codebase Setup", "status": "completed" },
-          { "id": "task_02", "name": "Read Security Guidelines", "status": "completed" },
-          { "id": "task_03", "name": "Set up Local Dev Environment", "status": "completed" },
-          { "id": "task_04", "name": "Submit Onboarding Feedback", "status": "pending" },
-          { "id": "task_05", "name": "First 1:1 with Sarah", "status": "pending" }
+          {
+            "id": "task_01",
+            "name": "Review Codebase Setup",
+            "status": "pending"
+          },
+          {
+            "id": "task_02",
+            "name": "Read Security Guidelines",
+            "status": "pending"
+          },
+          {
+            "id": "task_03",
+            "name": "Set up Local Dev Environment",
+            "status": "pending"
+          },
+          {
+            "id": "task_04",
+            "name": "Submit Onboarding Feedback",
+            "status": "pending"
+          },
+          {
+            "id": "task_05",
+            "name": "First 1:1 with Sarah",
+            "status": "pending"
+          }
         ]
       }
     },
@@ -84,24 +128,105 @@
       "id": "emp_003",
       "first_name": "Morgan",
       "last_name": "Lee",
-      "email": "morgan.lee@anthropic-mock.com",
+      "personal_email": "morgan.lee@gmail.com",
+      "work_email": "morgan.lee@example.com",
       "title": "Senior Product Engineer, Feedback Tools",
       "hire_date": "2024-03-10",
       "supervisory_organization": "People Products Engineering Org",
       "manager_id": "emp_001",
       "direct_reports": [],
-      "peers": ["emp_002"],
+      "peers": [
+        "emp_002"
+      ],
       "onboarding": {
-        "checklist_completed_percentage": 100,
-        "items": []
+        "checklist_completed_percentage": 0,
+        "items": [
+          {
+            "id": "task_01",
+            "name": "Review Codebase Setup",
+            "status": "pending"
+          }
+        ]
+      }
+    },
+    {
+      "id": "emp_004",
+      "first_name": "Taylor",
+      "last_name": "Chen",
+      "personal_email": "taylor.chen@gmail.com",
+      "work_email": "taylor.chen@example.com",
+      "title": "AI Product Engineer",
+      "hire_date": "2026-06-15",
+      "supervisory_organization": "People Products Engineering Org",
+      "manager_id": "emp_001",
+      "direct_reports": [],
+      "peers": [
+        "emp_002",
+        "emp_003",
+        "emp_005"
+      ],
+      "onboarding": {
+        "checklist_completed_percentage": 0,
+        "items": [
+          { "id": "task_01", "name": "Accepted Offer", "status": "pending" },
+          { "id": "task_02", "name": "Request Computer and Other Equipment", "status": "pending" },
+          { "id": "task_03", "name": "Review Codebase Setup", "status": "pending" },
+          { "id": "task_04", "name": "Read Security Guidelines", "status": "pending" },
+          { "id": "task_05", "name": "Set up Local Dev Environment", "status": "pending" },
+          { "id": "task_06", "name": "Health Benefits Enrollment", "status": "pending" },
+          { "id": "task_07", "name": "Submit Onboarding Feedback", "status": "pending" },
+          { "id": "task_08", "name": "First 1:1 with Sarah", "status": "pending" }
+        ]
+      }
+    },
+    {
+      "id": "emp_005",
+      "first_name": "Mary",
+      "last_name": "Smith",
+      "personal_email": "mary.smith@gmail.com",
+      "work_email": "mary.smith@example.com",
+      "title": "Frontend Engineer, Design Systems",
+      "hire_date": "2026-07-05",
+      "supervisory_organization": "People Products Engineering Org",
+      "manager_id": "emp_001",
+      "direct_reports": [],
+      "peers": [
+        "emp_002",
+        "emp_003",
+        "emp_004"
+      ],
+      "onboarding": {
+        "checklist_completed_percentage": 0,
+        "items": [
+          { "id": "task_01", "name": "Accepted Offer", "status": "pending" },
+          { "id": "task_02", "name": "Request Computer and Other Equipment", "status": "pending" },
+          { "id": "task_03", "name": "Review Codebase Setup", "status": "pending" },
+          { "id": "task_04", "name": "Read Security Guidelines", "status": "pending" },
+          { "id": "task_05", "name": "Set up Local Dev Environment", "status": "pending" },
+          { "id": "task_06", "name": "Health Benefits Enrollment", "status": "pending" },
+          { "id": "task_07", "name": "Submit Onboarding Feedback", "status": "pending" },
+          { "id": "task_08", "name": "First 1:1 with Sarah", "status": "pending" }
+        ]
       }
     }
   ],
   "provisioned_accounts": {
     "emp_002": [
-      { "app_name": "Slack", "account_email": "alex.rivera@anthropic-mock.com", "status": "active" },
-      { "app_name": "GitHub", "account_email": "alex.rivera@anthropic-mock.com", "status": "pending" },
-      { "app_name": "AWS Sandbox", "account_email": "alex.rivera@anthropic-mock.com", "status": "inactive" }
+      {
+        "app_name": "Slack",
+        "account_email": "alex.rivera@anthropic-mock.com",
+        "status": "active"
+      },
+      {
+        "app_name": "GitHub",
+        "account_email": "alex.rivera@anthropic-mock.com",
+        "status": "pending"
+      },
+      {
+        "app_name": "AWS Sandbox",
+        "account_email": "alex.rivera@anthropic-mock.com",
+        "status": "inactive"
+      }
     ]
   },
   "feedback": [
