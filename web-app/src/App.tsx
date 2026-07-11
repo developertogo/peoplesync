@@ -512,7 +512,7 @@ const [selectedCandidate, setSelectedCandidate] = useState(INITIAL_CANDIDATES[0]
     return list;
   }, [employees, onboardSearchText]);
   const [provisionedAccounts, setProvisionedAccounts] = useState<Array<{ app_name: string; account_email: string; status: 'active' | 'pending' | 'inactive' }>>(INITIAL_PROVISIONED_ACCOUNTS);
-  const [draggedAccountIndex, setDraggedAccountIndex] = useState<number | null>(null);
+
 
   // Rippling Search, Filter, Sort States
   const [isRipplingSearchOpen, setIsRipplingSearchOpen] = useState(false);
@@ -625,8 +625,6 @@ const [selectedCandidate, setSelectedCandidate] = useState(INITIAL_CANDIDATES[0]
 
     return result;
   }, [provisionedAccounts, ripplingSearchQuery, ripplingFilterStatus, ripplingSortOrder, selectedOnboardCandObj]);
-
-  const isDragEnabled = ripplingSearchQuery === '' && ripplingFilterStatus === 'all' && ripplingSortOrder === 'default';
 
   // Calibration/Bias State
   const [biasAccepted, setBiasAccepted] = useState(false);
@@ -2193,31 +2191,8 @@ const [selectedCandidate, setSelectedCandidate] = useState(INITIAL_CANDIDATES[0]
                   {processedAccounts.map((acc, index) => (
                     <div
                       key={acc.app_name}
-                      draggable={isDragEnabled}
-                      onDragStart={(e) => {
-                        if (!isDragEnabled) return;
-                        setDraggedAccountIndex(index);
-                        e.dataTransfer.effectAllowed = "move";
-                      }}
-                      onDragOver={(e) => {
-                        if (!isDragEnabled) return;
-                        e.preventDefault();
-                      }}
-                      onDrop={() => {
-                        if (!isDragEnabled || draggedAccountIndex === null || draggedAccountIndex === index) return;
-                        const updated = [...provisionedAccounts];
-                        const [removed] = updated.splice(draggedAccountIndex, 1);
-                        updated.splice(index, 0, removed);
-                        setProvisionedAccounts(updated);
-                        setDraggedAccountIndex(null);
-                      }}
-                      onDragEnd={() => setDraggedAccountIndex(null)}
-                      className={`grid grid-cols-[auto_2fr_1.2fr_auto] items-center gap-4 py-3.5 border-b last:border-b-0 transition-all duration-300 ${isDarkMode ? 'border-slate-700/40' : 'border-slate-200'} ${draggedAccountIndex === index ? 'opacity-40 scale-[0.98]' : ''}`}
+                      className={`grid grid-cols-[2fr_1.2fr_auto] items-center gap-4 py-3.5 border-b last:border-b-0 transition-all duration-300 ${isDarkMode ? 'border-slate-700/40' : 'border-slate-200'}`}
                     >
-                      {/* Column 0: Drag Handle */}
-                      <div className={`${isDragEnabled ? 'cursor-grab active:cursor-grabbing text-slate-500 hover:text-slate-300' : 'cursor-not-allowed text-slate-500/20 opacity-30'} p-1 shrink-0`}>
-                        <GripVertical className="w-3.5 h-3.5" />
-                      </div>
 
                       {/* Column 1: App Info */}
                       <div className="flex items-center space-x-3 min-w-0">
