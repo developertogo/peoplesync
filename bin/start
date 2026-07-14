@@ -19,16 +19,30 @@ trap cleanup SIGINT SIGTERM
 # Navigate to monorepo root if necessary, or just run the monorepo scripts
 cd "$(dirname "$0")/.."
 
+# Check if --local flag is provided as an argument
+USE_LOCAL="false"
+for arg in "$@"; do
+  if [ "$arg" = "--local" ]; then
+    USE_LOCAL="true"
+  fi
+done
+
+# If environment variable USE_LOCAL_DB_JSON is already set, respect it
+if [ "$USE_LOCAL_DB_JSON" = "true" ]; then
+  USE_LOCAL="true"
+fi
+
 echo "Starting Peoplesync Backend (MCP Server)..."
 npm run mcp:start &
 BACKEND_PID=$!
 
 echo "Starting Peoplesync Frontend (Vite)..."
-npm run web:dev &
+# Inject VITE_USE_LOCAL_DB_JSON env variable into Vite environment
+VITE_USE_LOCAL_DB_JSON=$USE_LOCAL npm run web:dev &
 FRONTEND_PID=$!
 
 echo "===================================================="
-echo "Peoplesync system started successfully!"
+echo "Peoplesync system started successfully! (Local DB Mode: $USE_LOCAL)"
 echo "Press Ctrl+C to stop both services."
 echo "===================================================="
 

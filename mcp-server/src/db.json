@@ -41,6 +41,23 @@
       ]
     },
     {
+      "id": "cnd_003",
+      "first_name": "Lisa",
+      "last_name": "Vance",
+      "email": "lisa.vance@gmail.com",
+      "phone": "+1-808-555-0133",
+      "status": "active",
+      "stage": "panel_interview",
+      "applied_at": "2026-06-18T14:30:00Z",
+      "target_job": {
+        "id": "job_103",
+        "title": "Senior Product Designer",
+        "department": "Product Design"
+      },
+      "resume": "LISA VANCE\nEmail: lisa.vance@gmail.com | Phone: +1-808-555-0133 | Seattle, WA\n\nEXPERIENCE\nSenior Product Designer at DesignStudio (2020 - Present)\n- Led UX redesign of flagship enterprise platform, increasing user activation by 25%.\n- Designed complex workflow visualization systems and interactive components.\n- Expert in Figma, React prototyping, and responsive design frameworks.\n\nEDUCATION\nB.F.A. in Interaction Design - Carnegie Mellon University",
+      "interview_feedback": []
+    },
+    {
       "id": "cnd_004",
       "first_name": "Mary",
       "last_name": "Smith",
@@ -50,7 +67,7 @@
       "stage": "hired",
       "applied_at": "2026-07-05T11:00:00Z",
       "target_job": {
-        "id": "job_103",
+        "id": "job_104",
         "title": "Frontend Engineer, Design Systems",
         "department": "Product Design"
       },
@@ -94,32 +111,32 @@
         "emp_003"
       ],
       "onboarding": {
-        "checklist_completed_percentage": 0,
+        "checklist_completed_percentage": 100,
         "items": [
           {
             "id": "task_01",
             "name": "Review Codebase Setup",
-            "status": "pending"
+            "status": "completed"
           },
           {
             "id": "task_02",
             "name": "Read Security Guidelines",
-            "status": "pending"
+            "status": "completed"
           },
           {
             "id": "task_03",
             "name": "Set up Local Dev Environment",
-            "status": "pending"
+            "status": "completed"
           },
           {
             "id": "task_04",
             "name": "Submit Onboarding Feedback",
-            "status": "pending"
+            "status": "completed"
           },
           {
             "id": "task_05",
             "name": "First 1:1 with Sarah",
-            "status": "pending"
+            "status": "completed"
           }
         ]
       }
@@ -127,9 +144,9 @@
     {
       "id": "emp_003",
       "first_name": "Morgan",
-      "last_name": "Lee",
-      "personal_email": "morgan.lee@gmail.com",
-      "work_email": "morgan.lee@example.com",
+      "last_name": "Brown",
+      "personal_email": "morgan.brown@gmail.com",
+      "work_email": "morgan.brown@example.com",
       "title": "Senior Product Engineer, Feedback Tools",
       "hire_date": "2024-03-10",
       "supervisory_organization": "People Products Engineering Org",
@@ -139,12 +156,47 @@
         "emp_002"
       ],
       "onboarding": {
-        "checklist_completed_percentage": 0,
+        "checklist_completed_percentage": 100,
         "items": [
           {
             "id": "task_01",
+            "name": "Accepted Offer",
+            "status": "completed"
+          },
+          {
+            "id": "task_02",
+            "name": "Request Computer and Other Equipment",
+            "status": "completed"
+          },
+          {
+            "id": "task_03",
             "name": "Review Codebase Setup",
-            "status": "pending"
+            "status": "completed"
+          },
+          {
+            "id": "task_04",
+            "name": "Read Security Guidelines",
+            "status": "completed"
+          },
+          {
+            "id": "task_05",
+            "name": "Set up Local Dev Environment",
+            "status": "completed"
+          },
+          {
+            "id": "task_06",
+            "name": "Health Benefits Enrollment",
+            "status": "completed"
+          },
+          {
+            "id": "task_07",
+            "name": "Submit Onboarding Feedback",
+            "status": "completed"
+          },
+          {
+            "id": "task_08",
+            "name": "First 1:1 with Sarah",
+            "status": "completed"
           }
         ]
       }
@@ -166,16 +218,48 @@
         "emp_005"
       ],
       "onboarding": {
-        "checklist_completed_percentage": 0,
+        "checklist_completed_percentage": 63,
         "items": [
-          { "id": "task_01", "name": "Accepted Offer", "status": "pending" },
-          { "id": "task_02", "name": "Request Computer and Other Equipment", "status": "pending" },
-          { "id": "task_03", "name": "Review Codebase Setup", "status": "pending" },
-          { "id": "task_04", "name": "Read Security Guidelines", "status": "pending" },
-          { "id": "task_05", "name": "Set up Local Dev Environment", "status": "pending" },
-          { "id": "task_06", "name": "Health Benefits Enrollment", "status": "pending" },
-          { "id": "task_07", "name": "Submit Onboarding Feedback", "status": "pending" },
-          { "id": "task_08", "name": "First 1:1 with Sarah", "status": "pending" }
+          {
+            "id": "task_01",
+            "name": "Accepted Offer",
+            "status": "completed"
+          },
+          {
+            "id": "task_02",
+            "name": "Request Computer and Other Equipment",
+            "status": "completed"
+          },
+          {
+            "id": "task_03",
+            "name": "Review Codebase Setup",
+            "status": "completed"
+          },
+          {
+            "id": "task_04",
+            "name": "Read Security Guidelines",
+            "status": "completed"
+          },
+          {
+            "id": "task_05",
+            "name": "Set up Local Dev Environment",
+            "status": "completed"
+          },
+          {
+            "id": "task_06",
+            "name": "Health Benefits Enrollment",
+            "status": "pending"
+          },
+          {
+            "id": "task_07",
+            "name": "Submit Onboarding Feedback",
+            "status": "pending"
+          },
+          {
+            "id": "task_08",
+            "name": "First 1:1 with Sarah",
+            "status": "pending"
+          }
         ]
       }
     },
@@ -196,16 +280,48 @@
         "emp_004"
       ],
       "onboarding": {
-        "checklist_completed_percentage": 0,
+        "checklist_completed_percentage": 25,
         "items": [
-          { "id": "task_01", "name": "Accepted Offer", "status": "pending" },
-          { "id": "task_02", "name": "Request Computer and Other Equipment", "status": "pending" },
-          { "id": "task_03", "name": "Review Codebase Setup", "status": "pending" },
-          { "id": "task_04", "name": "Read Security Guidelines", "status": "pending" },
-          { "id": "task_05", "name": "Set up Local Dev Environment", "status": "pending" },
-          { "id": "task_06", "name": "Health Benefits Enrollment", "status": "pending" },
-          { "id": "task_07", "name": "Submit Onboarding Feedback", "status": "pending" },
-          { "id": "task_08", "name": "First 1:1 with Sarah", "status": "pending" }
+          {
+            "id": "task_01",
+            "name": "Accepted Offer",
+            "status": "completed"
+          },
+          {
+            "id": "task_02",
+            "name": "Request Computer and Other Equipment",
+            "status": "completed"
+          },
+          {
+            "id": "task_03",
+            "name": "Review Codebase Setup",
+            "status": "completed"
+          },
+          {
+            "id": "task_04",
+            "name": "Read Security Guidelines",
+            "status": "pending"
+          },
+          {
+            "id": "task_05",
+            "name": "Set up Local Dev Environment",
+            "status": "pending"
+          },
+          {
+            "id": "task_06",
+            "name": "Health Benefits Enrollment",
+            "status": "pending"
+          },
+          {
+            "id": "task_07",
+            "name": "Submit Onboarding Feedback",
+            "status": "pending"
+          },
+          {
+            "id": "task_08",
+            "name": "First 1:1 with Sarah",
+            "status": "pending"
+          }
         ]
       }
     }
@@ -233,7 +349,7 @@
     {
       "id": "fb_001",
       "employee_id": "emp_003",
-      "reviewer": "Morgan Lee (Self-Review)",
+      "reviewer": "Morgan Brown (Self-Review)",
       "content": "I successfully launched the new 1:1 notes tracking dashboard last week, which has already been adopted by 15 teams.",
       "type": "self"
     },

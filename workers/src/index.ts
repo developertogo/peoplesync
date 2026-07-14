@@ -1,6 +1,22 @@
 import { registerWorker } from "iii-sdk";
 import { exec } from "child_process";
 import * as path from "path";
+import * as fs from "fs";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const DB_PATH = path.resolve(__dirname, "../../mcp-server/src/db.json");
+
+function readDb() {
+  const data = fs.readFileSync(DB_PATH, "utf-8");
+  return JSON.parse(data);
+}
+
+function writeDb(db: any) {
+  fs.writeFileSync(DB_PATH, JSON.stringify(db, null, 2), "utf-8");
+}
 
 const III_URL = process.env.III_URL || "ws://localhost:49134";
 
@@ -127,6 +143,68 @@ if (process.env.NODE_ENV !== "test") {
       return { success: true, result };
     } catch (err: any) {
       return { success: false, error: err.message };
+    }
+  });
+
+  // 5. Register Database HTTP Gateway Functions
+  worker.registerFunction("db::get", async (payload: any) => {
+    try {
+      const db = readDb();
+      return {
+        status_code: 200,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+          "Access-Control-Allow-Headers": "Content-Type"
+        },
+        body: JSON.stringify(db)
+      };
+    } catch (err: any) {
+      return {
+        status_code: 500,
+        body: JSON.stringify({ error: err.message })
+      };
+    }
+  });
+
+  worker.registerTrigger({
+    type: "http",
+    function_id: "db::get",
+    config: {
+      api_path: "/api/db",
+      http_method: "GET"
+    }
+  });
+
+  worker.registerFunction("db::set", async (payload: any) => {
+    try {
+      const newDb = typeof payload.body === "string" ? JSON.parse(payload.body) : payload.body;
+      writeDb(newDb);
+      return {
+        status_code: 200,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+          "Access-Control-Allow-Headers": "Content-Type"
+        },
+        body: JSON.stringify({ success: true })
+      };
+    } catch (err: any) {
+      return {
+        status_code: 400,
+        body: JSON.stringify({ error: err.message })
+      };
+    }
+  });
+
+  worker.registerTrigger({
+    type: "http",
+    function_id: "db::set",
+    config: {
+      api_path: "/api/db",
+      http_method: "POST"
     }
   });
 
