@@ -3,15 +3,14 @@ import {
   ChevronDown, 
   X, 
   Plus, 
-  Check, 
-  Trash2, 
   Search, 
-  Filter, 
-  RefreshCw 
+  Filter 
 } from 'lucide-react';
 import { usePeopleStore } from '../store/peopleStore';
 import { renderAppIcon } from '../App';
 import { EmployeeSearchDropdown } from './EmployeeSearchDropdown';
+import { OnboardingTaskItem } from './onboarding/OnboardingTaskItem';
+import { RipplingAccountRow } from './onboarding/RipplingAccountRow';
 
 interface OnboardingBuddyProps {
   isDarkMode: boolean;
@@ -69,7 +68,32 @@ export const OnboardingBuddy: React.FC<OnboardingBuddyProps> = ({
   const ripplingSortOrder = usePeopleStore(state => state.ripplingSortOrder);
   const setRipplingSortOrder = usePeopleStore(state => state.setRipplingSortOrder);
 
-  const selectedOnboardCandObj = employees.find(e => e.id === selectedOnboardCandidateId);
+  const onboardingCandidatesList = React.useMemo(() => {
+    return employees.filter(emp => emp.onboarding.items.some(item => item.status === 'pending'))
+      .sort((a, b) => {
+        const aLastName = a.name.split(' ').slice(-1)[0] || '';
+        const bLastName = b.name.split(' ').slice(-1)[0] || '';
+        return aLastName.localeCompare(bLastName);
+      });
+  }, [employees]);
+
+  const firstEligible = onboardingCandidatesList[0]?.id;
+
+  const [activeOnboardId, setActiveOnboardId] = React.useState<string>(() => {
+    const initialCand = employees.find(e => e.id === selectedOnboardCandidateId);
+    const isEligible = initialCand && initialCand.onboarding.items.some(item => item.status === 'pending');
+    return isEligible ? selectedOnboardCandidateId : (firstEligible || selectedOnboardCandidateId);
+  });
+
+  React.useEffect(() => {
+    const newCand = employees.find(e => e.id === selectedOnboardCandidateId);
+    const isEligible = newCand && newCand.onboarding.items.some(item => item.status === 'pending');
+    if (isEligible) {
+      setActiveOnboardId(selectedOnboardCandidateId);
+    }
+  }, [selectedOnboardCandidateId, employees]);
+
+  const selectedOnboardCandObj = employees.find(e => e.id === activeOnboardId) || employees.find(e => e.id === firstEligible);
   const rawOnboardingItems = selectedOnboardCandObj?.onboarding.items || [];
 
   const onboardingItems = React.useMemo(() => {
@@ -81,15 +105,6 @@ export const OnboardingBuddy: React.FC<OnboardingBuddyProps> = ({
 
   const completedCount = rawOnboardingItems.filter(item => item.status === 'completed').length;
   const completionPercentage = rawOnboardingItems.length > 0 ? Math.round((completedCount / rawOnboardingItems.length) * 105) : 0;
-
-  const onboardingCandidatesList = React.useMemo(() => {
-    return employees.filter(emp => emp.onboarding.items.some(item => item.status === 'pending'))
-      .sort((a, b) => {
-        const aLastName = a.name.split(' ').slice(-1)[0] || '';
-        const bLastName = b.name.split(' ').slice(-1)[0] || '';
-        return aLastName.localeCompare(bLastName);
-      });
-  }, [employees]);
 
   const processedAccounts = React.useMemo(() => {
     let result = provisionedAccounts.map(acc => ({
@@ -258,7 +273,7 @@ export const OnboardingBuddy: React.FC<OnboardingBuddyProps> = ({
           <EmployeeSearchDropdown
             isDarkMode={isDarkMode}
             label="Select Onboarding Candidate"
-            selectedValue={selectedOnboardCandidateId}
+            selectedValue={selectedOnboardCandObj?.id || selectedOnboardCandidateId}
             onSelect={setSelectedOnboardCandidateId}
             employees={onboardingCandidatesList}
             badgeSelector={(emp) => emp.target_job || 'Hired'}
@@ -333,85 +348,21 @@ export const OnboardingBuddy: React.FC<OnboardingBuddyProps> = ({
 
         {/* List */}
         <div className="space-y-2 flex-1 overflow-y-auto pr-1">
-          {onboardingItems.map((item) => {
-            const isExpanded = expandedTaskNoteId === item.id;
-            return (
-              <div
-                key={item.id}
-                className={`flex flex-col rounded-xl border transition-all duration-300 ${isDarkMode ? 'bg-slate-900/35 border-slate-700/40' : 'bg-white border-slate-205 shadow-sm'} ${isExpanded ? 'ring-1 ring-primary/30' : ''}`}
-              >
-                <div
-                  onClick={() => toggleOnboardingItem(item.id)}
-                  className="flex items-center justify-between space-x-3 p-3.5 cursor-pointer select-none"
-                >
-                  <div className="flex items-center space-x-3.5 flex-1 min-w-0">
-                    <div className={`w-5 h-5 rounded flex items-center justify-center transition-all shrink-0 ${item.status === 'completed' ? 'bg-primary text-white' : `border ${isDarkMode ? 'border-slate-700' : 'border-slate-300'}`}`}>
-                      {item.status === 'completed' && <Check className="w-3.5 h-3.5" />}
-                    </div>
-                    <span className={`text-sm truncate ${item.status === 'completed' ? 'line-through text-slate-505' : (isDarkMode ? 'text-slate-200' : 'text-slate-805')}`}>
-                      {item.name}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center space-x-2 shrink-0">
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        if (isExpanded) {
-                          saveTaskNote(item.id, editingNotes[item.id] || '');
-                          setExpandedTaskNoteId(null);
-                        } else {
-                          setEditingNotes({ ...editingNotes, [item.id]: item.note || '' });
-                          setExpandedTaskNoteId(item.id);
-                        }
-                      }}
-                      className={`p-1.5 rounded-lg border transition-all cursor-pointer flex items-center justify-center ${isDarkMode ? 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white' : 'bg-white border-slate-200 text-slate-500 hover:text-slate-705 shadow-sm'}`}
-                      title="Toggle Task Notes"
-                    >
-                      <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${isExpanded ? 'rotate-180 text-primary' : ''}`} />
-                    </button>
-
-                    {isEditingChecklist && item.status === 'pending' && (
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          deleteOnboardingItem(item.id);
-                        }}
-                        className={`p-1.5 rounded-lg border transition-all cursor-pointer flex items-center justify-center shrink-0 ${isDarkMode ? 'bg-slate-900 border-slate-800 text-slate-400 hover:text-red-400 hover:border-red-500/30' : 'bg-white border-slate-200 text-slate-500 hover:text-red-550 hover:border-red-550/30 shadow-sm'}`}
-                        title="Delete Task"
-                      >
-                        <Trash2 className="w-3.5 h-3.5" />
-                      </button>
-                    )}
-                  </div>
-                </div>
-
-                {isExpanded && (
-                  <div className={`p-3 border-t ${isDarkMode ? 'border-slate-800 bg-slate-950/20' : 'border-slate-200 bg-slate-50/50'}`}>
-                    <textarea
-                      rows={2}
-                      value={editingNotes[item.id] !== undefined ? editingNotes[item.id] : (item.note || '')}
-                      onChange={(e) => {
-                        const val = e.target.value;
-                        setEditingNotes({ ...editingNotes, [item.id]: val });
-                      }}
-                      onBlur={() => {
-                        saveTaskNote(item.id, editingNotes[item.id] || '');
-                      }}
-                      placeholder="Write a task note (auto-saves)..."
-                      className={`w-full text-xs border rounded-lg p-2 focus:outline-none focus:border-primary resize-y min-h-[38px] ${isDarkMode ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-800'}`}
-                    />
-                    {item.note && (
-                      <div className="text-[10px] text-emerald-400 mt-1 flex items-center space-x-1">
-                        <Check className="w-3 h-3" />
-                        <span>Saved</span>
-                      </div>
-                    )}
-                  </div>
-                )}
-              </div>
-            );
-          })}
+          {onboardingItems.map((item) => (
+            <OnboardingTaskItem
+              key={item.id}
+              item={item}
+              isDarkMode={isDarkMode}
+              isExpanded={expandedTaskNoteId === item.id}
+              isEditingChecklist={isEditingChecklist}
+              editingNotes={editingNotes}
+              setEditingNotes={setEditingNotes}
+              setExpandedTaskNoteId={setExpandedTaskNoteId}
+              toggleOnboardingItem={toggleOnboardingItem}
+              deleteOnboardingItem={deleteOnboardingItem}
+              saveTaskNote={saveTaskNote}
+            />
+          ))}
         </div>
       </div>
 
@@ -579,53 +530,13 @@ export const OnboardingBuddy: React.FC<OnboardingBuddyProps> = ({
 
         <div className={`divide-y transition-colors duration-500 ${isDarkMode ? 'divide-slate-800/40' : 'divide-slate-205'}`}>
           {processedAccounts.map((acc) => (
-            <div
+            <RipplingAccountRow
               key={acc.app_name}
-              className={`grid grid-cols-[2fr_1.2fr_auto] items-center gap-4 py-3.5 border-b last:border-b-0 transition-all duration-305 ${isDarkMode ? 'border-slate-700/40' : 'border-slate-200'}`}
-            >
-              <div className="flex items-center space-x-3 min-w-0">
-                <div className={`w-8 h-8 rounded-lg border flex items-center justify-center shrink-0 transition-colors duration-500 ${isDarkMode ? 'bg-slate-900 border-slate-700/50' : 'bg-slate-100 border-slate-200'}`}>
-                  {renderAppIcon(acc.app_name, isDarkMode)}
-                </div>
-                <div className="min-w-0">
-                  <div className={`text-sm font-medium truncate ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{acc.app_name}</div>
-                  <div className={`text-xs truncate ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>
-                    {acc.app_name.toLowerCase() === 'slack' ? `@${acc.account_email.split('@')[0]}` : acc.account_email}
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex justify-start">
-                <span className={`text-xs px-2.5 py-1 rounded-full font-medium flex items-center space-x-1.5 ${acc.status === 'active'
-                  ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
-                  : acc.status === 'pending'
-                    ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
-                    : 'bg-slate-500/10 text-slate-400 border border-slate-500/20'
-                  }`}>
-                  <span className={`w-1.5 h-1.5 rounded-full ${acc.status === 'active'
-                    ? 'bg-emerald-400 animate-pulse'
-                    : acc.status === 'pending'
-                      ? 'bg-amber-400'
-                      : 'bg-slate-400'
-                    }`}></span>
-                  <span>
-                    {acc.status === 'active' && 'Active'}
-                    {acc.status === 'pending' && 'Pending'}
-                    {acc.status === 'inactive' && 'Inactive'}
-                  </span>
-                </span>
-              </div>
-
-              <div className="flex justify-end">
-                <button
-                  onClick={() => toggleAccountStatus(acc.app_name)}
-                  className={`p-1.5 rounded-lg border transition-colors ${isDarkMode ? 'bg-slate-900 hover:bg-slate-800 border-slate-700/60 text-slate-400 hover:text-slate-202' : 'bg-white hover:bg-slate-50 border-slate-200 text-slate-505 hover:text-slate-707 shadow-sm'}`}
-                  title="Toggle Account Status"
-                >
-                  <RefreshCw className="w-3.5 h-3.5" />
-                </button>
-              </div>
-            </div>
+              acc={acc}
+              isDarkMode={isDarkMode}
+              renderAppIcon={renderAppIcon}
+              toggleAccountStatus={toggleAccountStatus}
+            />
           ))}
         </div>
       </div>

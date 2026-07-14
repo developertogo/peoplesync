@@ -327,7 +327,8 @@ export default function App() {
         if (selectedCalibrateCandidateId !== match.id) {
           setSelectedCalibrateCandidateId(match.id);
         }
-        if (selectedOnboardCandidateId !== match.id) {
+        const hasPending = match.onboarding.items.some(item => item.status === 'pending');
+        if (hasPending && selectedOnboardCandidateId !== match.id) {
           setSelectedOnboardCandidateId(match.id);
         }
       }
@@ -355,7 +356,8 @@ export default function App() {
     if (activeTab === 'calibrate' && selectedCalibrateCandidateId) {
       const matchEmp = employees.find(e => e.id === selectedCalibrateCandidateId);
       if (matchEmp) {
-        if (selectedOnboardCandidateId !== selectedCalibrateCandidateId) {
+        const hasPending = matchEmp.onboarding.items.some(item => item.status === 'pending');
+        if (hasPending && selectedOnboardCandidateId !== selectedCalibrateCandidateId) {
           setSelectedOnboardCandidateId(selectedCalibrateCandidateId);
         }
         const matchCand = candidates.find(c => c.name === matchEmp.name);

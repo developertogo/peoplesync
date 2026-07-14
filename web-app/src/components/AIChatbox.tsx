@@ -5,6 +5,8 @@ import {
   Send 
 } from 'lucide-react';
 import { usePeopleStore } from '../store/peopleStore';
+import { ChatResizeEdges } from './chat/ChatResizeEdges';
+import { ChatMessageItem } from './chat/ChatMessageItem';
 
 interface AIChatboxProps {
   isDarkMode: boolean;
@@ -378,11 +380,13 @@ export const AIChatbox: React.FC<AIChatboxProps> = ({
           if (!matchingCandExists && !matchingEmpExists && !isStageKeyword) {
             responseText = `Candidate or employee "${filterKeyword}" was not found in our database.`;
             searchMatched = true;
-          } else {
+          } else if (matchingCandExists) {
             setCandidateSearchQuery(filterKeyword);
             setCandidateFilterStages(['all']);
             setIsCandidateSearchOpen(true);
             uiUpdatedMsg = ` *(Filtered candidate list by: "${filterKeyword}")*`;
+            searchMatched = true;
+          } else {
             searchMatched = true;
           }
         }
@@ -493,51 +497,7 @@ export const AIChatbox: React.FC<AIChatboxProps> = ({
           className={`flex flex-col rounded-2xl border backdrop-blur-2xl shadow-2xl z-40 transition-all duration-300 ${isDarkMode ? 'bg-[#0B0F19]/90 border-slate-700/80 shadow-black/40' : 'bg-white/95 border-slate-200/90 shadow-slate-300'} ${isMobileView ? 'fixed bottom-4 left-4 right-4' : ''}`}
         >
           {!isMobileView && (
-            <>
-              {/* Edges */}
-              <div
-                onMouseDown={(e) => startResizingChat(e, 'n')}
-                className="absolute -top-1 left-3 right-3 h-3 cursor-ns-resize z-50 hover:bg-primary/30 transition-colors"
-              />
-              <div
-                onMouseDown={(e) => startResizingChat(e, 's')}
-                className="absolute -bottom-1.5 left-0 right-0 h-4 cursor-ns-resize z-50 hover:bg-primary/30 transition-colors"
-              />
-              <div
-                onMouseDown={(e) => startResizingChat(e, 'e')}
-                className="absolute top-3 bottom-3 -right-1 w-3 cursor-ew-resize z-50 hover:bg-primary/30 transition-colors"
-              />
-              <div
-                onMouseDown={(e) => startResizingChat(e, 'w')}
-                className="absolute top-3 bottom-3 -left-1 w-3 cursor-ew-resize z-50 hover:bg-primary/30 transition-colors"
-              />
-              {/* Corners */}
-              <div
-                onMouseDown={(e) => startResizingChat(e, 'nw')}
-                className="absolute top-0 left-0 w-3.5 h-3.5 cursor-nwse-resize z-50 hover:bg-primary/30 transition-colors"
-              />
-              <div
-                onMouseDown={(e) => startResizingChat(e, 'ne')}
-                className="absolute top-0 right-0 w-3.5 h-3.5 cursor-nesw-resize z-50 hover:bg-primary/30 transition-colors"
-              />
-              <div
-                onMouseDown={(e) => startResizingChat(e, 'sw')}
-                className="absolute bottom-0 left-0 w-3.5 h-3.5 cursor-nesw-resize z-50 hover:bg-primary/30 transition-colors"
-              />
-              <div
-                onMouseDown={(e) => startResizingChat(e, 'se')}
-                className="absolute bottom-0 right-0 w-3.5 h-3.5 cursor-nwse-resize z-50 hover:bg-primary/30 transition-colors"
-              />
-
-              {/* Bottom Right Resize Grip Visual Indicator */}
-              <div className="absolute bottom-1 right-1 pointer-events-none z-30">
-                <svg width="10" height="10" viewBox="0 0 10 10" className={`w-2.5 h-2.5 ${isDarkMode ? 'text-slate-550' : 'text-slate-400'}`}>
-                  <line x1="8" y1="10" x2="10" y2="8" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-                  <line x1="5" y1="10" x2="10" y2="5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-                  <line x1="2" y1="10" x2="10" y2="2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-                </svg>
-              </div>
-            </>
+            <ChatResizeEdges startResizingChat={startResizingChat} isDarkMode={isDarkMode} />
           )}
 
           {/* Header */}
@@ -570,11 +530,7 @@ export const AIChatbox: React.FC<AIChatboxProps> = ({
           {/* Message display */}
           <div className="flex-1 p-4 overflow-y-auto space-y-4">
             {chatMessages.map((msg, idx) => (
-              <div key={idx} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`max-w-[85%] rounded-xl px-4 py-2.5 text-xs leading-relaxed ${msg.sender === 'user' ? 'bg-gradient-to-r from-primary to-accent text-white rounded-tr-none font-medium' : `rounded-tl-none border ${isDarkMode ? 'bg-slate-900 border-slate-800/60 text-slate-205' : 'bg-slate-100 border-slate-205 text-slate-808'}`}`}>
-                  {msg.text}
-                </div>
-              </div>
+              <ChatMessageItem key={idx} msg={msg} isDarkMode={isDarkMode} />
             ))}
             <div ref={chatEndRef} />
           </div>
