@@ -216,7 +216,7 @@ export interface PeopleState {
   selectedCandidate: Candidate;
   draggedCandidateIndex: number | null;
   candidateSearchQuery: string;
-  candidateFilterStage: 'all' | 'application' | 'recruiter_screen' | 'manager_screen' | 'panel_interview' | 'final_interview' | 'offer' | 'archived' | 'hired';
+  candidateFilterStages: string[];
   isCandidateSearchOpen: boolean;
   isStageMenuOpen: boolean;
   isResumeExpanded: boolean;
@@ -277,7 +277,7 @@ export interface PeopleActions {
   setSelectedCandidate: (cand: Candidate) => void;
   setDraggedCandidateIndex: (idx: number | null) => void;
   setCandidateSearchQuery: (query: string) => void;
-  setCandidateFilterStage: (stage: PeopleState['candidateFilterStage']) => void;
+  setCandidateFilterStages: (stages: string[]) => void;
   setIsCandidateSearchOpen: (open: boolean) => void;
   setIsStageMenuOpen: (open: boolean) => void;
   setIsResumeExpanded: (expanded: boolean) => void;
@@ -362,7 +362,7 @@ export const usePeopleStore = create<PeopleStore>()(
     })(),
     draggedCandidateIndex: null,
     candidateSearchQuery: '',
-    candidateFilterStage: 'all',
+    candidateFilterStages: ['all'],
     isCandidateSearchOpen: false,
     isStageMenuOpen: false,
     isResumeExpanded: false,
@@ -537,7 +537,7 @@ export const usePeopleStore = create<PeopleStore>()(
     },
     setDraggedCandidateIndex: (draggedCandidateIndex) => set({ draggedCandidateIndex }),
     setCandidateSearchQuery: (candidateSearchQuery) => set({ candidateSearchQuery }),
-    setCandidateFilterStage: (candidateFilterStage) => set({ candidateFilterStage }),
+    setCandidateFilterStages: (candidateFilterStages) => set({ candidateFilterStages }),
     setIsCandidateSearchOpen: (isCandidateSearchOpen) => set({ isCandidateSearchOpen }),
     setIsStageMenuOpen: (isStageMenuOpen) => set({ isStageMenuOpen }),
     setIsResumeExpanded: (isResumeExpanded) => set({ isResumeExpanded }),

@@ -28,6 +28,7 @@ export const EmployeeSearchDropdown: React.FC<EmployeeSearchDropdownProps> = ({
   const [isOpen, setIsOpen] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [activeIndex, setActiveIndex] = useState<number>(-1);
+  const [visibleCount, setVisibleCount] = useState(5);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
@@ -55,10 +56,11 @@ export const EmployeeSearchDropdown: React.FC<EmployeeSearchDropdownProps> = ({
     }
   }, [isOpen]);
 
-  // Reset activeIndex when text changes
+  // Reset activeIndex and visibleCount when text or open state changes
   useEffect(() => {
     setActiveIndex(-1);
-  }, [searchText]);
+    setVisibleCount(5);
+  }, [searchText, isOpen]);
 
   // Close dropdown on click outside
   useEffect(() => {
@@ -73,25 +75,35 @@ export const EmployeeSearchDropdown: React.FC<EmployeeSearchDropdownProps> = ({
   }, []);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (filteredEmployees.length === 0) return;
+    const sliced = filteredEmployees.slice(0, visibleCount);
+    if (sliced.length === 0) return;
 
     if (e.key === 'ArrowDown') {
       e.preventDefault();
-      setActiveIndex(prev => (prev + 1) % filteredEmployees.length);
+      setActiveIndex(prev => (prev + 1) % sliced.length);
     } else if (e.key === 'ArrowUp') {
       e.preventDefault();
-      setActiveIndex(prev => (prev - 1 + filteredEmployees.length) % filteredEmployees.length);
+      setActiveIndex(prev => (prev - 1 + sliced.length) % sliced.length);
     } else if (e.key === 'Enter') {
       e.preventDefault();
-      if (filteredEmployees.length === 1) {
-        onSelect(filteredEmployees[0].id);
+      if (sliced.length === 1) {
+        onSelect(sliced[0].id);
         setIsOpen(false);
-      } else if (activeIndex >= 0 && activeIndex < filteredEmployees.length) {
-        onSelect(filteredEmployees[activeIndex].id);
+      } else if (activeIndex >= 0 && activeIndex < sliced.length) {
+        onSelect(sliced[activeIndex].id);
         setIsOpen(false);
       }
     } else if (e.key === 'Escape') {
       setIsOpen(false);
+    }
+  };
+
+  const handleDropdownScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const target = e.currentTarget;
+    if (target.scrollHeight - target.scrollTop <= target.clientHeight + 15) {
+      if (visibleCount < filteredEmployees.length) {
+        setVisibleCount(prev => Math.min(prev + 5, filteredEmployees.length));
+      }
     }
   };
 
@@ -110,7 +122,7 @@ export const EmployeeSearchDropdown: React.FC<EmployeeSearchDropdownProps> = ({
           setIsOpen(!isOpen);
           setSearchText('');
         }}
-        className={`w-full flex items-center justify-between border text-xs font-semibold rounded-lg px-2.5 py-2.5 focus:outline-none focus:border-primary transition-colors cursor-pointer ${isDarkMode ? 'bg-slate-900 border-slate-700 text-white hover:bg-slate-800/50' : 'bg-white border-slate-200 text-slate-808 hover:bg-slate-55 shadow-sm'}`}
+        className={`w-full flex items-center justify-between border text-xs font-semibold rounded-lg px-2.5 py-2.5 focus:outline-none focus:border-primary transition-colors cursor-pointer ${isDarkMode ? 'bg-slate-900 border-slate-700 text-white hover:bg-slate-800/50' : 'bg-white border-slate-200 text-slate-888 hover:bg-slate-55 shadow-sm'}`}
       >
         <span className="flex items-center space-x-2 truncate">
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
@@ -147,11 +159,11 @@ export const EmployeeSearchDropdown: React.FC<EmployeeSearchDropdownProps> = ({
               </button>
             )}
           </div>
-          <div className="max-h-48 overflow-y-auto">
+          <div onScroll={handleDropdownScroll} className="max-h-48 overflow-y-auto">
             {filteredEmployees.length === 0 ? (
               <div className="p-3 text-xs text-slate-500 text-center">No employees found</div>
             ) : (
-              filteredEmployees.map((e, idx) => (
+              filteredEmployees.slice(0, visibleCount).map((e, idx) => (
                 <button
                   type="button"
                   key={e.id}
@@ -162,6 +174,11 @@ export const EmployeeSearchDropdown: React.FC<EmployeeSearchDropdownProps> = ({
                   <span className="text-[10px] text-slate-500 truncate w-full">{e.target_job} • {e.department}</span>
                 </button>
               ))
+            )}
+            {visibleCount < filteredEmployees.length && (
+              <div className="py-2 text-center text-[9px] font-semibold text-slate-500 uppercase tracking-wider animate-pulse border-t dark:border-slate-800 border-slate-100">
+                Scroll for more...
+              </div>
             )}
           </div>
         </div>

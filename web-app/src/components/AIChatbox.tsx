@@ -25,8 +25,8 @@ export const AIChatbox: React.FC<AIChatboxProps> = ({
   const setSelectedOnboardCandidateId = usePeopleStore(state => state.setSelectedOnboardCandidateId);
   const setSelectedCalibrateCandidateId = usePeopleStore(state => state.setSelectedCalibrateCandidateId);
   
-  const candidateFilterStage = usePeopleStore(state => state.candidateFilterStage);
-  const setCandidateFilterStage = usePeopleStore(state => state.setCandidateFilterStage);
+  const candidateFilterStages = usePeopleStore(state => state.candidateFilterStages);
+  const setCandidateFilterStages = usePeopleStore(state => state.setCandidateFilterStages);
   const setCandidateSearchQuery = usePeopleStore(state => state.setCandidateSearchQuery);
   const setIsCandidateSearchOpen = usePeopleStore(state => state.setIsCandidateSearchOpen);
   
@@ -328,46 +328,46 @@ export const AIChatbox: React.FC<AIChatboxProps> = ({
 
         if (filterKeyword === 'all' || filterKeyword === 'clear' || filterKeyword === 'reset') {
           setCandidateSearchQuery('');
-          setCandidateFilterStage('all');
+          setCandidateFilterStages(['all']);
           uiUpdatedMsg = " *(Cleared all candidate search filters)*";
           searchMatched = true;
         } else if (filterKeyword.includes('application') || filterKeyword.includes('review')) {
-          setCandidateFilterStage('application');
+          setCandidateFilterStages(['application']);
           setCandidateSearchQuery('');
           uiUpdatedMsg = " *(Filtered candidate list to 'Application Review' stage)*";
           searchMatched = true;
         } else if (filterKeyword.includes('recruiter screen') || filterKeyword.includes('screening')) {
-          setCandidateFilterStage('recruiter_screen');
+          setCandidateFilterStages(['recruiter_screen']);
           setCandidateSearchQuery('');
           uiUpdatedMsg = " *(Filtered candidate list to 'Recruiter Screen' stage)*";
           searchMatched = true;
         } else if (filterKeyword.includes('manager')) {
-          setCandidateFilterStage('manager_screen');
+          setCandidateFilterStages(['manager_screen']);
           setCandidateSearchQuery('');
           uiUpdatedMsg = " *(Filtered candidate list to 'Manager Screen' stage)*";
           searchMatched = true;
         } else if (filterKeyword.includes('technical') || filterKeyword.includes('tech') || filterKeyword.includes('panel')) {
-          setCandidateFilterStage('panel_interview');
+          setCandidateFilterStages(['panel_interview']);
           setCandidateSearchQuery('');
           uiUpdatedMsg = " *(Filtered candidate list to 'Panel Interview' stage)*";
           searchMatched = true;
         } else if (filterKeyword.includes('onsite') || filterKeyword.includes('final')) {
-          setCandidateFilterStage('final_interview');
+          setCandidateFilterStages(['final_interview']);
           setCandidateSearchQuery('');
           uiUpdatedMsg = " *(Filtered candidate list to 'Final Interview' stage)*";
           searchMatched = true;
         } else if (filterKeyword.includes('offer')) {
-          setCandidateFilterStage('offer');
+          setCandidateFilterStages(['offer']);
           setCandidateSearchQuery('');
           uiUpdatedMsg = " *(Filtered candidate list to 'Offer Stage')*";
           searchMatched = true;
         } else if (filterKeyword.includes('archive')) {
-          setCandidateFilterStage('archived');
+          setCandidateFilterStages(['archived']);
           setCandidateSearchQuery('');
           uiUpdatedMsg = " *(Filtered candidate list to 'Archived' stage)*";
           searchMatched = true;
         } else if (filterKeyword.includes('hired')) {
-          setCandidateFilterStage('hired');
+          setCandidateFilterStages(['hired']);
           setCandidateSearchQuery('');
           uiUpdatedMsg = " *(Filtered candidate list to 'Hired' stage)*";
           searchMatched = true;
@@ -380,7 +380,7 @@ export const AIChatbox: React.FC<AIChatboxProps> = ({
             searchMatched = true;
           } else {
             setCandidateSearchQuery(filterKeyword);
-            setCandidateFilterStage('all');
+            setCandidateFilterStages(['all']);
             setIsCandidateSearchOpen(true);
             uiUpdatedMsg = ` *(Filtered candidate list by: "${filterKeyword}")*`;
             searchMatched = true;
@@ -408,7 +408,7 @@ export const AIChatbox: React.FC<AIChatboxProps> = ({
               const q = (lowerText.replace('filter ', '').replace('search ', '').trim()).toLowerCase();
               const matchesQuery = q === '' || c.name.toLowerCase().includes(q) || c.email.toLowerCase().includes(q) || c.target_job.toLowerCase().includes(q);
               if (q === 'hired' || q.includes('screen') || q === 'all' || q === 'clear' || q === 'reset' || q.includes('offer') || q.includes('onsite') || q.includes('technical') || q.includes('application')) {
-                return candidateFilterStage === 'all' || c.stage === candidateFilterStage;
+                return candidateFilterStages.includes('all') || candidateFilterStages.includes(c.stage);
               }
               return matchesQuery;
             });

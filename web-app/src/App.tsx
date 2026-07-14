@@ -168,8 +168,19 @@ export default function App() {
 
   // Horizontal Resizing States
   const [recruitLeftWidth, setRecruitLeftWidth] = useState(340);
-  const [preferredRecruitLeftWidth, setPreferredRecruitLeftWidth] = useState(340);
+  const [preferredRecruitLeftWidth, setPreferredRecruitLeftWidth] = useState<number | null>(null);
   const [isResizingRecruit, setIsResizingRecruit] = useState(false);
+
+  React.useEffect(() => {
+    if (preferredRecruitLeftWidth !== null) {
+      setRecruitLeftWidth(preferredRecruitLeftWidth);
+    } else {
+      const sidebarWidth = isSidebarCollapsed ? 80 : 320;
+      const canvasWidth = windowWidth - sidebarWidth - 64;
+      const targetWidth = Math.floor(canvasWidth * 0.60);
+      setRecruitLeftWidth(Math.max(220, targetWidth));
+    }
+  }, [windowWidth, isSidebarCollapsed, preferredRecruitLeftWidth]);
 
   const startResizingRecruit = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -256,21 +267,25 @@ export default function App() {
 
     // Recruit Tab
     const maxRecruitLeftWidth = Math.max(220, availableWidth - 360);
-    const targetRecruitWidth = Math.max(220, Math.min(preferredRecruitLeftWidth, maxRecruitLeftWidth));
+    const targetRecruitWidth = Math.max(220, Math.min(preferredRecruitLeftWidth || recruitLeftWidth, maxRecruitLeftWidth));
     if (recruitLeftWidth !== targetRecruitWidth) {
       setRecruitLeftWidth(targetRecruitWidth);
     }
 
     // Onboard Tab
     const maxOnboardLeftWidth = Math.max(220, availableWidth - 360);
-    const targetOnboardWidth = Math.max(220, Math.min(preferredOnboardLeftWidth, maxOnboardLeftWidth));
+    const targetOnboardWidth = isSidebarCollapsed
+      ? Math.floor(availableWidth * 0.6)
+      : Math.max(220, Math.min(preferredOnboardLeftWidth, maxOnboardLeftWidth));
     if (onboardLeftWidth !== targetOnboardWidth) {
       setOnboardLeftWidth(targetOnboardWidth);
     }
 
     // Calibrate Tab
     const maxCalibrateLeftWidth = Math.max(220, availableWidth - 320);
-    const targetCalibrateWidth = Math.max(220, Math.min(preferredCalibrateLeftWidth, maxCalibrateLeftWidth));
+    const targetCalibrateWidth = isSidebarCollapsed
+      ? Math.floor(availableWidth * 0.6)
+      : Math.max(220, Math.min(preferredCalibrateLeftWidth, maxCalibrateLeftWidth));
     if (calibrateLeftWidth !== targetCalibrateWidth) {
       setCalibrateLeftWidth(targetCalibrateWidth);
     }
@@ -358,8 +373,8 @@ export default function App() {
       <div className="absolute bottom-10 right-1/4 w-[400px] h-[400px] bg-accent/5 rounded-full glow-blur animate-pulse-glow z-0"></div>
 
       {/* Sidebar Component */}
-      <Sidebar 
-        isMobileView={isMobileView} 
+      <Sidebar
+        isMobileView={isMobileView}
         isExtraSmall={isExtraSmall}
         theme={theme}
         setTheme={setTheme}
@@ -425,9 +440,9 @@ export default function App() {
       </main>
 
       {/* Floating AI Chatbox */}
-      <AIChatbox 
-        isDarkMode={isDarkMode} 
-        isMobileView={isMobileView} 
+      <AIChatbox
+        isDarkMode={isDarkMode}
+        isMobileView={isMobileView}
       />
     </div>
   );

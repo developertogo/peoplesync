@@ -39,8 +39,8 @@ export const RecruiterHub: React.FC<RecruiterHubProps> = ({
   
   const candidateSearchQuery = usePeopleStore(state => state.candidateSearchQuery);
   const setCandidateSearchQuery = usePeopleStore(state => state.setCandidateSearchQuery);
-  const candidateFilterStage = usePeopleStore(state => state.candidateFilterStage);
-  const setCandidateFilterStage = usePeopleStore(state => state.setCandidateFilterStage);
+  const candidateFilterStages = usePeopleStore(state => state.candidateFilterStages);
+  const setCandidateFilterStages = usePeopleStore(state => state.setCandidateFilterStages);
   
   const employees = usePeopleStore(state => state.employees);
   const setSelectedCalibrateCandidateId = usePeopleStore(state => state.setSelectedCalibrateCandidateId);
@@ -69,11 +69,26 @@ export const RecruiterHub: React.FC<RecruiterHubProps> = ({
   const [interviewScore, setInterviewScore] = useState(4);
   const [interviewNotes, setInterviewNotes] = useState('');
   const [interviewLogged, setInterviewLogged] = useState(false);
+  const [isCompact, setIsCompact] = useState(false);
+
+  const [visibleCount, setVisibleCount] = useState(5);
+  React.useEffect(() => {
+    setVisibleCount(5);
+  }, [candidateSearchQuery, candidateFilterStages]);
+
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const target = e.currentTarget;
+    if (target.scrollHeight - target.scrollTop <= target.clientHeight + 20) {
+      if (visibleCount < filteredCandidates.length) {
+        setVisibleCount(prev => Math.min(prev + 5, filteredCandidates.length));
+      }
+    }
+  };
 
   const [candidateActiveIndex, setCandidateActiveIndex] = useState<number>(-1);
   React.useEffect(() => {
     setCandidateActiveIndex(-1);
-  }, [candidateSearchQuery, candidateFilterStage]);
+  }, [candidateSearchQuery, candidateFilterStages]);
 
   const handleSearchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (filteredCandidates.length === 0) return;
@@ -102,6 +117,18 @@ export const RecruiterHub: React.FC<RecruiterHubProps> = ({
       }, 50);
     }
   }, [isCandidateSearchOpen]);
+
+  const stageDropdownRef = React.useRef<HTMLDivElement>(null);
+  React.useEffect(() => {
+    const handleOutsideClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (stageDropdownRef.current && !stageDropdownRef.current.contains(target)) {
+        setIsStageMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleOutsideClick);
+    return () => document.removeEventListener('mousedown', handleOutsideClick);
+  }, [setIsStageMenuOpen]);
 
   const isScorecardEnabled = ['recruiter_screen', 'manager_screen', 'panel_interview', 'final_interview'].includes(selectedCandidate?.stage || '');
 
@@ -139,16 +166,20 @@ export const RecruiterHub: React.FC<RecruiterHubProps> = ({
       const q = candidateSearchQuery.toLowerCase();
       result = result.filter(c => c.name.toLowerCase().includes(q) || c.target_job.toLowerCase().includes(q));
     }
-    if (candidateFilterStage !== 'all') {
-      result = result.filter(c => c.stage === candidateFilterStage);
+    if (candidateFilterStages.length > 0 && !candidateFilterStages.includes('all')) {
+      result = result.filter(c => candidateFilterStages.includes(c.stage));
     }
-    // Sort alphabetically by last name
+    // Sort alphabetically by last name only when search or filters are active (not in drag-and-drop mode)
+    const isDragState = candidateSearchQuery === '' && candidateFilterStages.includes('all');
+    if (isDragState) {
+      return result;
+    }
     return result.sort((a, b) => {
       const aLastName = a.name.split(' ').slice(-1)[0] || '';
       const bLastName = b.name.split(' ').slice(-1)[0] || '';
       return aLastName.localeCompare(bLastName);
     });
-  }, [candidates, candidateSearchQuery, candidateFilterStage]);
+  }, [candidates, candidateSearchQuery, candidateFilterStages]);
 
   return (
     <div className={`flex-1 flex min-h-0 relative ${isResponsiveMode ? 'flex-col space-y-6' : 'flex-row space-x-2'}`}>
@@ -160,7 +191,7 @@ export const RecruiterHub: React.FC<RecruiterHubProps> = ({
         <div className="flex justify-between items-center mb-1 flex-wrap">
           <h3 className={textTitleClass}>Greenhouse Candidates</h3>
           <span className="text-[10px] uppercase font-bold text-emerald-400 tracking-wider bg-emerald-500/10 border border-emerald-500/25 px-2 py-0.5 rounded mb-4">
-            Greenhouse API: Connected
+            Greenhouse: Connected
           </span>
         </div>
 
@@ -204,27 +235,41 @@ export const RecruiterHub: React.FC<RecruiterHubProps> = ({
             </div>
           </div>
 
-          <div className="relative stage-dropdown-container">
+          <div className="flex items-center space-x-3 shrink-0">
+            <label className="flex items-center space-x-1.5 text-xs font-semibold text-slate-500 cursor-pointer select-none hover:text-primary transition-colors">
+              <input
+                type="checkbox"
+                checked={isCompact}
+                onChange={(e) => setIsCompact(e.target.checked)}
+                className="rounded border-slate-300 text-primary focus:ring-primary w-3.5 h-3.5 cursor-pointer"
+              />
+              <span>Compact</span>
+            </label>
+            <div ref={stageDropdownRef} className="relative stage-dropdown-container">
             <button
               onClick={() => setIsStageMenuOpen(!isStageMenuOpen)}
-              className={`flex items-center justify-between border text-xs font-semibold rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-primary transition-colors cursor-pointer space-x-1 ${isDarkMode ? 'bg-slate-900 border-slate-700 text-white hover:bg-slate-800/50' : 'bg-white border-slate-200 text-slate-800 hover:bg-slate-50'}`}
+              className={`flex items-center justify-between border text-xs font-semibold rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-primary transition-colors cursor-pointer space-x-1 ${isDarkMode ? 'bg-slate-900 border-slate-700 text-white hover:bg-slate-800/50' : 'bg-white border-slate-200 text-slate-800 hover:bg-slate-55'}`}
             >
               <span className="truncate max-w-[125px]">
-                {candidateFilterStage === 'all' && 'All Stages'}
-                {candidateFilterStage === 'application' && 'Application Review'}
-                {candidateFilterStage === 'recruiter_screen' && 'Recruiter Screen'}
-                {candidateFilterStage === 'manager_screen' && 'Manager Screen'}
-                {candidateFilterStage === 'panel_interview' && 'Panel Interview'}
-                {candidateFilterStage === 'final_interview' && 'Final Interview'}
-                {candidateFilterStage === 'offer' && 'Offer Stage'}
-                {candidateFilterStage === 'archived' && 'Archived'}
-                {candidateFilterStage === 'hired' && 'Hired'}
+                {candidateFilterStages.includes('all') ? 'All Stages' : (() => {
+                  const stageNamesMap: Record<string, string> = {
+                    application: 'Application Review',
+                    recruiter_screen: 'Recruiter Screen',
+                    manager_screen: 'Manager Screen',
+                    panel_interview: 'Panel Interview',
+                    final_interview: 'Final Interview',
+                    offer: 'Offer Stage',
+                    archived: 'Archived',
+                    hired: 'Hired'
+                  };
+                  return candidateFilterStages.map(s => stageNamesMap[s] || s).join(', ');
+                })()}
               </span>
               <ChevronDown className="w-3.5 h-3.5 opacity-60" />
             </button>
 
             {isStageMenuOpen && (
-              <div className={`absolute ${recruitLeftWidth > 290 ? 'right-0' : 'left-0'} top-full mt-1 w-36 z-[60] border rounded-lg shadow-xl overflow-hidden transition-all duration-300 ${isDarkMode ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-800'}`}>
+              <div className={`absolute ${recruitLeftWidth > 290 ? 'right-0' : 'left-0'} top-full mt-1 w-44 z-[60] border rounded-lg shadow-xl overflow-hidden transition-all duration-300 ${isDarkMode ? 'bg-slate-900 border-slate-808 text-white' : 'bg-white border-slate-202 text-slate-800'}`}>
                 {[
                   { id: 'all', name: 'All Stages' },
                   { id: 'application', name: 'Application Review' },
@@ -235,28 +280,51 @@ export const RecruiterHub: React.FC<RecruiterHubProps> = ({
                   { id: 'offer', name: 'Offer Stage' },
                   { id: 'archived', name: 'Archived' },
                   { id: 'hired', name: 'Hired' }
-                ].map(opt => (
-                  <button
-                    key={opt.id}
-                    onClick={() => {
-                      setCandidateFilterStage(opt.id as any);
-                      setIsStageMenuOpen(false);
-                    }}
-                    className={`w-full flex items-center px-3 py-2 text-left text-xs font-medium hover:bg-primary/10 transition-colors ${candidateFilterStage === opt.id ? 'bg-primary/5 font-semibold text-primary' : ''}`}
-                  >
-                    {opt.name}
-                  </button>
-                ))}
+                ].map(opt => {
+                  const isChecked = candidateFilterStages.includes(opt.id);
+                  return (
+                    <label
+                      key={opt.id}
+                      className="w-full flex items-center px-3 py-2 text-left text-xs font-medium hover:bg-primary/10 transition-colors cursor-pointer select-none space-x-2"
+                    >
+                      <input
+                        type="checkbox"
+                        checked={isChecked}
+                        onChange={() => {
+                          if (opt.id === 'all') {
+                            setCandidateFilterStages(['all']);
+                          } else {
+                            let nextStages = candidateFilterStages.filter(s => s !== 'all');
+                            if (nextStages.includes(opt.id)) {
+                              nextStages = nextStages.filter(s => s !== opt.id);
+                            } else {
+                              nextStages.push(opt.id);
+                            }
+                            if (nextStages.length === 0) {
+                              nextStages = ['all'];
+                            }
+                            setCandidateFilterStages(nextStages);
+                          }
+                        }}
+                        className="rounded border-slate-300 text-primary focus:ring-primary w-3.5 h-3.5 cursor-pointer shrink-0"
+                      />
+                      <span className={`${isChecked ? 'font-semibold text-primary' : ''} truncate`}>
+                        {opt.name}
+                      </span>
+                    </label>
+                  );
+                })}
               </div>
             )}
           </div>
+          </div>
         </div>
 
-        <div className="space-y-3 flex-1 overflow-y-auto pr-1">
-          {filteredCandidates.map((cand, index) => (
+        <div onScroll={handleScroll} className="space-y-3 flex-1 overflow-y-auto pr-1">
+          {filteredCandidates.slice(0, visibleCount).map((cand, index) => (
             <div
               key={cand.id}
-              draggable={candidateSearchQuery === '' && candidateFilterStage === 'all'}
+              draggable={candidateSearchQuery === '' && candidateFilterStages.includes('all')}
               onDragStart={(e) => {
                 setDraggedCandidateIndex(index);
                 e.dataTransfer.effectAllowed = "move";
@@ -280,22 +348,45 @@ export const RecruiterHub: React.FC<RecruiterHubProps> = ({
                 <GripVertical className="w-3.5 h-3.5" />
               </div>
 
-              <button
-                onClick={() => {
-                  setSelectedCandidate(cand);
-                }}
-                className={`flex-1 text-left p-4 rounded-xl border transition-all duration-300 ${selectedCandidate.id === cand.id ? 'bg-primary/10 border-primary/50 text-primary font-semibold shadow-sm' : `${isDarkMode ? 'bg-slate-900/30 border-slate-700/40 text-slate-400 hover:border-slate-600/60' : 'bg-slate-55 border-slate-205 text-slate-655 hover:bg-slate-105/50'}`} ${index === candidateActiveIndex ? 'ring-2 ring-primary bg-primary/5' : ''}`}
-              >
-                <div className={`font-medium text-sm ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{cand.name}</div>
-                <div className={`text-xs mt-1 ${isDarkMode ? 'text-slate-450' : 'text-slate-500'}`}>{cand.target_job}</div>
-                <div className="mt-3 flex items-center justify-between">
-                  <span className={`text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded border transition-colors duration-500 ${isDarkMode ? 'bg-slate-800 text-slate-300 border-slate-700/50' : 'bg-slate-100 text-slate-600 border-slate-200'}`}>
+              {isCompact ? (
+                <button
+                  onClick={() => {
+                    setSelectedCandidate(cand);
+                  }}
+                  className={`flex-1 text-left px-4 py-2.5 rounded-xl border transition-all duration-300 flex items-center justify-between gap-3 ${selectedCandidate.id === cand.id ? 'bg-primary/10 border-primary/50 text-primary font-semibold shadow-sm' : `${isDarkMode ? 'bg-slate-900/30 border-slate-700/40 text-slate-400 hover:border-slate-600/60' : 'bg-slate-55 border-slate-205 text-slate-655 hover:bg-slate-105/50'}`} ${index === candidateActiveIndex ? 'ring-2 ring-primary bg-primary/5' : ''}`}
+                >
+                  <div className="flex items-center space-x-1.5 min-w-0 flex-1 text-xs">
+                    <span className={`font-semibold shrink-0 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{cand.name}</span>
+                    <span className="opacity-40 shrink-0">*</span>
+                    <span className={`truncate ${isDarkMode ? 'text-slate-450' : 'text-slate-500'}`}>{cand.target_job}</span>
+                  </div>
+                  <span className={`text-[9px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded border shrink-0 text-right ${isDarkMode ? 'bg-slate-800 text-slate-300 border-slate-700/50' : 'bg-slate-100 text-slate-600 border-slate-200'}`}>
                     {cand.stage.replace('_', ' ')}
                   </span>
-                </div>
-              </button>
+                </button>
+              ) : (
+                <button
+                  onClick={() => {
+                    setSelectedCandidate(cand);
+                  }}
+                  className={`flex-1 text-left p-4 rounded-xl border transition-all duration-300 ${selectedCandidate.id === cand.id ? 'bg-primary/10 border-primary/50 text-primary font-semibold shadow-sm' : `${isDarkMode ? 'bg-slate-900/30 border-slate-700/40 text-slate-400 hover:border-slate-600/60' : 'bg-slate-55 border-slate-205 text-slate-655 hover:bg-slate-105/50'}`} ${index === candidateActiveIndex ? 'ring-2 ring-primary bg-primary/5' : ''}`}
+                >
+                  <div className={`font-medium text-sm ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{cand.name}</div>
+                  <div className={`text-xs mt-1 ${isDarkMode ? 'text-slate-450' : 'text-slate-500'}`}>{cand.target_job}</div>
+                  <div className="mt-3 flex items-center justify-between">
+                    <span className={`text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded border transition-colors duration-500 ${isDarkMode ? 'bg-slate-800 text-slate-300 border-slate-700/50' : 'bg-slate-100 text-slate-600 border-slate-200'}`}>
+                      {cand.stage.replace('_', ' ')}
+                    </span>
+                  </div>
+                </button>
+              )}
             </div>
           ))}
+          {visibleCount < filteredCandidates.length && (
+            <div className="py-2 text-center text-[10px] font-semibold text-slate-500 uppercase tracking-wider animate-pulse">
+              Scroll for more candidates...
+            </div>
+          )}
         </div>
       </div>
 

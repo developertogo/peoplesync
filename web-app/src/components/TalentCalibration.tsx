@@ -40,6 +40,22 @@ export const TalentCalibration: React.FC<TalentCalibrationProps> = ({
 
   const selectedCalibrateCandObj = employees.find(e => e.id === selectedCalibrateCandidateId) || employees[0];
 
+  const [visibleCount, setVisibleCount] = React.useState(3);
+  const feedbacks = feedbacksMap[selectedCalibrateCandObj.id] || [];
+
+  React.useEffect(() => {
+    setVisibleCount(3);
+  }, [selectedCalibrateCandidateId]);
+
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const target = e.currentTarget;
+    if (target.scrollHeight - target.scrollTop <= target.clientHeight + 25) {
+      if (visibleCount < feedbacks.length) {
+        setVisibleCount(prev => Math.min(prev + 3, feedbacks.length));
+      }
+    }
+  };
+
   const highlightText = (fullText: string, highlightPart: string, highlightClass: string, icon?: React.ReactNode) => {
     if (!highlightPart) return fullText;
     const index = fullText.indexOf(highlightPart);
@@ -90,7 +106,7 @@ export const TalentCalibration: React.FC<TalentCalibrationProps> = ({
         />
 
         {/* Peer Feedback Auditor Card */}
-        <div className={`flex-1 space-y-6 ${cardClass} ${isResponsiveMode ? 'w-full h-auto overflow-visible' : 'overflow-y-auto min-h-0 pr-3'}`}>
+        <div onScroll={handleScroll} className={`flex-1 space-y-6 ${cardClass} ${isResponsiveMode ? 'w-full h-auto overflow-visible' : 'overflow-y-auto min-h-0 pr-3'}`}>
           <div className="flex justify-between items-start">
             <div>
               <h3 className="font-display font-semibold text-base mb-1">Peer Feedback Auditor</h3>
@@ -120,7 +136,7 @@ export const TalentCalibration: React.FC<TalentCalibrationProps> = ({
           </div>
 
           <div className="space-y-6">
-            {(feedbacksMap[selectedCalibrateCandObj.id] || []).map((fb) => {
+            {feedbacks.slice(0, visibleCount).map((fb) => {
               const hasBiasFlag = !fb.biasAccepted && !fb.biasDismissed;
               return (
                 <div key={fb.id} className="space-y-3 pb-4 border-b border-slate-700/20 last:border-b-0 last:pb-0">
@@ -144,7 +160,7 @@ export const TalentCalibration: React.FC<TalentCalibrationProps> = ({
                   </div>
 
                   {/* Feedback text area with active warning */}
-                  <div className={`relative border rounded-xl p-5 pb-9 font-sans leading-relaxed text-sm transition-all duration-500 ${isDarkMode ? 'bg-slate-900/50 border-slate-700/50 text-slate-350' : 'bg-slate-50 border-slate-205 text-slate-707'}`}>
+                  <div className={`relative border rounded-xl p-5 pb-9 font-sans leading-relaxed text-sm transition-all duration-500 ${isDarkMode ? 'bg-slate-900/50 border-slate-700/50 text-slate-350' : 'bg-slate-55 border-slate-205 text-slate-707'}`}>
                     {fb.biasAccepted ? (
                       <p>
                         {highlightText(
@@ -178,50 +194,40 @@ export const TalentCalibration: React.FC<TalentCalibrationProps> = ({
                       <Sparkles className="w-3.5 h-3.5" />
                     </button>
                   </div>
-
-                  {/* Suggestion Card */}
-                  {fb.isExpanded && !fb.biasAccepted && !fb.biasDismissed && (
-                    <div className={`border rounded-xl p-5 flex items-start space-x-4 shadow-lg transition-all duration-500 min-w-0 ${isDarkMode ? 'bg-slate-900 border-amber-500/20 shadow-amber-500/5' : 'bg-amber-500/5 border border-amber-500/20 shadow-amber-500/2'}`}>
-                      <div className="w-8 h-8 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-400 shrink-0">
-                        <Sparkles className="w-4 h-4" />
-                      </div>
-                      <div className="flex-1 space-y-3 min-w-0">
-                        <div className={`text-xs font-bold truncate ${isDarkMode ? 'text-amber-300' : 'text-amber-600'}`}>Unconscious Bias Flagged (Gender Coded Phrasing)</div>
-                        <p className={`text-xs leading-relaxed ${isDarkMode ? 'text-slate-400' : 'text-slate-606'}`}>
-                          {fb.biasExplanation}
-                        </p>
-                        <div className={`rounded-lg p-3 text-xs border transition-all duration-500 break-words ${isDarkMode ? 'bg-slate-955/60 border-slate-708/50 text-slate-308' : 'bg-white border-slate-200 text-slate-707'}`}>
-                          <span className={`font-semibold block mb-1 ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>AI Recommendation:</span>
-                          "{fb.rewrittenHighlight}"
+                  {/* Bias mitigation options - only visible when bias is detected and not resolved */}
+                  {hasBiasFlag && fb.isExpanded && (
+                    <div className="space-y-4 pt-3 pl-2 border-l-2 border-amber-500/30">
+                      <div className="rounded-xl border border-amber-500/25 bg-amber-500/5 p-4 text-xs space-y-2">
+                        <div className="flex items-center space-x-1.5 text-amber-400 font-semibold uppercase tracking-wider">
+                          <AlertTriangle className="w-3.5 h-3.5 shrink-0" />
+                          <span>Detected Bias Signal</span>
                         </div>
-
-                        <div className="flex flex-wrap gap-2">
-                          <button
-                            onClick={() => setFeedbackBiasAccepted(fb.id, true)}
-                            className="bg-amber-500 hover:bg-amber-650 text-slate-900 font-semibold text-xs px-4 py-2 rounded-lg transition-colors cursor-pointer whitespace-nowrap shrink-0"
-                          >
-                            Accept Rewrite
-                          </button>
-                          <button
-                            onClick={() => setFeedbackBiasDismissed(fb.id, true)}
-                            className={`border font-semibold text-xs px-4 py-2 rounded-lg transition-colors cursor-pointer whitespace-nowrap shrink-0 ${isDarkMode ? 'bg-slate-800 hover:bg-slate-750 text-slate-300 border-slate-700' : 'bg-white hover:bg-slate-100 text-slate-600'}`}
-                          >
-                            Dismiss
-                          </button>
-                        </div>
+                        <p className={isDarkMode ? 'text-slate-300' : 'text-slate-705'}>{fb.biasExplanation}</p>
                       </div>
-                    </div>
-                  )}
 
-                  {fb.isExpanded && fb.biasDismissed && !fb.biasAccepted && (
-                    <div className="flex justify-end pr-2 gap-2 items-center">
-                      <span className="text-[10px] text-slate-500">AI suggestion hidden.</span>
-                      <button
-                        onClick={() => setFeedbackBiasDismissed(fb.id, false)}
-                        className={`text-xs font-semibold underline transition-colors cursor-pointer ${isDarkMode ? 'text-slate-400 hover:text-slate-200' : 'text-slate-505'}`}
-                      >
-                        Show suggestion
-                      </button>
+                      <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-4 text-xs space-y-2.5">
+                        <div className="flex items-center space-x-1.5 text-emerald-400 font-semibold uppercase tracking-wider">
+                          <Sparkles className="w-3.5 h-3.5 shrink-0" />
+                          <span>De-biased Alternative Suggestion</span>
+                        </div>
+                        <p className={isDarkMode ? 'text-slate-300 font-medium' : 'text-slate-800 font-semibold'}>{fb.rewrittenText}</p>
+                      </div>
+
+                      <div className="flex items-center space-x-3 pt-1">
+                        <button
+                          onClick={() => setFeedbackBiasAccepted(fb.id, true)}
+                          className="px-3.5 py-1.5 rounded-lg bg-emerald-500 text-white hover:bg-emerald-600 transition-colors text-xs font-semibold flex items-center space-x-1.5 shadow-sm hover:scale-[1.02] cursor-pointer"
+                        >
+                          <Check className="w-3.5 h-3.5" />
+                          <span>Apply Correction</span>
+                        </button>
+                        <button
+                          onClick={() => setFeedbackBiasDismissed(fb.id, true)}
+                          className={`px-3.5 py-1.5 rounded-lg border text-xs font-semibold transition-all hover:bg-slate-700 hover:text-white cursor-pointer ${isDarkMode ? 'border-slate-700 text-slate-400' : 'border-slate-200 text-slate-600 hover:bg-slate-50'}`}
+                        >
+                          Dismiss Suggestion
+                        </button>
+                      </div>
                     </div>
                   )}
 
@@ -242,6 +248,11 @@ export const TalentCalibration: React.FC<TalentCalibrationProps> = ({
                 </div>
               );
             })}
+            {visibleCount < feedbacks.length && (
+              <div className="py-2 text-center text-[10px] font-bold text-slate-500 uppercase tracking-wider animate-pulse">
+                Scroll for more feedback...
+              </div>
+            )}
           </div>
         </div>
       </div>
