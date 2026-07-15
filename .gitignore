@@ -43,3 +43,12 @@ env/
 
 # Front End cache
 .vite
+
+# Local Databases (SQLite/libsql)
+*.db
+*.sqlite
+*.sqlite3
+*-journal
+*-wal
+*-shm
+peoplesync.db
