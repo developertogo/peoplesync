@@ -177,7 +177,11 @@ export const INITIAL_PROVISIONED_ACCOUNTS = [
 
 
 const BACKEND_API_URL = "http://localhost:49134/api/db";
-const USE_LOCAL_DB_JSON = (import.meta as any).env.VITE_USE_LOCAL_DB_JSON === 'true';
+const searchParams = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
+const urlMode = searchParams?.get('mode');
+
+const PURE_MOCK_STATIC = urlMode === 'static' || (import.meta as any).env.VITE_PURE_MOCK_STATIC === 'true';
+const USE_LOCAL_DB_JSON = urlMode === 'local' || PURE_MOCK_STATIC || (import.meta as any).env.VITE_USE_LOCAL_DB_JSON === 'true';
 
 export interface Feedback {
   id: string;
@@ -620,6 +624,14 @@ export const usePeopleStore = create<PeopleStore>()(
 
     // Fetch API
     fetchDb: async () => {
+      if (PURE_MOCK_STATIC) {
+        // Enforce pure static fallback initialization without network triggers
+        set({
+          candidates: INITIAL_CANDIDATES,
+          employees: INITIAL_EMPLOYEES
+        });
+        return;
+      }
       try {
         const resp = await fetch(BACKEND_API_URL);
         if (!resp.ok) throw new Error('Network error');
@@ -665,7 +677,7 @@ export const usePeopleStore = create<PeopleStore>()(
 
     // Sync API
     syncWithBackend: async (newEmployees) => {
-      if (USE_LOCAL_DB_JSON) return;
+      if (PURE_MOCK_STATIC || USE_LOCAL_DB_JSON) return;
       try {
         const resp = await fetch(BACKEND_API_URL);
         if (!resp.ok) throw new Error('HTTP request failed');
