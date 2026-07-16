@@ -4,7 +4,7 @@ Welcome to **PeopleSync**, a decentralized, AI-native employee lifecycle platfor
 
 This repository implements a prototype for candidate recruiting (Greenhouse ATS), onboarding checklists (Rippling account provisioning), and peer review calibration (Workday directory) using a hybrid **Rust agent runtime ([ZeroClaw](https://www.zeroclawlabs.ai/))** and **TypeScript services**, orchestrated via **[iii.dev](https://iii.dev/)** as the underlying network and service bus.
 
-**Live Interactive Demo**: [PeopleSync Demo](https://developertogo.github.io/portfolio/peoplesync)
+**Live Interactive Demo**: [PeopleSync Demo](https://developertogo.github.io/peoplesync)
 
 > Below are samples of the user interface:
 
@@ -120,7 +120,7 @@ The frontend application supports three distinct run modes configurable directly
 | **Local DB JSON Mode** | `?mode=local` | Communicates with the local database backend (`db.json`) but prevents writing frontend state modifications back, protecting local datasets. |
 | **Remote DB Mode** | *(Default)* | Full bidirectional data synchronization with the backend API service, processing and saving state mutations in real time. |
 
-🚀 **Live Interactive Demo**: Try the UI instantly in your browser in Pure Mock Static Mode: [PeopleSync Demo](https://developertogo.github.io/portfolio/peoplesync)
+🚀 **Live Interactive Demo**: Try the UI instantly in your browser in Pure Mock Static Mode: [PeopleSync Demo](https://developertogo.github.io/peoplesync)
 
 ### Production Transitions
 To transition from the local offline development mock setup to production:
